@@ -1,0 +1,8 @@
+*.iml
+*.ipr
+*.iws
+
+target/
+
+src/main/webapp/bower_components/
+src/main/webapp/node_modules/
