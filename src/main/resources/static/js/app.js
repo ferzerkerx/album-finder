@@ -21,4 +21,7 @@ albumFinderApp.config(['$routeProvider',
         otherwise({
             redirectTo: '/albums'
         });
+
+//        $httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+
     }]);

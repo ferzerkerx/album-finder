@@ -9,6 +9,14 @@
     </head>
     <body>
 
+        <div ng-controller="loginController" class="container">
+            <ul class="nav nav-pills" role="tablist">
+                <li class="active"><a href="#/albums">albums</a></li>
+                <li><a href="#/login">login</a></li>
+                <li ng-show="authenticated"><a href="" ng-click="logout()">logout</a></li>
+            </ul>
+        </div>
+
         <div class="view-container">
             <div ng-view class="view-frame">
 

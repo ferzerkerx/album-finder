@@ -9,6 +9,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
@@ -21,7 +24,7 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-            .withUser("user").password("password").roles("USER")
+            .withUser("user").password("password").roles("AUTHENTICATED_USER")
             .and()
             .withUser("admin").password("password").roles("ADMIN");
     }
@@ -33,15 +36,19 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
             .authenticationEntryPoint(restAuthenticationEntryPoint)
             .and()
             .authorizeRequests()
-            .antMatchers("/index.html", "/home.html", "/login.html", "/").permitAll()
+            .antMatchers("/index.html", "/partials/albums.html", "/partials/login.html", "/*").permitAll()
+            .antMatchers("/js/**", "/bower_components/**", "/css/**").permitAll()
             .antMatchers("/admin/**").access("hasRole('ADMIN')")
             .anyRequest().authenticated()
-            .and().csrf().disable(); //TODO Fer
+            .and()
+            .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
+            .csrf().csrfTokenRepository(csrfTokenRepository())
+            .and().logout();
+    }
+
+    private CsrfTokenRepository csrfTokenRepository() {
+        HttpSessionCsrfTokenRepository repository = new HttpSessionCsrfTokenRepository();
+        repository.setHeaderName("X-XSRF-TOKEN");
+        return repository;
     }
 }
-
-//TODO remove
-//@Configuration
-//public class SecurityWebConfig  {
-//
-//}
