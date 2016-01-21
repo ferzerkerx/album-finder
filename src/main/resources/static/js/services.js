@@ -36,7 +36,23 @@ afServices.factory('albumsService', ['$http', '$location',
 
             return $http.get(url, config).then(function (response) {
                 console.log(response);
-                return response.data;
+                if (!response.data) {
+                    return;
+                }
+                var data = response.data;
+                var isAdmin = false;
+                if (data.authorities) {
+                    for (var i = 0; i < data.authorities.length; i++ ) {
+                        if (data.authorities[i]['authority'] === "ROLE_ADMIN") {
+                            isAdmin =  true;
+                            break;
+                        }
+                    }
+                }
+                return {
+                    username: data.username,
+                    isAdmin: isAdmin
+                };
             });
         };
 
