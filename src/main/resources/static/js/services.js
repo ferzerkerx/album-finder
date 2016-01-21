@@ -23,6 +23,34 @@ afServices.factory('albumsService', ['$http', '$location',
             });
         };
 
+
+        albumsService.doLogin = function(credentials) {
+            var headers = credentials ? {authorization : "Basic "
+                    + btoa(credentials.username + ":" + credentials.password)
+                } : {};
+            var url = albumsService.contextPath + '/user';
+            var config = {
+                    headers: headers
+                };
+
+
+            return $http.get(url, config).then(function (response) {
+                console.log(response);
+                return response.data;
+            });
+        };
+
+        albumsService.doLogout = function() {
+            var url = albumsService.contextPath + '/logout';
+            var config = {
+            };
+
+            return $http.get(url, config).then(function (response) {
+                console.log(response);
+                return response.data;
+            });
+        };
+
         return albumsService;
     }]);
 
