@@ -36,6 +36,7 @@ afControllers.controller('loginController', ['$rootScope', '$scope', '$location'
               if ($rootScope.userInfo.authenticated) {
                 $location.path("/");
                 $scope.error = false;
+                $('#loginModal').modal('hide');
               } else {
                 $location.path("/login");
                 $scope.error = true;
@@ -50,3 +51,23 @@ afControllers.controller('loginController', ['$rootScope', '$scope', '$location'
             });
         }
     }]);
+
+
+    afControllers.controller('artistsController', ['$scope', 'albumsService',
+        function ($scope, albumsService) {
+            albumsService.listArtists().then(function(data) {
+                $scope.artists = data;
+            });
+
+
+
+            $scope.deleteArtist = function(artist) {
+                var shouldDeleteArtist = confirm("Are you sure you want to delete:"  + artist.name + "?");
+                if (shouldDeleteArtist === true) {
+                    albumsService.deleteArtist(artist.id).then(function(data) {
+                        //TODO
+                    });
+                }
+            }
+
+       }]);

@@ -23,6 +23,17 @@ afServices.factory('albumsService', ['$http', '$location',
             });
         };
 
+         albumsService.listArtists = function(host) {
+            var url = albumsService.contextPath + '/artists';
+            var config = {
+                };
+
+            return $http.get(url, config).then(function (response) {
+                console.log(response);
+                return response.data;
+            });
+        };
+
 
         albumsService.doLogin = function(credentials) {
             var headers = credentials ? {authorization : "Basic "

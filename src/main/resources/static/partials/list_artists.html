@@ -1,0 +1,12 @@
+<table class="table">
+    <tr ng-repeat="artist in artists">
+        <td>{{artist.name}}</td>
+        <td></td>
+        <td>
+            <a class="btn btn-info" href="/artist/{{artist.id}}">edit</a>
+        </td>
+        <td>
+            <a class="btn btn-warning" href="#" ng-click="deleteArtist(artist)">delete</a>
+        </td>
+    </tr>
+</table>
