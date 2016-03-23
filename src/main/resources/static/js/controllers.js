@@ -37,6 +37,7 @@ afControllers.controller('loginController', ['$rootScope', '$scope', '$location'
                 $location.path("/");
                 $scope.error = false;
                 $('#loginModal').modal('hide');
+                $scope.credentials = {};
               } else {
                 $location.path("/login");
                 $scope.error = true;

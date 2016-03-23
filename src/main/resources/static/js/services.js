@@ -10,7 +10,7 @@ afServices.factory('albumsService', ['$http', '$location',
         var albumsService = {contextPath: ''};
 
 
-        albumsService.listAlbums = function(host) {
+        albumsService.listAlbums = function() {
 
             var url = albumsService.contextPath + '/albums/search';
             var config = {
@@ -23,12 +23,24 @@ afServices.factory('albumsService', ['$http', '$location',
             });
         };
 
-         albumsService.listArtists = function(host) {
+         albumsService.listArtists = function() {
             var url = albumsService.contextPath + '/artists';
             var config = {
                 };
 
             return $http.get(url, config).then(function (response) {
+                console.log(response);
+                return response.data;
+            });
+        };
+
+        albumsService.deleteArtist = function(id) {
+            var url = albumsService.contextPath + '/admin/artists/' + id;
+            var config = {
+                    data: {_method: "DELETE"}
+                };
+
+            return $http.delete(url, config).then(function (response) {
                 console.log(response);
                 return response.data;
             });
