@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ferzerkerx.album_finder.model.Artist;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,14 @@ public abstract class AbstractControllerIntegrationTest {
         return MockMvcBuilders.webAppContextSetup(getWebApplicationContext()).build();
     }
 
+    //TODO move to a fixture class?
+    protected Artist createArtist() {
+        Artist artist = new Artist();
+        artist.setName("someArtist");
+        artist.setId(1);
+        return artist;
+    }
+
     public static <T> void setBinding(ApplicationContext applicationContext, Class<?> interfaceType, T singleton) {
 
         if (!(interfaceType.isAssignableFrom(singleton.getClass()))) {
@@ -66,7 +75,7 @@ public abstract class AbstractControllerIntegrationTest {
 
         List<String> beanNames = new ArrayList<>();
         beanNames.addAll(Arrays.asList(applicationContext.getBeanNamesForType(interfaceType)));
-        // If the interface type does not uniquely distinguish a bean, make sure we add a bean that can match by name.
+
         if (beanNames.isEmpty()) {
             final String className = interfaceType.getSimpleName();
             final String interfaceBeanName = className.substring(0, 1).toLowerCase() + className.substring(1);

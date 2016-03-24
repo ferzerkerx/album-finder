@@ -128,7 +128,9 @@ public class AlbumsControllerTest extends AbstractControllerIntegrationTest {
         List<Album> albums = Collections.singletonList(createAlbum());
         when(albumFinderService.findMatchedRecordByCriteria("someTitle", "someYear")).thenReturn(albums);
 
-        getMockMvc().perform(get("/albums/search?title=someTitle&year=someYear")//
+        getMockMvc().perform(get("/albums/search")//
+            .param("title", "someTitle")
+            .param("year", "someYear")
             .contentType(MediaType.APPLICATION_JSON)) //
             .andExpect(status().isOk()) //
             .andExpect(jsonPath("$.data[0].id").value(1))
@@ -138,13 +140,9 @@ public class AlbumsControllerTest extends AbstractControllerIntegrationTest {
     }
 
     private Album createAlbum() {
-        Artist artist = new Artist();
-        artist.setName("some name");
-        artist.setId(10);
-
         Album album = new Album();
         album.setTitle("some title");
-        album.setArtist(artist);
+        album.setArtist(createArtist());
         album.setYear("2016");
         album.setId(1);
         return album;
