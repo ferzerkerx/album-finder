@@ -8,11 +8,13 @@ import com.ferzerkerx.album_finder.model.Artist;
 import com.ferzerkerx.album_finder.service.AlbumFinderService;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.mockito.internal.matchers.GreaterThan;
 import org.springframework.http.MediaType;
 
-import static org.junit.Assert.fail;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -70,17 +72,45 @@ public class AlbumsControllerTest extends AbstractControllerIntegrationTest {
 
     @Test
     public void testSaveAlbum() throws Exception {
-        fail();
+        Album album = createAlbum();
+        album.setId(0);
+
+        doAnswer(invocationOnMock -> {
+            Album album1 = (Album) invocationOnMock.getArguments()[1];
+            album1.setId(2);
+            return album1;
+        }).when(albumFinderService).saveAlbum(eq(1), any());
+
+        getMockMvc().perform(post("/admin/artist/1/album")//
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(toJson(album)))//
+            .andExpect(status().isOk()) //
+            .andExpect(jsonPath("$.data.id").value(new GreaterThan<>(0)))
+        ; //
     }
+
 
     @Test
     public void testDeleteAlbumById() throws Exception {
-        fail();
+        doNothing().when(albumFinderService).deleteAlbumById(1);
+
+        getMockMvc().perform(delete("/admin/album/1")//
+            .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+        ; //
     }
 
     @Test
     public void testUpdateAlbumById() throws Exception {
-        fail();
+        Album album = createAlbum();
+        when(albumFinderService.updateAlbumById(any())).thenReturn(album);
+
+        getMockMvc().perform(put("/admin/album/1")//
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(toJson(album)))//
+            .andExpect(status().isOk()) //
+            .andExpect(jsonPath("$.data.id").value(new GreaterThan<>(0)))
+        ; //
     }
 
     @Test

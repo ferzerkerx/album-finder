@@ -3,6 +3,8 @@ package com.ferzerkerx.album_finder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +41,16 @@ public abstract class AbstractControllerIntegrationTest {
         return mockMvc;
     }
 
+    protected static byte[] toJson(Object object) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsBytes(object);
+    }
+
     protected WebApplicationContext getWebApplicationContext() {
         return webApplicationContext;
     }
 
-    protected MockMvc createMockMvc() {
+    private MockMvc createMockMvc() {
         return MockMvcBuilders.webAppContextSetup(getWebApplicationContext()).build();
     }
 

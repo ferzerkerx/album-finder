@@ -41,7 +41,7 @@ public class ResponseEntityService {
         return new ResponseEntity<>(response, status);
     }
 
-    protected Meta createMetaForError(String error, HttpStatus status) {
+    private Meta createMetaForError(String error, HttpStatus status) {
         Meta meta = new Meta();
         meta.setErrorMessage(error);
         meta.setStatus(status.value());
