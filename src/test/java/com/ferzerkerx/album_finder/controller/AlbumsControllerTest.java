@@ -2,9 +2,7 @@ package com.ferzerkerx.album_finder.controller;
 
 import java.util.Collections;
 import java.util.List;
-import com.ferzerkerx.album_finder.AbstractControllerIntegrationTest;
 import com.ferzerkerx.album_finder.model.Album;
-import com.ferzerkerx.album_finder.model.Artist;
 import com.ferzerkerx.album_finder.service.AlbumFinderService;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -19,7 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
-public class AlbumsControllerTest extends AbstractControllerIntegrationTest {
+public class AlbumsControllerTest extends BaseControllerTest {
 
     private AlbumFinderService albumFinderService;
 
@@ -139,7 +137,7 @@ public class AlbumsControllerTest extends AbstractControllerIntegrationTest {
         ; //
     }
 
-    private Album createAlbum() {
+    private static Album createAlbum() {
         Album album = new Album();
         album.setTitle("some title");
         album.setArtist(createArtist());

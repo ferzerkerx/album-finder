@@ -56,6 +56,7 @@ public abstract class BaseDao<T> {
     }
 
 
+    @SuppressWarnings("unchecked")
     public T findById(Integer id) {
         IdentifierLoadAccess identifierLoadAccess = getCurrentSession().byId(clazz);
         return (T) identifierLoadAccess.getReference(id);

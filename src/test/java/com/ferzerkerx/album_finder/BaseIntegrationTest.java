@@ -25,38 +25,11 @@ import org.springframework.web.context.WebApplicationContext;
 @ContextConfiguration(classes = { TestConfig.class})
 @WebAppConfiguration
 @DirtiesContext(classMode= DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-public abstract class AbstractControllerIntegrationTest {
+public abstract class BaseIntegrationTest {
 
-    private MockMvc mockMvc;
-
-    @Autowired
-    private WebApplicationContext webApplicationContext;
-
-    @Before
-    public void setUp() {
-        mockMvc = createMockMvc();
-    }
-
-
-    protected MockMvc getMockMvc() {
-        return mockMvc;
-    }
-
-    protected static byte[] toJson(Object object) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsBytes(object);
-    }
-
-    protected WebApplicationContext getWebApplicationContext() {
-        return webApplicationContext;
-    }
-
-    private MockMvc createMockMvc() {
-        return MockMvcBuilders.webAppContextSetup(getWebApplicationContext()).build();
-    }
 
     //TODO move to a fixture class?
-    protected Artist createArtist() {
+    protected static Artist createArtist() {
         Artist artist = new Artist();
         artist.setName("someArtist");
         artist.setId(1);

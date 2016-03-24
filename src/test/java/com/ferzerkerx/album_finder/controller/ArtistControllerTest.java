@@ -2,22 +2,21 @@ package com.ferzerkerx.album_finder.controller;
 
 import java.util.Collections;
 import java.util.List;
-import com.ferzerkerx.album_finder.AbstractControllerIntegrationTest;
 import com.ferzerkerx.album_finder.model.Artist;
 import com.ferzerkerx.album_finder.service.AlbumFinderService;
+import org.junit.After;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.internal.matchers.GreaterThan;
 import org.springframework.http.MediaType;
 
-import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class ArtistControllerTest extends AbstractControllerIntegrationTest {
+public class ArtistControllerTest extends BaseControllerTest {
 
 
     private AlbumFinderService albumFinderService;
@@ -27,6 +26,11 @@ public class ArtistControllerTest extends AbstractControllerIntegrationTest {
         super.setUp();
         albumFinderService = Mockito.mock(AlbumFinderService.class);
         setBinding(getWebApplicationContext(), AlbumFinderService.class, albumFinderService);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        Mockito.reset(albumFinderService);
     }
 
     @Test
