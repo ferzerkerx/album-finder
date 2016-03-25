@@ -3,27 +3,25 @@ package com.ferzerkerx.album_finder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ferzerkerx.album_finder.model.Album;
 import com.ferzerkerx.album_finder.model.Artist;
-import org.junit.Before;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
+import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { TestConfig.class})
 @WebAppConfiguration
+@Transactional(transactionManager="transactionManager")
+@Rollback
 @DirtiesContext(classMode= DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public abstract class BaseIntegrationTest {
 
@@ -34,6 +32,15 @@ public abstract class BaseIntegrationTest {
         artist.setName("someArtist");
         artist.setId(1);
         return artist;
+    }
+
+    protected static Album createAlbum() {
+        Album album = new Album();
+        album.setTitle("some title");
+        album.setArtist(createArtist());
+        album.setYear("2016");
+        album.setId(1);
+        return album;
     }
 
     public static <T> void setBinding(ApplicationContext applicationContext, Class<?> interfaceType, T singleton) {

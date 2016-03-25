@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -38,6 +39,8 @@ public class ArtistControllerTest extends BaseControllerTest {
         doNothing().when(albumFinderService).deleteArtistWithAlbumsById(1);
 
         getMockMvc().perform(delete("/admin/artist/1")//
+            .with(csrf())
+            .with(admin())
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
         ; //
@@ -66,6 +69,8 @@ public class ArtistControllerTest extends BaseControllerTest {
         when(albumFinderService.updateArtistById(any())).thenReturn(artist);
 
         getMockMvc().perform(put("/admin/artist/1")//
+            .with(csrf())
+            .with(admin())
             .contentType(MediaType.APPLICATION_JSON)
             .content(toJson(artist)))//
             .andExpect(status().isOk()) //
@@ -101,6 +106,8 @@ public class ArtistControllerTest extends BaseControllerTest {
         }).when(albumFinderService).saveArtist(any());
 
         getMockMvc().perform(post("/admin/artists")//
+            .with(csrf())
+            .with(admin())
             .contentType(MediaType.APPLICATION_JSON)
             .content(toJson(artist)))//
             .andExpect(status().isOk()) //

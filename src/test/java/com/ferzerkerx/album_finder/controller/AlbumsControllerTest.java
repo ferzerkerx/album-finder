@@ -8,10 +8,13 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.internal.matchers.GreaterThan;
 import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.request.RequestPostProcessor;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -80,6 +83,8 @@ public class AlbumsControllerTest extends BaseControllerTest {
         }).when(albumFinderService).saveAlbum(eq(1), any());
 
         getMockMvc().perform(post("/admin/artist/1/album")//
+            .with(csrf())
+            .with(admin())
             .contentType(MediaType.APPLICATION_JSON)
             .content(toJson(album)))//
             .andExpect(status().isOk()) //
@@ -87,12 +92,13 @@ public class AlbumsControllerTest extends BaseControllerTest {
         ; //
     }
 
-
     @Test
     public void testDeleteAlbumById() throws Exception {
         doNothing().when(albumFinderService).deleteAlbumById(1);
 
         getMockMvc().perform(delete("/admin/album/1")//
+            .with(csrf())
+            .with(admin())
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
         ; //
@@ -104,6 +110,8 @@ public class AlbumsControllerTest extends BaseControllerTest {
         when(albumFinderService.updateAlbumById(any())).thenReturn(album);
 
         getMockMvc().perform(put("/admin/album/1")//
+            .with(csrf())
+            .with(admin())
             .contentType(MediaType.APPLICATION_JSON)
             .content(toJson(album)))//
             .andExpect(status().isOk()) //
@@ -135,14 +143,5 @@ public class AlbumsControllerTest extends BaseControllerTest {
             .andExpect(jsonPath("$.data[0].title").value("some title"))
             .andExpect(jsonPath("$.data[0].year").value("2016"))
         ; //
-    }
-
-    private static Album createAlbum() {
-        Album album = new Album();
-        album.setTitle("some title");
-        album.setArtist(createArtist());
-        album.setYear("2016");
-        album.setId(1);
-        return album;
     }
 }

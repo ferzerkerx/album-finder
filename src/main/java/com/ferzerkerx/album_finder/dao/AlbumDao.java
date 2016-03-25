@@ -37,7 +37,7 @@ public class AlbumDao extends BaseDao<Album> {
         }
 
         if (StringUtils.isNotEmpty(example.getYear())) {
-            criteria.add(Restrictions.like("releaseDate", example.getYear()));
+            criteria.add(Restrictions.like("year", example.getYear()));
         }
         return listAndCast(criteria);
     }
