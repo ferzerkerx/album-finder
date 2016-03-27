@@ -1,6 +1,5 @@
 package com.ferzerkerx.album_finder.dao;
 
-import java.util.Collection;
 import java.util.List;
 import com.ferzerkerx.album_finder.model.Artist;
 import org.hibernate.Query;
@@ -14,7 +13,7 @@ public class ArtistDao extends BaseDao<Artist> {
     }
 
 
-    public Collection<Artist> findAllArtists() {
+    public List<Artist> findAllArtists() {
         Query query = createQuery("SELECT a FROM Artist a");
         return listAndCast(query);
     }
