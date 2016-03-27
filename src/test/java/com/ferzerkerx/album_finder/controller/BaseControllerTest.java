@@ -11,10 +11,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.*;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
 
-public class BaseControllerTest extends BaseIntegrationTest {
+public abstract class BaseControllerTest extends BaseIntegrationTest {
 
     private MockMvc mockMvc;
 
