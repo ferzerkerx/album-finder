@@ -4,6 +4,7 @@ import javax.sql.DataSource;
 import java.util.Properties;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -18,13 +19,20 @@ public class DbConfig {
     @Autowired
     private Environment env;
 
+    @Value("${album_finder.insert_data}")
+    private boolean shouldInsertData;
+
     @Bean
     public DataSource getDataSource() {
         //This can be changed depending on the profile
-        return new EmbeddedDatabaseBuilder()
-            .setType(EmbeddedDatabaseType.HSQL)
-            .addScript("sql/create-db.sql")
-            .addScript("sql/insert-data.sql").build();
+        EmbeddedDatabaseBuilder embeddedDatabaseBuilder =
+            new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.HSQL).addScript("sql/create-db.sql");
+
+            if (shouldInsertData) {
+                embeddedDatabaseBuilder.addScript("sql/insert-data.sql");
+            }
+
+        return embeddedDatabaseBuilder.build();
     }
 
     @Bean
@@ -51,6 +59,7 @@ public class DbConfig {
             {
                 setProperty("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
                 setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
+                setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
             }
         };
     }

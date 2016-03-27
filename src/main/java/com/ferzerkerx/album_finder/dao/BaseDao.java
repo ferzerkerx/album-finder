@@ -39,9 +39,8 @@ public abstract class BaseDao<T> {
 
 
     public void deleteById(Integer id) {
-        String hql = "DELETE " + clazz.getName() + " WHERE id = :id";
-        Query q = getCurrentSession().createQuery(hql).setParameter("id", id);
-        q.executeUpdate();
+        T byId = findById(id);
+        delete(byId);
     }
 
 
@@ -58,8 +57,7 @@ public abstract class BaseDao<T> {
 
     @SuppressWarnings("unchecked")
     public T findById(Integer id) {
-        IdentifierLoadAccess identifierLoadAccess = getCurrentSession().byId(clazz);
-        return (T) identifierLoadAccess.getReference(id);
+        return (T) getCurrentSession().get(clazz, id);
     }
 
 

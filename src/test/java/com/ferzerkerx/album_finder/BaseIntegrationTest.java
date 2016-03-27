@@ -34,10 +34,15 @@ public abstract class BaseIntegrationTest {
         return artist;
     }
 
+    protected Album createAlbum(Artist artist) {
+        Album album = createAlbum();
+        album.setArtist(artist);
+        return album;
+    }
+
     protected static Album createAlbum() {
         Album album = new Album();
         album.setTitle("some title");
-        album.setArtist(createArtist());
         album.setYear("2016");
         album.setId(1);
         return album;
