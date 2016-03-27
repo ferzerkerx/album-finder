@@ -66,7 +66,7 @@ public class ArtistControllerTest extends BaseControllerTest {
     public void updateArtistById() throws Exception {
         Artist artist = createArtist();
 
-        when(albumFinderService.updateArtistById(any())).thenReturn(artist);
+        when(albumFinderService.updateArtist(any())).thenReturn(artist);
 
         getMockMvc().perform(put("/admin/artist/1")//
             .with(csrf())

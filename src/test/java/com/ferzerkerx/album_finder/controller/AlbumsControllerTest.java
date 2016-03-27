@@ -8,13 +8,11 @@ import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.internal.matchers.GreaterThan;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.request.RequestPostProcessor;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -107,7 +105,7 @@ public class AlbumsControllerTest extends BaseControllerTest {
     @Test
     public void testUpdateAlbumById() throws Exception {
         Album album = createAlbum();
-        when(albumFinderService.updateAlbumById(any())).thenReturn(album);
+        when(albumFinderService.updateAlbum(any())).thenReturn(album);
 
         getMockMvc().perform(put("/admin/album/1")//
             .with(csrf())
@@ -132,7 +130,7 @@ public class AlbumsControllerTest extends BaseControllerTest {
     public void testFindMatchedRecordByCriteria() throws Exception {
 
         List<Album> albums = Collections.singletonList(createAlbum());
-        when(albumFinderService.findMatchedRecordByCriteria("someTitle", "someYear")).thenReturn(albums);
+        when(albumFinderService.findMatchedAlbumByCriteria("someTitle", "someYear")).thenReturn(albums);
 
         getMockMvc().perform(get("/albums/search")//
             .param("title", "someTitle")

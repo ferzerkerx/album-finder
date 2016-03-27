@@ -79,11 +79,11 @@ public class Album {
 
         Album album = (Album) o;
 
-        return new EqualsBuilder().append(id, album.id).append(title, album.title).append(artist, album.artist).append(year, album.year).isEquals();
+        return new EqualsBuilder().append(id, album.id).append(title, album.title).append(year, album.year).isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(id).append(title).append(artist).append(year).toHashCode();
+        return new HashCodeBuilder(17, 37).append(id).append(title).append(year).toHashCode();
     }
 }

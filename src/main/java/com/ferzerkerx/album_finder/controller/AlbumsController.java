@@ -53,7 +53,7 @@ public class AlbumsController extends AbstractController {
     @RequestMapping(value = {"/admin/album/{id}"}, method = RequestMethod.PUT)
     public ResponseEntity<Response<Album>> updateAlbumById(@PathVariable(value = "id") int albumId, @RequestBody Album album) {
         album.setId(albumId);
-        return data(albumFinderService.updateAlbumById(album));
+        return data(albumFinderService.updateAlbum(album));
     }
 
     @RequestMapping(value = {"/albums/search"}, method = RequestMethod.GET)
@@ -64,6 +64,6 @@ public class AlbumsController extends AbstractController {
         if (StringUtils.isBlank(title) && StringUtils.isBlank(year)) {
             throw new BaseException("At least one search criteria must be specified");
         }
-        return data(albumFinderService.findMatchedRecordByCriteria(title, year));
+        return data(albumFinderService.findMatchedAlbumByCriteria(title, year));
     }
 }

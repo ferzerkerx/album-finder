@@ -51,7 +51,7 @@ public class ArtistController extends AbstractController {
     @RequestMapping(value = {"/admin/artist/{id}"}, method = RequestMethod.PUT)
     public ResponseEntity<Response<Artist>> updateArtistById(@PathVariable(value = "id") int artistId, @RequestBody Artist artist) {
         artist.setId(artistId);
-        return data(albumFinderService.updateArtistById(artist));
+        return data(albumFinderService.updateArtist(artist));
     }
 
     @RequestMapping(value = {"/artist/search"}, method = RequestMethod.GET)

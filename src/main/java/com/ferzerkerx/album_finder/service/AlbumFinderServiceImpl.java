@@ -50,11 +50,11 @@ public class AlbumFinderServiceImpl implements AlbumFinderService {
     }
 
     @Override
-    public List<Album> findMatchedRecordByCriteria(String title, String year) {
-        Album record = new Album();
-        record.setTitle(title);
-        record.setYear(year);
-        return albumDao.findByCriteria(record);
+    public List<Album> findMatchedAlbumByCriteria(String title, String year) {
+        Album album = new Album();
+        album.setTitle(title);
+        album.setYear(year);
+        return albumDao.findByCriteria(album);
     }
 
     @Override
@@ -82,12 +82,12 @@ public class AlbumFinderServiceImpl implements AlbumFinderService {
     }
 
     @Override
-    public Artist updateArtistById(Artist artist) {
+    public Artist updateArtist(Artist artist) {
         return artistDao.update(artist);
     }
 
     @Override
-    public Album updateAlbumById(Album album) {
+    public Album updateAlbum(Album album) {
         return albumDao.update(album);
     }
 }

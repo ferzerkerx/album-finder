@@ -16,7 +16,7 @@ public interface AlbumFinderService {
 
     List<Artist> findMatchedArtistsByName(String name);
 
-    List<Album> findMatchedRecordByCriteria(String title, String year);
+    List<Album> findMatchedAlbumByCriteria(String title, String year);
 
     Album findAlbumById(int recordId);
 
@@ -26,7 +26,7 @@ public interface AlbumFinderService {
 
     void saveAlbum(int artistId, Album album);
 
-    Artist updateArtistById(Artist artist);
+    Artist updateArtist(Artist artist);
 
-    Album updateAlbumById(Album album);
+    Album updateAlbum(Album album);
 }
