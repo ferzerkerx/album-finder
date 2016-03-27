@@ -31,7 +31,6 @@ public class AlbumsControllerTest extends BaseControllerTest {
 
     @Test
     public void testGetAlbums() throws Exception {
-
         List<Album> albums = Collections.singletonList(createAlbum());
 
         when(albumFinderService.findAlbumsByArtist(1)).thenReturn(albums);
@@ -43,8 +42,6 @@ public class AlbumsControllerTest extends BaseControllerTest {
             .andExpect(jsonPath("$.data[0].title").value("some title"))
             .andExpect(jsonPath("$.data[0].year").value("2016"))
         ; //
-
-
     }
 
     @Test
@@ -128,7 +125,6 @@ public class AlbumsControllerTest extends BaseControllerTest {
 
     @Test
     public void testFindMatchedRecordByCriteria() throws Exception {
-
         List<Album> albums = Collections.singletonList(createAlbum());
         when(albumFinderService.findMatchedAlbumByCriteria("someTitle", "someYear")).thenReturn(albums);
 
