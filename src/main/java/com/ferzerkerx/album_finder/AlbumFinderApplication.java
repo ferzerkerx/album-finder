@@ -16,7 +16,7 @@ public class AlbumFinderApplication extends SpringBootServletInitializer {
 
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(DbConfig.class, SecurityWebConfig.class);
+        return application.sources(DbConfig.class, WebConfig.class, SecurityWebConfig.class);
     }
 
 }

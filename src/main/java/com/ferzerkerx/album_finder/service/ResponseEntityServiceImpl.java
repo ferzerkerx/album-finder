@@ -3,12 +3,16 @@ package com.ferzerkerx.album_finder.service;
 import com.ferzerkerx.album_finder.model.BaseException;
 import com.ferzerkerx.album_finder.model.Meta;
 import com.ferzerkerx.album_finder.model.Response;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ResponseEntityServiceImpl implements ResponseEntityService {
+class ResponseEntityServiceImpl implements ResponseEntityService {
+
+    private static final Logger logger = LogManager.getLogger(ResponseEntityServiceImpl.class);
 
     @Override
     public <T> ResponseEntity<Response<T>> data(T data) {
@@ -35,7 +39,8 @@ public class ResponseEntityServiceImpl implements ResponseEntityService {
     }
 
     private void logException(Exception e) {
-        //TODO implement me!
+        e.printStackTrace();//TODO remove
+        logger.error(e.getMessage());
     }
 
     private <B> ResponseEntity<Response<B>> error(String error, HttpStatus status) {

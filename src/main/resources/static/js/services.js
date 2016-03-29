@@ -9,6 +9,10 @@ afServices.factory('albumsService', ['$http', '$location',
     function($http, $location) {
         var albumsService = {contextPath: ''};
 
+        var handleResponse = function(response) {
+            console.log(response);
+            return response.data.data;
+        };
 
         albumsService.listAlbums = function() {
 
@@ -18,8 +22,7 @@ afServices.factory('albumsService', ['$http', '$location',
                 };
 
             return $http.get(url, config).then(function (response) {
-                console.log(response);
-                return response.data;
+                return handleResponse(response);
             });
         };
 
@@ -29,20 +32,18 @@ afServices.factory('albumsService', ['$http', '$location',
                 };
 
             return $http.get(url, config).then(function (response) {
-                console.log(response);
-                return response.data;
+                return handleResponse(response);
             });
         };
 
         albumsService.deleteArtist = function(id) {
-            var url = albumsService.contextPath + '/admin/artists/' + id;
+            var url = albumsService.contextPath + '/admin/artist/' + id;
             var config = {
                     data: {_method: "DELETE"}
                 };
 
             return $http.delete(url, config).then(function (response) {
-                console.log(response);
-                return response.data;
+                return handleResponse(response);
             });
         };
 
@@ -85,8 +86,7 @@ afServices.factory('albumsService', ['$http', '$location',
             };
 
             return $http.get(url, config).then(function (response) {
-                console.log(response);
-                return response.data;
+                return handleResponse(response);
             });
         };
 

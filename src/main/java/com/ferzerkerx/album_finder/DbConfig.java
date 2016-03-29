@@ -19,7 +19,7 @@ public class DbConfig {
     @Autowired
     private Environment env;
 
-    @Value("${album_finder.insert_data}")
+    @Value("${album_finder.pre_populate_db}")
     private boolean shouldInsertData;
 
     @Bean
