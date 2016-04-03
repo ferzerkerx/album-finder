@@ -105,7 +105,7 @@ public class ArtistControllerTest extends BaseControllerTest {
             return artist1;
         }).when(albumFinderService).saveArtist(any());
 
-        getMockMvc().perform(post("/admin/artists")//
+        getMockMvc().perform(post("/admin/artist")//
             .with(csrf())
             .with(admin())
             .contentType(MediaType.APPLICATION_JSON)

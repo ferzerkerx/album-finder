@@ -18,7 +18,7 @@ afServices.factory('albumsService', ['$http', '$location',
 
             var url = albumsService.contextPath + '/albums/search';
             var config = {
-                    params: {title: 'SUDEN'}
+                    params: {title: 'SUDEN'} //TODO remove hardcode
                 };
 
             return $http.get(url, config).then(function (response) {
@@ -36,10 +36,37 @@ afServices.factory('albumsService', ['$http', '$location',
             });
         };
 
+
+        function updateArtist(artist) {
+
+            var url = albumsService.contextPath + '/admin/artist/' + artist.id;
+
+            return $http.put(url, artist).then(function (response) {
+                return handleResponse(response);
+            });
+        }
+
+        function saveArtist(artist) {
+            var url = albumsService.contextPath + '/admin/artist';
+
+            return $http.post(url, artist).then(function (response) {
+                return handleResponse(response);
+            });
+        }
+
+        albumsService.saveOrUpdateArtist = function(artist) {
+            var isUpdate = artist.id > 0;
+
+            if (isUpdate) {
+                return updateArtist(artist)
+            }
+            return saveArtist(artist);
+        };
+
         albumsService.deleteArtist = function(id) {
             var url = albumsService.contextPath + '/admin/artist/' + id;
             var config = {
-                    data: {_method: "DELETE"}
+
                 };
 
             return $http.delete(url, config).then(function (response) {

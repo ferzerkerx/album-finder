@@ -32,7 +32,7 @@ public class ArtistController extends AbstractController {
     }
 
 
-    @RequestMapping(value = {"/admin/artists"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/admin/artist"}, method = RequestMethod.POST)
     public ResponseEntity<Response<Artist>> saveArtist(@RequestBody Artist artist) {
         albumFinderService.saveArtist(artist);
         return data(artist);

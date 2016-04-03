@@ -54,8 +54,8 @@ afControllers.controller('loginController', ['$rootScope', '$scope', '$location'
     }]);
 
 
-    afControllers.controller('artistsController', ['$scope', 'albumsService',
-        function ($scope, albumsService) {
+    afControllers.controller('artistsController', ['$scope', '$route', 'albumsService',
+        function ($scope, $route, albumsService) {
             albumsService.listArtists().then(function(data) {
                 $scope.artists = data;
             });
@@ -66,9 +66,35 @@ afControllers.controller('loginController', ['$rootScope', '$scope', '$location'
                 var shouldDeleteArtist = confirm("Are you sure you want to delete:"  + artist.name + "?");
                 if (shouldDeleteArtist === true) {
                     albumsService.deleteArtist(artist.id).then(function(data) {
-                        //TODO
+                        $route.reload();
                     });
+                    //TODO show spinner
                 }
+             };
+
+
+            $scope.saveOrUpdateArtist = function() {
+                albumsService.saveOrUpdateArtist($scope.currentArtist).then(function(data) {
+                    $('#artistModal').modal('hide');
+                    $route.reload();
+                });
+                //TODO show spinner
+
+            };
+
+
+            $scope.editArtist = function(artist) {
+                $scope.currentArtist = artist;
+                $('#artistModal').modal('show');
+            };
+
+            $scope.createArtist = function() {
+                $scope.currentArtist = {
+                     id:0,
+                    name:''
+                };
+
+                $('#artistModal').modal('show');
             }
 
        }]);

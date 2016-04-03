@@ -14,7 +14,7 @@
                 <li class="active"><a href="#/albums">albums</a></li>
                 <li ng-show="userInfo.isAdmin"><a href="#/artists">artists</a></li>
                 <li ng-show="!userInfo.authenticated"><a href="#" data-toggle="modal" data-target="#loginModal">Login</a></li>
-                <li ng-show="userInfo.authenticated"><a href="" ng-click="logout()">logout</a></li>
+                <li ng-show="userInfo.authenticated"><a href="" ng-click="logout()">Logout</a></li>
             </ul>
 
 
@@ -24,7 +24,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">Loginr</h4>
+                            <h4 class="modal-title">Login</h4>
                         </div>
                         <div class="alert alert-danger" ng-show="error">
                             There was a problem logging in. Please try again.
