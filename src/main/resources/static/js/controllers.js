@@ -4,11 +4,49 @@
 
 var afControllers = angular.module('afControllers', []);
 
-afControllers.controller('albumsController', ['$scope', 'albumsService',
-    function ($scope, albumsService) {
+afControllers.controller('albumsController', ['$scope', '$route', 'albumsService',
+    function ($scope, $route, albumsService) {
         albumsService.listAlbums().then(function(data) {
             $scope.albums = data;
         });
+
+
+        $scope.deleteAlbum = function(album) {
+            var shouldDeleteAlbum = confirm("Are you sure you want to delete:"  + album.title + "?");
+            if (shouldDeleteAlbum === true) {
+                albumsService.deleteAlbum(album.id).then(function(data) {
+                    $route.reload();
+                });
+                //TODO show spinner
+            }
+        };
+
+
+        $scope.saveOrUpdateAlbum = function() {
+            albumsService.saveOrUpdateAlbum($scope.currentAlbum).then(function(data) {
+                $('#albumModal').modal('hide');
+                $route.reload();
+            });
+            //TODO show spinner
+
+        };
+
+
+        $scope.editAlbum = function(album) {
+            $scope.currentAlbum = album;
+            $('#albumModal').modal('show');
+        };
+
+        $scope.createAlbum = function() {
+            $scope.currentAlbum = {
+                id:0,
+                title:'',
+                year:new Date().getFullYear().toString(),
+                artist:{}
+            };
+
+            $('#albumModal').modal('show');
+        }
 
    }]);
 
@@ -59,7 +97,6 @@ afControllers.controller('loginController', ['$rootScope', '$scope', '$location'
             albumsService.listArtists().then(function(data) {
                 $scope.artists = data;
             });
-
 
 
             $scope.deleteArtist = function(artist) {

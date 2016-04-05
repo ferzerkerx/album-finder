@@ -24,7 +24,6 @@ public class Album {
     @Column(name="title")
     private String title;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "artist_id", nullable = false, updatable = false)
     private Artist artist;

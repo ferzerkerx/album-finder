@@ -12,14 +12,44 @@
 
         </div>
         <div class="col-md-10">
-            <!--Body content-->
+            <button class="btn btn-info" ng-click="createAlbum()">Create</button>
 
-            <ul class="phones">
-                <li ng-repeat="album in albums">
-                    <a href="#/album/{{album.id}}" class="thumb"><img ng-src="{{album.imageUrl}}"></a>
-                    <a href="#/album/{{album.id}}">{{album.title}}</a>
-            </ul>
+            <table class="table">
+                <tr ng-repeat="album in albums">
+                    <td>{{album.title}}</td>
+                    <td>{{album.year}}</td>
+                    <td>{{album.artist.name}}</td>
+                    <td></td>
+                    <td>
+                        <button class="btn btn-info" ng-click="editAlbum(album)">edit</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-warning" ng-click="deleteAlbum(album)">delete</button>
+                    </td>
+                </tr>
+            </table>
 
+        </div>
+    </div>
+</div>
+
+
+<div id="albumModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Album</h4>
+            </div>
+            <form role="form" ng-submit="saveOrUpdateAlbum()">
+                <div class="form-group">
+                    <label for="name">Title:</label>
+                    <input type="text" class="form-control" id="name" name="name" ng-model="currentAlbum.title"/>
+                    <input type="text" class="form-control" id="year" name="year" ng-model="currentAlbum.year"/>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
         </div>
     </div>
 </div>

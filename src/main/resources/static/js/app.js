@@ -15,7 +15,7 @@ albumFinderApp.config(['$routeProvider',
             controller: 'albumsController'
         }).
         when('/artists', {
-            templateUrl: 'partials/list_artists.html',
+            templateUrl: 'partials/artists.html',
             controller: 'artistsController'
         }).
         otherwise({

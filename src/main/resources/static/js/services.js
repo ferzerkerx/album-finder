@@ -5,8 +5,8 @@
 
 var afServices = angular.module('afServices', ['ngResource']);
 
-afServices.factory('albumsService', ['$http', '$location',
-    function($http, $location) {
+afServices.factory('albumsService', ['$http',
+    function($http) {
         var albumsService = {contextPath: ''};
 
         var handleResponse = function(response) {
@@ -65,6 +65,43 @@ afServices.factory('albumsService', ['$http', '$location',
 
         albumsService.deleteArtist = function(id) {
             var url = albumsService.contextPath + '/admin/artist/' + id;
+            var config = {
+
+                };
+
+            return $http.delete(url, config).then(function (response) {
+                return handleResponse(response);
+            });
+        };
+
+        function updateAlbum(album) {
+
+            var url = albumsService.contextPath + '/admin/album/' + album.id;
+
+            return $http.put(url, album).then(function (response) {
+                return handleResponse(response);
+            });
+        }
+
+        function saveAlbum(album) {
+            var url = albumsService.contextPath + '/admin/artist/' + album.artist.id + '/album/';
+
+            return $http.post(url, album).then(function (response) {
+                return handleResponse(response);
+            });
+        }
+
+        albumsService.saveOrUpdateAlbum = function(album) {
+            var isUpdate = album.id > 0;
+
+            if (isUpdate) {
+                return updateAlbum(album)
+            }
+            return saveAlbum(album);
+        };
+
+        albumsService.deleteAlbum = function(id) {
+            var url = albumsService.contextPath + '/admin/album/' + id;
             var config = {
 
                 };

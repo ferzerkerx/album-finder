@@ -4,10 +4,10 @@
         <td>{{artist.name}}</td>
         <td></td>
         <td>
-            <button class="btn btn-info" href="#" ng-click="editArtist(artist)">edit</button>
+            <button class="btn btn-info" ng-click="editArtist(artist)">edit</button>
         </td>
         <td>
-            <button class="btn btn-warning" href="#" ng-click="deleteArtist(artist)">delete</button>
+            <button class="btn btn-warning" ng-click="deleteArtist(artist)">delete</button>
         </td>
     </tr>
 </table>
@@ -23,7 +23,7 @@
             <form role="form" ng-submit="saveOrUpdateArtist()">
                 <div class="form-group">
                     <label for="name">Name:</label>
-                    <input type="text" class="form-control" id="name" name="username" ng-model="currentArtist.name"/>
+                    <input type="text" class="form-control" id="name" name="name" ng-model="currentArtist.name"/>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

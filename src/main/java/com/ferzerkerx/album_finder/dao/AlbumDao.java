@@ -4,6 +4,7 @@ import java.util.List;
 import com.ferzerkerx.album_finder.model.Album;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -11,6 +12,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class AlbumDao extends BaseDao<Album> {
+
+    private static final int MAX_RESULTS = 200;
+
     public AlbumDao() {
         super(Album.class);
     }
@@ -29,8 +33,7 @@ public class AlbumDao extends BaseDao<Album> {
 
 
     public List<Album> findByCriteria(Album example) {
-        Criteria criteria = createCriteria();
-
+        Criteria criteria = createCriteria().setMaxResults(MAX_RESULTS).setFetchMode("artist", FetchMode.JOIN);
 
         if (StringUtils.isNotEmpty(example.getTitle())) {
             criteria.add(Restrictions.like("title", "%" + example.getTitle() + "%"));
