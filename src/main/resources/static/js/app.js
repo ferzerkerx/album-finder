@@ -3,8 +3,9 @@
 
 var albumFinderApp = angular.module('albumFinderApp', [
     'ngRoute',
+    'angucomplete-alt',
     'afControllers',
-    'afServices'
+    'afServices',
 ]);
 
 albumFinderApp.config(['$routeProvider',

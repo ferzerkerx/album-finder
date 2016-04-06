@@ -46,7 +46,19 @@
                 <div class="form-group">
                     <label for="name">Title:</label>
                     <input type="text" class="form-control" id="name" name="name" ng-model="currentAlbum.title"/>
+                    <label for="year">Year:</label>
                     <input type="text" class="form-control" id="year" name="year" ng-model="currentAlbum.year"/>
+                    <label for="artist">Artist:</label>
+                    <angucomplete-alt id="artist"
+                                      placeholder="Search artists"
+                                      pause="100"
+                                      selected-object="selectedArtistForAlbum"
+                                      initial-value="initialArtistForAlbum"
+                                      local-data="listOfArtists"
+                                      search-fields="name"
+                                      title-field="name"
+                                      minlength="1"
+                                      input-class="form-control form-control-small"/>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

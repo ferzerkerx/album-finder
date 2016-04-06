@@ -6,6 +6,7 @@ var afControllers = angular.module('afControllers', []);
 
 afControllers.controller('albumsController', ['$scope', '$route', 'albumsService',
     function ($scope, $route, albumsService) {
+
         albumsService.listAlbums().then(function(data) {
             $scope.albums = data;
         });
@@ -23,6 +24,10 @@ afControllers.controller('albumsController', ['$scope', '$route', 'albumsService
 
 
         $scope.saveOrUpdateAlbum = function() {
+            if ($scope.selectedArtistForAlbum != undefined) {
+                $scope.currentAlbum.artist = $scope.selectedArtistForAlbum.originalObject;
+            }
+
             albumsService.saveOrUpdateAlbum($scope.currentAlbum).then(function(data) {
                 $('#albumModal').modal('hide');
                 $route.reload();
@@ -34,6 +39,7 @@ afControllers.controller('albumsController', ['$scope', '$route', 'albumsService
 
         $scope.editAlbum = function(album) {
             $scope.currentAlbum = album;
+            $scope.initialArtistForAlbum = album.artist;
             $('#albumModal').modal('show');
         };
 
@@ -42,10 +48,15 @@ afControllers.controller('albumsController', ['$scope', '$route', 'albumsService
                 id:0,
                 title:'',
                 year:new Date().getFullYear().toString(),
-                artist:{}
+                artist:{name:''}
             };
 
-            $('#albumModal').modal('show');
+            $scope.selectedArtistForAlbum = {};
+            albumsService.listArtists().then(function(data) {
+                $scope.listOfArtists = data;
+                $('#albumModal').modal('show');
+            });
+            //TODO show spinner
         }
 
    }]);
