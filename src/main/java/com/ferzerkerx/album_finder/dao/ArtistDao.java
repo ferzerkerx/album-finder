@@ -12,7 +12,7 @@ public class ArtistDao extends BaseDao<Artist> {
         super(Artist.class);
     }
 
-
+    //TODO remove
     public List<Artist> findAllArtists() {
         Query query = createQuery("SELECT a FROM Artist a");
         return listAndCast(query);
@@ -20,7 +20,8 @@ public class ArtistDao extends BaseDao<Artist> {
 
 
     public List<Artist> findMatchedArtistsByName(String name) {
-        Query query = createQuery("SELECT a FROM Artist a WHERE a.name LIKE :name");
+        Query query = createQuery("SELECT a FROM Artist a WHERE lower(a.name) LIKE lower(:name)");
+        query.setMaxResults(MAX_RESULTS);
         query.setParameter("name", "%" + name + "%");
         return listAndCast(query);
     }

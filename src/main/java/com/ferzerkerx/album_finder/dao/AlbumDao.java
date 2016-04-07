@@ -13,8 +13,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class AlbumDao extends BaseDao<Album> {
 
-    private static final int MAX_RESULTS = 200;
-
     public AlbumDao() {
         super(Album.class);
     }
@@ -36,11 +34,11 @@ public class AlbumDao extends BaseDao<Album> {
         Criteria criteria = createCriteria().setMaxResults(MAX_RESULTS).setFetchMode("artist", FetchMode.JOIN);
 
         if (StringUtils.isNotEmpty(example.getTitle())) {
-            criteria.add(Restrictions.like("title", "%" + example.getTitle() + "%"));
+            criteria.add(Restrictions.ilike("title", "%" + example.getTitle() + "%"));
         }
 
         if (StringUtils.isNotEmpty(example.getYear())) {
-            criteria.add(Restrictions.like("year", example.getYear()));
+            criteria.add(Restrictions.ilike("year", example.getYear()));
         }
         return listAndCast(criteria);
     }

@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class BaseDao<T> {
 
+    protected static final int MAX_RESULTS = 200;
+
     private final Class<T> clazz;
 
     public BaseDao(Class<T> clazz) {

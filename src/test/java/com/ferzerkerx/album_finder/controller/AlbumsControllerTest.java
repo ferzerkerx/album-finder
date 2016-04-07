@@ -115,15 +115,6 @@ public class AlbumsControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void testFindMatchedRecordByCriteriaWithNoSpecifiedCriteria() throws Exception {
-        getMockMvc().perform(get("/albums/search")//
-            .contentType(MediaType.APPLICATION_JSON)) //
-            .andExpect(status().isOk()) //
-            .andExpect(jsonPath("$.meta.errorMessage").value("At least one search criteria must be specified"))
-        ; //
-    }
-
-    @Test
     public void testFindMatchedRecordByCriteria() throws Exception {
         List<Album> albums = Collections.singletonList(createAlbum());
         when(albumFinderService.findMatchedAlbumByCriteria("someTitle", "someYear")).thenReturn(albums);

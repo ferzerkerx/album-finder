@@ -10,15 +10,19 @@ afServices.factory('albumsService', ['$http',
         var albumsService = {contextPath: ''};
 
         var handleResponse = function(response) {
+            //TODO do proper error handling
             console.log(response);
             return response.data.data;
         };
 
-        albumsService.listAlbums = function() {
+        albumsService.listAlbums = function(title, year) {
 
             var url = albumsService.contextPath + '/albums/search';
             var config = {
-                    params: {title: 'SUDEN'} //TODO remove hardcode
+                    params: {
+                        title: title,
+                        year: year
+                    }
                 };
 
             return $http.get(url, config).then(function (response) {
@@ -26,9 +30,23 @@ afServices.factory('albumsService', ['$http',
             });
         };
 
+        //TODO remove
          albumsService.listArtists = function() {
             var url = albumsService.contextPath + '/artists';
             var config = {
+                };
+
+            return $http.get(url, config).then(function (response) {
+                return handleResponse(response);
+            });
+        };
+
+        albumsService.listArtistsByName = function(name) {
+            var url = albumsService.contextPath + '/artist/search';
+            var config = {
+                    params: {
+                        name: name
+                    }
                 };
 
             return $http.get(url, config).then(function (response) {
@@ -146,10 +164,8 @@ afServices.factory('albumsService', ['$http',
 
         albumsService.doLogout = function() {
             var url = albumsService.contextPath + '/logout';
-            var config = {
-            };
 
-            return $http.get(url, config).then(function (response) {
+            return $http.get(url).then(function (response) {
                 return handleResponse(response);
             });
         };

@@ -39,10 +39,15 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/js/**", "/bower_components/**", "/css/**").permitAll()
             .antMatchers("/admin/**").access("hasRole('ADMIN')")
             .anyRequest().authenticated()
-            .and()
-            .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
-            .csrf().csrfTokenRepository(csrfTokenRepository())
-            .and().logout();
+                .and()
+                .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
+            .csrf()
+                .csrfTokenRepository(csrfTokenRepository())
+                .and()
+            .logout()
+                .deleteCookies("remove")
+                .invalidateHttpSession(true)
+                .logoutUrl("/logout");
     }
 
     private CsrfTokenRepository csrfTokenRepository() {

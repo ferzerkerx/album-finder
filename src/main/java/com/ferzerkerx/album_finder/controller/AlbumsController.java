@@ -61,9 +61,6 @@ public class AlbumsController extends AbstractController {
         @RequestParam(value = "title", required = false) String title,
         @RequestParam(value = "year", required = false) String year) {
 
-        if (StringUtils.isBlank(title) && StringUtils.isBlank(year)) {
-            throw new BaseException("At least one search criteria must be specified");
-        }
         return data(albumFinderService.findMatchedAlbumByCriteria(title, year));
     }
 }

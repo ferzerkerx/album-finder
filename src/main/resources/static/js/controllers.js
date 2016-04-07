@@ -7,15 +7,21 @@ var afControllers = angular.module('afControllers', []);
 afControllers.controller('albumsController', ['$scope', '$route', 'albumsService',
     function ($scope, $route, albumsService) {
 
-        albumsService.listAlbums().then(function(data) {
-            $scope.albums = data;
-        });
+        $scope.title = '';
+        $scope.year = '';
+
+        $scope.listAlbums = function() {
+            albumsService.listAlbums($scope.title, $scope.year).then(function(data) {
+                $scope.albums = data;
+            });
+            //TODO show spinner
+        };
 
 
         $scope.deleteAlbum = function(album) {
             var shouldDeleteAlbum = confirm("Are you sure you want to delete:"  + album.title + "?");
             if (shouldDeleteAlbum === true) {
-                albumsService.deleteAlbum(album.id).then(function(data) {
+                albumsService.deleteAlbum(album.id).then(function() {
                     $route.reload();
                 });
                 //TODO show spinner
@@ -28,7 +34,7 @@ afControllers.controller('albumsController', ['$scope', '$route', 'albumsService
                 $scope.currentAlbum.artist = $scope.selectedArtistForAlbum.originalObject;
             }
 
-            albumsService.saveOrUpdateAlbum($scope.currentAlbum).then(function(data) {
+            albumsService.saveOrUpdateAlbum($scope.currentAlbum).then(function() {
                 $('#albumModal').modal('hide');
                 $route.reload();
             });
@@ -57,15 +63,23 @@ afControllers.controller('albumsController', ['$scope', '$route', 'albumsService
                 $('#albumModal').modal('show');
             });
             //TODO show spinner
-        }
+        };
 
+        $scope.listAlbums();
    }]);
 
 
-afControllers.controller('loginController', ['$rootScope', '$scope', '$location', 'albumsService',
-    function ( $rootScope, $scope, $location, albumsService) {
+afControllers.controller('loginController', ['$rootScope', '$scope', '$location', '$route', 'albumsService',
+    function ( $rootScope, $scope, $location, $route, albumsService) {
+        $rootScope.getClass = function (path) {
+            return ($location.path().substr(0, path.length) === path) ? 'active' : '';
+        };
+
+        $rootScope.userInfo = {};
+        $scope.credentials = {};
+
         var authenticate = function(credentials, callback) {
-            $rootScope.userInfo = {};
+
             albumsService.doLogin(credentials).then(function(data) {
                 $rootScope.userInfo.authenticated = false;
                 if (data) {
@@ -78,42 +92,47 @@ afControllers.controller('loginController', ['$rootScope', '$scope', '$location'
             });
         };
 
-        authenticate();
-        $scope.credentials = {};
         $scope.login = function() {
             authenticate($scope.credentials, function() {
               if ($rootScope.userInfo.authenticated) {
-                $location.path("/");
                 $scope.error = false;
                 $('#loginModal').modal('hide');
                 $scope.credentials = {};
-              } else {
-                $location.path("/login");
+              }
+              else {
+                $route.reload();
                 $scope.error = true;
               }
             });
         };
 
         $scope.logout = function() {
-            albumsService.doLogout().then(function(data) {
+            albumsService.doLogout().then(function() {
                 $rootScope.userInfo = {};
-                $location.path("/");
+                $route.reload();
             });
-        }
+        };
+
+        authenticate();
     }]);
 
 
     afControllers.controller('artistsController', ['$scope', '$route', 'albumsService',
         function ($scope, $route, albumsService) {
-            albumsService.listArtists().then(function(data) {
-                $scope.artists = data;
-            });
 
+            $scope.searchName = '';
+
+            $scope.listArtists = function() {
+                albumsService.listArtistsByName($scope.searchName).then(function(data) {
+                    $scope.artists = data;
+
+                });
+            };
 
             $scope.deleteArtist = function(artist) {
                 var shouldDeleteArtist = confirm("Are you sure you want to delete:"  + artist.name + "?");
                 if (shouldDeleteArtist === true) {
-                    albumsService.deleteArtist(artist.id).then(function(data) {
+                    albumsService.deleteArtist(artist.id).then(function() {
                         $route.reload();
                     });
                     //TODO show spinner
@@ -122,7 +141,7 @@ afControllers.controller('loginController', ['$rootScope', '$scope', '$location'
 
 
             $scope.saveOrUpdateArtist = function() {
-                albumsService.saveOrUpdateArtist($scope.currentArtist).then(function(data) {
+                albumsService.saveOrUpdateArtist($scope.currentArtist).then(function() {
                     $('#artistModal').modal('hide');
                     $route.reload();
                 });
@@ -143,6 +162,8 @@ afControllers.controller('loginController', ['$rootScope', '$scope', '$location'
                 };
 
                 $('#artistModal').modal('show');
-            }
+            };
+
+            $scope.listArtists();
 
        }]);

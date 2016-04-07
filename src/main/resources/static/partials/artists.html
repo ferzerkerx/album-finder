@@ -1,16 +1,39 @@
-<button class="btn btn-info" ng-click="createArtist()">Create</button>
-<table class="table">
-    <tr ng-repeat="artist in artists">
-        <td>{{artist.name}}</td>
-        <td></td>
-        <td>
-            <button class="btn btn-info" ng-click="editArtist(artist)">edit</button>
-        </td>
-        <td>
-            <button class="btn btn-warning" ng-click="deleteArtist(artist)">delete</button>
-        </td>
-    </tr>
-</table>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <!--Sidebar content-->
+
+            Search:
+            <form role="form" ng-submit="listArtists()">
+                <div class="form-group">
+                    <label for="searchName">Name:</label>
+                    <input type="text" class="form-control" id="searchName" name="searchName" ng-model="searchName"/>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
+        </div>
+        <div class="col-md-10">
+            <button class="btn btn-info" ng-click="createArtist()">Create</button>
+            Results filter: <input ng-model="results_filter"/>
+            <table class="table">
+                <th>Name</th>>
+                <tr ng-repeat="artist in artists | filter:results_filter">
+                    <td>{{artist.name}}</td>
+                    <td></td>
+                    <td>
+                        <button class="btn btn-info" ng-show="userInfo.isAdmin" ng-click="editArtist(artist)">edit</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-warning" ng-show="userInfo.isAdmin" ng-click="deleteArtist(artist)">delete</button>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+</div>
+
 
 <div id="artistModal" class="modal fade" role="dialog">
     <div class="modal-dialog">

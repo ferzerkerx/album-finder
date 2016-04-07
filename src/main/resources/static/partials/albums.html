@@ -3,28 +3,36 @@
         <div class="col-md-2">
             <!--Sidebar content-->
 
-            Search: <input ng-model="query">
-            Sort by:
-            <select ng-model="orderProp">
-                <option value="name">Alphabetical</option>
-                <option value="age">Newest</option>
-            </select>
+            Search:
+            <form role="form" ng-submit="listAlbums()">
+                <div class="form-group">
+                    <label for="searchName">Title:</label>
+                    <input type="text" class="form-control" id="searchName" name="searchName" ng-model="title"/>
+                    <label for="searchYear">Year:</label>
+                    <input type="text" class="form-control" id="searchYear" name="searchYear" ng-model="year"/>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
 
         </div>
         <div class="col-md-10">
-            <button class="btn btn-info" ng-click="createAlbum()">Create</button>
+            <button class="btn btn-info" ng-show="userInfo.isAdmin" ng-click="createAlbum()">Create</button>
+            Results filter: <input ng-model="results_filter"/>
 
             <table class="table">
-                <tr ng-repeat="album in albums">
+                <th>Title</th>
+                <th>Year</th>
+                <th>Name</th>
+                <tr ng-repeat="album in albums | filter:results_filter">
                     <td>{{album.title}}</td>
                     <td>{{album.year}}</td>
                     <td>{{album.artist.name}}</td>
                     <td></td>
                     <td>
-                        <button class="btn btn-info" ng-click="editAlbum(album)">edit</button>
+                        <button class="btn btn-info" ng-show="userInfo.isAdmin" ng-click="editAlbum(album)">edit</button>
                     </td>
                     <td>
-                        <button class="btn btn-warning" ng-click="deleteAlbum(album)">delete</button>
+                        <button class="btn btn-warning" ng-show="userInfo.isAdmin" ng-click="deleteAlbum(album)">delete</button>
                     </td>
                 </tr>
             </table>
