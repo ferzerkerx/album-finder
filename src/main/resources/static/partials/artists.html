@@ -17,7 +17,7 @@
             <button class="btn btn-info" ng-click="createArtist()">Create</button>
             Results filter: <input ng-model="results_filter"/>
             <table class="table">
-                <th>Name</th>>
+                <th>Name</th>
                 <tr ng-repeat="artist in artists | filter:results_filter">
                     <td>{{artist.name}}</td>
                     <td></td>

@@ -98,6 +98,7 @@ afControllers.controller('loginController', ['$rootScope', '$scope', '$location'
                 $scope.error = false;
                 $('#loginModal').modal('hide');
                 $scope.credentials = {};
+                $route.reload();
               }
               else {
                 $route.reload();
