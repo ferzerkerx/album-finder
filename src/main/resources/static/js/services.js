@@ -5,9 +5,15 @@
 
 var afServices = angular.module('afServices', ['ngResource']);
 
-afServices.factory('albumsService', ['$http',
-    function($http) {
-        var albumsService = {contextPath: ''};
+afServices.factory('albumsService', ['$http', '$location',
+    function($http, $location) {
+
+        //TODO needs to be more specific
+        var path = $location.absUrl();
+        var pathArray = path.split('/');
+        var appContext = pathArray[3];
+
+        var albumsService = {contextPath: appContext};
 
         var handleResponse = function(response) {
             //TODO do proper error handling
@@ -30,19 +36,12 @@ afServices.factory('albumsService', ['$http',
             });
         };
 
-        //TODO remove
-         albumsService.listArtists = function() {
-            var url = albumsService.contextPath + '/artists';
-            var config = {
-                };
-
-            return $http.get(url, config).then(function (response) {
-                return handleResponse(response);
-            });
+        albumsService.listArtistsUrl = function() {
+            return albumsService.contextPath + '/artist/search';
         };
 
         albumsService.listArtistsByName = function(name) {
-            var url = albumsService.contextPath + '/artist/search';
+            var url = albumsService.listArtistsUrl();
             var config = {
                     params: {
                         name: name

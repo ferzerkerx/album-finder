@@ -4,8 +4,8 @@
 
 var afControllers = angular.module('afControllers', []);
 
-afControllers.controller('albumsController', ['$scope', '$route', 'albumsService',
-    function ($scope, $route, albumsService) {
+afControllers.controller('albumsController', ['$scope', '$route', '$location', 'albumsService',
+    function ($scope, $route, $location, albumsService) {
 
         $scope.title = '';
         $scope.year = '';
@@ -58,12 +58,16 @@ afControllers.controller('albumsController', ['$scope', '$route', 'albumsService
             };
 
             $scope.selectedArtistForAlbum = {};
-            albumsService.listArtists().then(function(data) {
-                $scope.listOfArtists = data;
-                $('#albumModal').modal('show');
-            });
+            $('#albumModal').modal('show');
             //TODO show spinner
         };
+
+        $scope.artistSearchUrl = $location.protocol() + '://' + $location.host() + ':' + $location.port() + albumsService.listArtistsUrl() + '?';
+
+        $scope.remoteUrlRequestFn = function(str){
+            return {name: str};
+        };
+
 
         $scope.listAlbums();
    }]);

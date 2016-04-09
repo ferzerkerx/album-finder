@@ -114,19 +114,4 @@ public class ArtistControllerTest extends BaseControllerTest {
             .andExpect(jsonPath("$.data.id").value(new GreaterThan<>(0)))
         ; //
     }
-
-    @Test
-    public void showAllArtists() throws Exception {
-        List<Artist> artists = Collections.singletonList(createArtist());
-
-        when(albumFinderService.findAllArtists()).thenReturn(artists);
-
-        getMockMvc().perform(get("/artists")//
-            .contentType(MediaType.APPLICATION_JSON)) //
-            .andExpect(status().isOk()) //
-            .andExpect(jsonPath("$.data[0].id").value(1))
-            .andExpect(jsonPath("$.data[0].name").value("someArtist"))
-        ; //
-
-    }
 }

@@ -1,6 +1,5 @@
 package com.ferzerkerx.album_finder.controller;
 
-import java.util.Collection;
 import java.util.List;
 import com.ferzerkerx.album_finder.model.Artist;
 import com.ferzerkerx.album_finder.model.Response;
@@ -25,12 +24,6 @@ public class ArtistController extends AbstractController {
         super(responseEntityService);
         this.albumFinderService = albumFinderService;
     }
-
-    @RequestMapping(value = {"/artists"}, method = RequestMethod.GET)
-    public ResponseEntity<Response<Collection<Artist>>> showAllArtists() {
-        return data(albumFinderService.findAllArtists());
-    }
-
 
     @RequestMapping(value = {"/admin/artist"}, method = RequestMethod.POST)
     public ResponseEntity<Response<Artist>> saveArtist(@RequestBody Artist artist) {

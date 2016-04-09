@@ -62,10 +62,14 @@
                                       pause="100"
                                       selected-object="selectedArtistForAlbum"
                                       initial-value="initialArtistForAlbum"
-                                      local-data="listOfArtists"
+                                      remote-url="artistSearchUrl"
+                                      remote-url-request-formatter="remoteUrlRequestFn"
+                                      remote-url-data-field="data"
                                       search-fields="name"
                                       title-field="name"
-                                      minlength="1"
+                                      minlength="2"
+                                      text-searching="Searching..."
+                                      text-no-results="Not found..."
                                       input-class="form-control form-control-small"/>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>

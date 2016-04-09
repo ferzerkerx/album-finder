@@ -14,7 +14,7 @@
 
         </div>
         <div class="col-md-10">
-            <button class="btn btn-info" ng-click="createArtist()">Create</button>
+            <button class="btn btn-info" ng-show="userInfo.isAdmin" ng-click="createArtist()">Create</button>
             Results filter: <input ng-model="results_filter"/>
             <table class="table">
                 <th>Name</th>
