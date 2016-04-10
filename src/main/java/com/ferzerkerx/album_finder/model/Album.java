@@ -8,9 +8,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name="album")
@@ -21,13 +24,15 @@ public class Album {
     @Column(name="album_id")
     private int id;
 
-    @Column(name="title")
+    @NotBlank
+    @Column(name="title", nullable = false)
     private String title;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "artist_id", nullable = false, updatable = false)
     private Artist artist;
 
+    @Pattern(regexp="\\d{4}")
     @Column(length = 4)
     private String year;
 

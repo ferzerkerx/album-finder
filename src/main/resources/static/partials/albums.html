@@ -50,19 +50,19 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Album</h4>
             </div>
-            <form role="form" ng-submit="saveOrUpdateAlbum()">
+            <form name="albumForm" role="form" ng-submit="saveOrUpdateAlbum()">
                 <div class="form-group">
                     <label for="name">Title:</label>
-                    <input type="text" class="form-control" id="name" name="name" ng-model="currentAlbum.title"/>
+                    <input type="text" class="form-control" id="name" name="name" ng-model="currentAlbum.title" required/>
                     <label for="year">Year:</label>
-                    <input type="text" class="form-control" id="year" name="year" ng-model="currentAlbum.year"/>
+                    <input type="text" class="form-control" id="year" name="year" ng-model="currentAlbum.year" required/>
                     <label for="artist">Artist:</label>
                     <angucomplete-alt id="artist"
                                       placeholder="Search artists"
                                       pause="100"
                                       selected-object="selectedArtistForAlbum"
                                       initial-value="initialArtistForAlbum"
-                                      remote-url="artistSearchUrl"
+                                      remote-url="/artist/search"
                                       remote-url-request-formatter="remoteUrlRequestFn"
                                       remote-url-data-field="data"
                                       search-fields="name"
@@ -70,9 +70,10 @@
                                       minlength="2"
                                       text-searching="Searching..."
                                       text-no-results="Not found..."
-                                      input-class="form-control form-control-small"/>
+                                      input-class="form-control form-control-small"
+                                      field-required="true"/>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" ng-disabled="albumForm.$invalid" class="btn btn-primary">Submit</button>
             </form>
         </div>
     </div>

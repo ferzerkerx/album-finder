@@ -62,8 +62,6 @@ afControllers.controller('albumsController', ['$scope', '$route', '$location', '
             //TODO show spinner
         };
 
-        $scope.artistSearchUrl = $location.protocol() + '://' + $location.host() + ':' + $location.port() + albumsService.listArtistsUrl() + '?';
-
         $scope.remoteUrlRequestFn = function(str){
             return {name: str};
         };

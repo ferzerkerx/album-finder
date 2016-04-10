@@ -5,13 +5,10 @@
 
 var afServices = angular.module('afServices', ['ngResource']);
 
-afServices.factory('albumsService', ['$http', '$location',
-    function($http, $location) {
+afServices.factory('albumsService', ['$http',
+    function($http) {
 
-        //TODO needs to be more specific
-        var path = $location.absUrl();
-        var pathArray = path.split('/');
-        var appContext = pathArray[3];
+        var appContext = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));;
 
         var albumsService = {contextPath: appContext};
 
@@ -36,12 +33,8 @@ afServices.factory('albumsService', ['$http', '$location',
             });
         };
 
-        albumsService.listArtistsUrl = function() {
-            return albumsService.contextPath + '/artist/search';
-        };
-
         albumsService.listArtistsByName = function(name) {
-            var url = albumsService.listArtistsUrl();
+            var url = albumsService.contextPath + '/artist/search';
             var config = {
                     params: {
                         name: name

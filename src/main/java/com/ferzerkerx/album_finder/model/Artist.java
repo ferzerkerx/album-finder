@@ -12,6 +12,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Table(name="artist")
@@ -22,7 +23,8 @@ public class Artist {
     @Column(name="artist_id")
     private int id;
 
-    @Column(name="name")
+    @NotBlank
+    @Column(name="name", nullable = false)
     private String name;
 
     @JsonIgnore

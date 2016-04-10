@@ -4,12 +4,12 @@
             <!--Sidebar content-->
 
             Search:
-            <form role="form" ng-submit="listArtists()">
+            <form role="form" name="artistForm" ng-submit="listArtists()">
                 <div class="form-group">
                     <label for="searchName">Name:</label>
-                    <input type="text" class="form-control" id="searchName" name="searchName" ng-model="searchName"/>
+                    <input type="text" class="form-control" id="searchName" name="searchName" ng-model="searchName" required/>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary" ng-disabled="artistForm.$invalid">Submit</button>
             </form>
 
         </div>
