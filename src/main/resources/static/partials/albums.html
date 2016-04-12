@@ -59,7 +59,7 @@
 
                 <div class="form-group" ng-class="{ 'has-error' : albumForm.year.$invalid && !albumForm.year.$pristine }">
                     <label for="year">Year:</label>
-                    <input type="text" class="form-control" id="year" name="year" ng-model="currentAlbum.year" required/>
+                    <input type="text" class="form-control" id="year" name="year" ng-model="currentAlbum.year" ng-pattern="/^[1-9]\d{3}$/" required/>
                     <p ng-show="albumForm.year.$invalid && !albumForm.name.$pristine" class="help-block">Year is invalid.</p>
                 </div>
 
