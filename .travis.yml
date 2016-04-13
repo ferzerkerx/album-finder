@@ -8,6 +8,7 @@ before_script:
   - "nvm install stable"
   - "nvm use stable"
   - "mvn clean"
+  - "npm install"
 
 install:
   - "mvn install"
