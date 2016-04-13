@@ -12,7 +12,6 @@ afControllers.controller('albumsController', ['$scope', '$route', '$location', '
 
         $scope.listAlbums = function() {
             albumsService.listAlbums($scope.title, $scope.year).then(function(data) {
-                console.log('####' + data);
                 $scope.albums = data;
             });
             //TODO show spinner
