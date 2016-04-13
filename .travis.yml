@@ -16,4 +16,5 @@ install:
   - "cd ../../../.."
 script:
   - "mvn test"
+  - "cd src/main/resources/static/"
   - "npm run test-single-run"
