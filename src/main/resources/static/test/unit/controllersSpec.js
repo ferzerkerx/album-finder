@@ -37,8 +37,9 @@ describe('Album Finder controllers', function() {
             $scope.title = 'someTitle';
             $scope.year = '2016';
 
-            $scope.listAlbums();
+            $scope.$apply();
             expect(albumsService.listAlbums).toHaveBeenCalledWith('someTitle', '2016');
+
 
             expect($scope.albums).toBe(albums);
         });
