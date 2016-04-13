@@ -7,10 +7,12 @@ before_install:
   - ". $HOME/.nvm/nvm.sh"
   - "nvm install stable"
   - "nvm use stable"
-  - "mvn clean"
   - "npm install"
 
 install:
-  - "mvn install"
+  - "mvn clean compile"
   - "cd src/main/resources/static/"
+  - "npm install"
+script:
+  - "mvn test"
   - "npm run test-single-run"
