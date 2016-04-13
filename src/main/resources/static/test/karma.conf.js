@@ -8,7 +8,6 @@ module.exports = function(config){
             'bower_components/angular-route/angular-route.js',
             'bower_components/angular-resource/angular-resource.js',
             'bower_components/angular-mocks/angular-mocks.js',
-            'bower_components/angular-sanitize/angular-sanitize.min.js',
             'bower_components/jquery/dist/jquery.js',
             'bower_components/bootstrap/dist/js/bootstrap.min.js',
             'bower_components/angucomplete-alt/angucomplete-alt.js',
