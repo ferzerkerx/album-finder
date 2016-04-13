@@ -20,7 +20,7 @@ describe('Album Finder controllers', function() {
         $provide.factory('albumsServiceMock', function($q) {
             var listAlbums = jasmine.createSpy('listAlbums').and.callFake(function() {
                 var items = [{data:'someData'}], passPromise = true;
-                
+
                 if (passPromise) {
                     return $q.when(items);
                 }
