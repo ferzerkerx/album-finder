@@ -13,6 +13,7 @@ install:
   - "mvn clean compile"
   - "cd src/main/resources/static/"
   - "npm install"
+  - "cd ../../../.."
 script:
   - "mvn test"
   - "npm run test-single-run"
