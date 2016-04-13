@@ -20,32 +20,26 @@ module.exports = function(config){
 
         frameworks: ['jasmine'],
 
-        browsers : ['Chrome'],
+        browsers : ['PhantomJS'],
 
         plugins : [
             'karma-chrome-launcher',
             'karma-firefox-launcher',
-            'karma-jasmine'
+            'karma-jasmine',
+            'karma-phantomjs-launcher'
         ],
 
         junitReporter : {
             outputFile: 'test_out/unit.xml',
             suite: 'unit'
         },
-        customLaunchers: {
-            Chrome_travis_ci: {
-                base: 'Chrome',
-                flags: ['--no-sandbox']
-            }
+        phantomjsLauncher: {
+            exitOnResourceError: true
         }
 
 
 
     };
-
-    if (process.env.TRAVIS) {
-        configuration.browsers = ['Chrome_travis_ci'];
-    }
 
     config.set(projectConfig);
 };
