@@ -3,6 +3,9 @@ jdk:
   - oraclejdk8
 node_js: "1.4.14"
 install:
+  - ". $HOME/.nvm/nvm.sh"
+  - "nvm install stable"
+  - "nvm use stable"
+  - "mvn clean install"
   - "cd src/main/resources/static/"
   - "npm install"
-script: "npm test"
