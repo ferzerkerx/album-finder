@@ -10,6 +10,6 @@ before_script:
   - "mvn clean"
 
 install:
-  - "mvn clean"
+  - "mvn install"
   - "cd src/main/resources/static/"
   - "npm run test-single-run"
