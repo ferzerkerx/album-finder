@@ -120,8 +120,8 @@ afControllers.controller('loginController', ['$rootScope', '$scope', '$location'
     }]);
 
 
-    afControllers.controller('artistsController', ['$scope', '$route', 'albumsService',
-        function ($scope, $route, albumsService) {
+    afControllers.controller('artistsController', ['$scope', '$route', '$window' ,'albumsService',
+        function ($scope, $route, $window, albumsService) {
 
             $scope.searchName = '';
 
@@ -133,7 +133,7 @@ afControllers.controller('loginController', ['$rootScope', '$scope', '$location'
             };
 
             $scope.deleteArtist = function(artist) {
-                var shouldDeleteArtist = confirm("Are you sure you want to delete:"  + artist.name + "?");
+                var shouldDeleteArtist = $window.confirm("Are you sure you want to delete:"  + artist.name + "?");
                 if (shouldDeleteArtist === true) {
                     albumsService.deleteArtist(artist.id).then(function() {
                         $route.reload();
