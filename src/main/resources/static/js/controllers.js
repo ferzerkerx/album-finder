@@ -4,8 +4,8 @@
 
 var afControllers = angular.module('afControllers', []);
 
-afControllers.controller('albumsController', ['$scope', '$route', '$location', 'albumsService',
-    function ($scope, $route, $location, albumsService) {
+afControllers.controller('albumsController', ['$scope', '$route', '$window','$location', 'albumsService',
+    function ($scope, $route, $window, $location, albumsService) {
 
         $scope.title = '';
         $scope.year = '';
@@ -19,7 +19,7 @@ afControllers.controller('albumsController', ['$scope', '$route', '$location', '
 
 
         $scope.deleteAlbum = function(album) {
-            var shouldDeleteAlbum = confirm("Are you sure you want to delete:"  + album.title + "?");
+            var shouldDeleteAlbum = $window.confirm("Are you sure you want to delete:"  + album.title + "?");
             if (shouldDeleteAlbum === true) {
                 albumsService.deleteAlbum(album.id).then(function() {
                     $route.reload();
