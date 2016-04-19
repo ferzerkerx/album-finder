@@ -51,6 +51,12 @@ describe('Album Finder controllers', function () {
             });
 
             var doLogin = jasmine.createSpy('doLogin').and.callFake(function () {
+                return $q.when({
+                    isAdmin: false
+                });
+            });
+
+            var doLogout = jasmine.createSpy('doLogout').and.callFake(function () {
                 return $q.when({});
             });
 
@@ -61,7 +67,8 @@ describe('Album Finder controllers', function () {
                 listArtistsByName: listArtistsByName,
                 deleteArtist: deleteArtist,
                 saveOrUpdateArtist: saveOrUpdateArtist,
-                doLogin: doLogin
+                doLogin: doLogin,
+                doLogout: doLogout
             };
         });
     }));
@@ -95,6 +102,8 @@ describe('Album Finder controllers', function () {
 
             $scope.title = 'someTitle';
             $scope.year = '2016';
+            $scope.$apply();
+
             $scope.listAlbums();
             expect(albumsService.listAlbums).toHaveBeenCalledWith('someTitle', '2016');
             expect($scope.albums).toEqualData(albums);
@@ -124,6 +133,7 @@ describe('Album Finder controllers', function () {
             var album = {id: 5};
             $scope.currentAlbum = album;
 
+            $scope.$apply();
             $scope.saveOrUpdateAlbum();
             expect(albumsService.saveOrUpdateAlbum).toHaveBeenCalledWith(album);
         });
@@ -134,6 +144,7 @@ describe('Album Finder controllers', function () {
             $scope.currentAlbum = album;
             $scope.selectedArtistForAlbum = {originalObject: artist};
 
+            $scope.$apply();
             $scope.saveOrUpdateAlbum();
             expect(albumsService.saveOrUpdateAlbum).toHaveBeenCalledWith(album);
             expect(album.artist).toBe(artist);
@@ -244,16 +255,17 @@ describe('Album Finder controllers', function () {
 
 
     describe('loginController', function () {
-        var ctrl, $scope, albumsService, $q, $window;
+        var ctrl, $scope, albumsService, $q, $window, $rootScope;
 
         beforeEach(inject(function (_$rootScope_, $route, _$window_, $location, albumsServiceMock, _$q_, _$controller_, $httpBackend) {
             $httpBackend.whenGET(/partials.*/).respond(200, '');
             $q = _$q_;
+            $rootScope = _$rootScope_;
             $window = _$window_;
             albumsService = albumsServiceMock;
-            $scope = _$rootScope_.$new();
+            $scope = $rootScope.$new();
             ctrl = _$controller_('loginController', {
-                $rootScope: _$rootScope_,
+                $rootScope: $rootScope,
                 $scope: $scope,
                 $location: $location,
                 $route: $route,
@@ -273,7 +285,27 @@ describe('Album Finder controllers', function () {
             };
 
             $scope.login();
+
             expect(albumsService.doLogin).toHaveBeenCalledWith($scope.credentials);
+            expect($rootScope.userInfo.authenticated).toBe(true);
+            expect($rootScope.userInfo.isAdmin).toBe(false);
+
+            $scope.$apply();
+            expect($scope.error).toBe(false);
+            expect($scope.credentials).toEqualData({});
+        });
+
+        it('should logout', function () {
+            $rootScope.userInfo = {
+              data: 'someData'
+            };
+
+            $scope.$apply();
+            $scope.logout();
+
+            expect(albumsService.doLogout).toHaveBeenCalledWith();
+            $scope.$apply();
+            expect($rootScope.userInfo).toEqualData({});
         });
 
     });

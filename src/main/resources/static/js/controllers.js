@@ -81,13 +81,11 @@ afControllers.controller('loginController', ['$rootScope', '$scope', '$location'
         $scope.credentials = {};
 
         var authenticate = function(credentials, callback) {
-
             albumsService.doLogin(credentials).then(function(data) {
                 $rootScope.userInfo.authenticated = false;
                 if (data) {
                     $rootScope.userInfo.authenticated = true;
                     $rootScope.userInfo.isAdmin = data.isAdmin;
-                    console.log($rootScope.userInfo);
                 }
                 callback && callback();
 
