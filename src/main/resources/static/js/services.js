@@ -5,10 +5,10 @@
 
 var afServices = angular.module('afServices', ['ngResource']);
 
-afServices.factory('albumsService', ['$http',
-    function($http) {
+afServices.factory('albumsService', ['$http', '$location',
+    function($http, $location) {
 
-        var appContext = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));;
+        var appContext = $location.url().substring(0, $location.url().indexOf("/",2));
 
         var albumsService = {contextPath: appContext};
 
@@ -138,6 +138,7 @@ afServices.factory('albumsService', ['$http',
                     return;
                 }
                 var data = response.data;
+
                 var isAdmin = false;
                 if (data.authorities) {
                     for (var i = 0; i < data.authorities.length; i++ ) {
