@@ -1,0 +1,6 @@
+{
+  "name": "AngularJs + Hibernate + SpringMVC + SpringSecurity Sample",
+  "description": "Sample Project using AngularJs + Hibernate + SpringMVC + SpringSecurity",
+  "repository": "https://github.com/ferzerkerx/album-finder",
+  "keywords": ["angularjs", "hibernate", "spring-mvc", "spring-security"]
+}
