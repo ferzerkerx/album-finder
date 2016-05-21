@@ -6,7 +6,7 @@
 	<groupId>com.ferzerkerx</groupId>
 	<artifactId>AlbumFinder</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
 	<name>AlbumFinder</name>
 	<description>Search your favorite albums</description>
@@ -51,7 +51,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
