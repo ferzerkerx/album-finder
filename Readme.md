@@ -1,4 +1,4 @@
-## Sample Project using AngularJs + Hibernate + SpringMVC + SpringSecurity
+## Sample Project using  Hibernate + SpringMVC + SpringSecurity
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/ferzerkerx/album-finder)
 [![Build Status](https://travis-ci.org/ferzerkerx/album-finder.svg?branch=master)](https://travis-ci.org/ferzerkerx/album-finder)
