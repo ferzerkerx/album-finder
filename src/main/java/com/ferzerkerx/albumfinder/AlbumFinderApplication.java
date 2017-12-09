@@ -14,7 +14,7 @@ public class AlbumFinderApplication {
     public FilterRegistrationBean corsFilterRegistration() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(corsFilter());
-        registration.addUrlPatterns("*");;
+        registration.addUrlPatterns("*");
         registration.setName("corsFilter");
         registration.setOrder(1);
         return registration;

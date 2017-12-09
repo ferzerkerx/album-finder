@@ -31,9 +31,6 @@ public class Album {
     @Column(length = 4)
     private String year;
 
-    public Album() {
-    }
-
     public int getId() {
         return id;
     }

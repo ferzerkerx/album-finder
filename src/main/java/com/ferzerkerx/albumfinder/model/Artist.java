@@ -28,9 +28,6 @@ public class Artist {
     @OneToMany(mappedBy="artist", cascade={CascadeType.DETACH}, fetch = FetchType.LAZY)
     private List<Album> albums;
 
-    public Artist() {
-    }
-
     public int getId() {
         return id;
     }

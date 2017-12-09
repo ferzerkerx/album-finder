@@ -1,20 +1,20 @@
 package com.ferzerkerx.albumfinder.dao;
 
-import java.util.List;
 import org.hibernate.Criteria;
-import org.hibernate.IdentifierLoadAccess;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 public abstract class BaseDao<T> {
 
-    protected static final int MAX_RESULTS = 200;
+    static final int MAX_RESULTS = 200;
 
     private final Class<T> clazz;
 
-    public BaseDao(Class<T> clazz) {
+    BaseDao(Class<T> clazz) {
         this.clazz = clazz;
     }
 

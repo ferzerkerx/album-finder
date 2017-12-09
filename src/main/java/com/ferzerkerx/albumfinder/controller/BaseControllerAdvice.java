@@ -14,7 +14,7 @@ public class BaseControllerAdvice {
     private ResponseEntityService responseEntityService;
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Response<Object>> handleUncaughtException(Exception e) throws Exception {
+    public ResponseEntity<Response<Object>> handleUncaughtException(Exception e) {
         return responseEntityService.unexpectedError(e);
     }
 }

@@ -30,6 +30,7 @@ public class AlbumDao extends BaseDao<Album> {
     }
 
 
+    @Override
     public List<Album> findByCriteria(Album example) {
         Criteria criteria = createCriteria().setMaxResults(MAX_RESULTS).setFetchMode("artist", FetchMode.JOIN);
 
