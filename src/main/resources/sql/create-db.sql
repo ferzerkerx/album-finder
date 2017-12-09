@@ -1,3 +1,8 @@
+drop sequence if exists artist_artist_id_seq;
+drop sequence if exists album_album_id_seq;
+create sequence artist_artist_id_seq start with 1 increment by 1;
+create sequence album_album_id_seq start with 1 increment by 1;
+
 DROP TABLE IF EXISTS album;
 DROP TABLE IF EXISTS artist;
 

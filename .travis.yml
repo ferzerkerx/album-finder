@@ -1,20 +1,22 @@
 language: java
 jdk:
   - oraclejdk8
-node_js: "v6.1.0"
 
-#before_install:
-#  - ". $HOME/.nvm/nvm.sh"
-#  - "nvm install stable"
-#  - "nvm use stable"
-#  - "npm install"
+addons:
+  sonarcloud:
+    organization: "ferzerkerx-github"
+    token:
+      secure: "E4OzIgLh8wlM66o3gT1Z03VqrIuoqHyN7OfW0cJvvJ01EcL79f/HG1uFYHSsvjxR43dknL0tUm+9UtKZofQco0gg+sRGMnl0inLJtC2tijzaP3fSt6kPAdx4yNEFdskZ2QaQdSgMK1dWD4Xochr+dkPu9hfQOQvPWUr5bujn+EN4m4debjASy7WKhi33m7e7mtJqCr219RpXOSZ0JtmYZtRDGQmDHEDjNxTBu5sso3299nCqGfpRairQi+lZTNJ6m6tGkerHvgDz1vqr6fhMbyFmnCkZzHFMdf3lvT6YmhuqqaZ1AY9ZBA0XMuZCyzh0qBe1GJgjsR54blvZW8y93BbBOZxE0dPkPYFac81639QTtlqKjYRee/MihhrvWe1tuMaeWlckwr2FDyStv26sbmVgT/fT/Gs2EhzbYevNnZoPi/E0mVeuIAc7hiuVV/vldD1Mk4RL6LzI1mPU1/rbQDHOqaWJa4J4/xHKfl4Xyb4kKbGXTzqhjlA8Y1ay/hp2re8bm5mV2+A8dakrmNVToq3YuC4Akbg2T3l4s6/YZtdVvb1N2RtPfakb8MyFx8zNGs0bBM1P9XXbZCTRhOB6oZJXJGfoJvs6WMMYSzmvl2hBJhEl1SaGX87k1XF/VoTqJqRFyKdXwBHHbTy84ZfgvqyrBysAkjACpoJ5kAtQ2lo="
+env:
+  secure: "Dcjc0TBaEoe+6eSCGVTuDI0LRdf6NuUS7JwqZucz09ZaOaNvEyyt6VF/Xk710AhQ63lWgYTi2KLMBfg5mFNCKOwl2/am9IbNK+yn437jEpzw/CML01h/1cNfzBhmFY0rF9qDPqwAnDU3ZChFnqPfWV40J5M7Yl8tJn9Ve2iGFlnxyKY2p3PKbx2Ta+wNAEfijnyCoHRoL5f9YS7eewLt+HIbuuBfyMrbS/n4sMMmCH5h9V+o/kxr8u0ZqGiW2n32p3i8l68iARyyjpOPfM2QZjzs8rvZ9ya513U4EWeXvnH2egGuSj3BpvIh1Y4Z4PRNffw3/R3ydBmFhQU6N5UKe1ertkMI+fDV0v2hAZbS73SMC7eP9iOhp5tiPHt3Ns7HBOtERs4YbVLbl4NjmD/YZjq268vm7qToYmuelAP+GuyhsA0Em+oN0cKEOcROwY7Y2corzc/D228P+ZpQ2ir+0h6Q1umhRSDqXV495Hl5Q22lu4yrT9g+rig4MGqWJnkXtryFS0VV8YcqOA3R/rpncBi0oOEldiAM4F0IynVVgXkS/8Fo/zeBHbk5tkmsmJ5iUtlRwR6Hmv32mWDlRJaLYV0qg7g7geohg8PHTptOx/2HYnQenn+0lOO4Oaliqyy5WSQ31RefKolNkeKHlhtP4H56gIR7wSPTsWTFPAqI3pk="
 
 install:
   - "mvn clean compile"
-  - "cd src/main/resources/static/"
-  - "npm install"
-  - "cd ../../../.."
+  - "npm install -g snyk"
+
 script:
-  - "mvn test"
-  - "cd src/main/resources/static/"
-  - "npm run test-single-run"
+  - "mvn install sonar:sonar"
+  - "snyk test"
+
+after_success:
+  - snyk monitor

@@ -2,6 +2,7 @@
 *.ipr
 *.iws
 
+.idea/
 target/
 
 **/bower_components/
