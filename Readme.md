@@ -2,6 +2,7 @@
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/ferzerkerx/album-finder)
 [![Build Status](https://travis-ci.org/ferzerkerx/album-finder.svg?branch=master)](https://travis-ci.org/ferzerkerx/album-finder)
+[![Quality Gate](https://sonarcloud.io/api/badges/gate?key=com.ferzerkerx%3AAlbumFinder)](https://sonarcloud.io/dashboard/index/com.ferzerkerx%3AAlbumFinder)
 
 
 ### Overview:
