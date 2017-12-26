@@ -7,8 +7,11 @@ import com.ferzerkerx.albumfinder.service.AlbumFinderService;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.internal.matchers.GreaterThan;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
 
+import static com.ferzerkerx.albumfinder.Util.createAlbum;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
@@ -20,13 +23,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class AlbumsControllerTest extends BaseControllerTest {
 
+    @Autowired
     private AlbumFinderService albumFinderService;
 
-    @Override
-    public void setUp() {
-        super.setUp();
-        albumFinderService = Mockito.mock(AlbumFinderService.class);
-        setBinding(getWebApplicationContext(), AlbumFinderService.class, albumFinderService);
+    @Autowired
+    private MockMvc mockMvc;
+
+    MockMvc getMockMvc() {
+        return mockMvc;
     }
 
     @Test

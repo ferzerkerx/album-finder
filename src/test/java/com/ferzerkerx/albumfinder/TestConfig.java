@@ -1,9 +1,8 @@
 package com.ferzerkerx.albumfinder;
 
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.PropertySource;
+import com.ferzerkerx.albumfinder.service.AlbumFinderService;
+import org.mockito.Mockito;
+import org.springframework.context.annotation.*;
 
 @Configuration
 @PropertySource("classpath:test_application.properties")

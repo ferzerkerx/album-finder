@@ -1,15 +1,19 @@
 package com.ferzerkerx.albumfinder.controller;
 
-import java.util.Collections;
-import java.util.List;
 import com.ferzerkerx.albumfinder.model.Artist;
 import com.ferzerkerx.albumfinder.service.AlbumFinderService;
 import org.junit.After;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.mockito.internal.matchers.GreaterThan;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Collections;
+import java.util.List;
+
+import static com.ferzerkerx.albumfinder.Util.createArtist;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -19,14 +23,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class ArtistControllerTest extends BaseControllerTest {
 
-    private AlbumFinderService albumFinderService;
+    @Autowired
+    private MockMvc mockMvc;
 
-    @Override
-    public void setUp() {
-        super.setUp();
-        albumFinderService = Mockito.mock(AlbumFinderService.class);
-        setBinding(getWebApplicationContext(), AlbumFinderService.class, albumFinderService);
+    MockMvc getMockMvc() {
+        return mockMvc;
     }
+
+    @Autowired
+    private AlbumFinderService albumFinderService;
 
     @After
     public void tearDown() {

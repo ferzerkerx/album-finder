@@ -2,14 +2,15 @@ package com.ferzerkerx.albumfinder.dao;
 
 import java.util.List;
 import com.ferzerkerx.albumfinder.BaseIntegrationTest;
+import com.ferzerkerx.albumfinder.Util;
 import com.ferzerkerx.albumfinder.model.Album;
 import com.ferzerkerx.albumfinder.model.Artist;
-import org.hibernate.FlushMode;
-import org.hibernate.SessionFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import static com.ferzerkerx.albumfinder.Util.createAlbum;
+import static com.ferzerkerx.albumfinder.Util.createArtist;
 import static org.junit.Assert.*;
 
 public class AlbumDaoTest extends BaseIntegrationTest {
