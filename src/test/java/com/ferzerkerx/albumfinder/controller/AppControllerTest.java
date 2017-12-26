@@ -13,8 +13,7 @@ public class AppControllerTest extends BaseControllerTest {
     public void logout() throws Exception {
         getMockMvc().perform(get("/logout")
             .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-        ;
+            .andExpect(status().isOk());
     }
 
     @Test
@@ -24,8 +23,7 @@ public class AppControllerTest extends BaseControllerTest {
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.username").value("admin"))
-            .andExpect(jsonPath("$.authorities[0].authority").value("ROLE_ADMIN"))
-        ;
+            .andExpect(jsonPath("$.authorities[0].authority").value("ROLE_ADMIN"));
     }
 
     @Test
@@ -35,7 +33,6 @@ public class AppControllerTest extends BaseControllerTest {
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.username").value("user"))
-            .andExpect(jsonPath("$.authorities[0].authority").value("ROLE_AUTHENTICATED_USER"))
-        ;
+            .andExpect(jsonPath("$.authorities[0].authority").value("ROLE_AUTHENTICATED_USER"));
     }
 }

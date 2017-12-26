@@ -25,9 +25,8 @@ public abstract class BaseDao<T> {
         return sessionFactory.getCurrentSession();
     }
 
-    public T insert(T type) {
+    public void insert(T type) {
         getCurrentSession().save(type);
-        return type;
     }
 
     public T update(T type) {
@@ -40,9 +39,8 @@ public abstract class BaseDao<T> {
         delete(byId);
     }
 
-    public T delete(T type) {
+    public void delete(T type) {
         getCurrentSession().delete(type);
-        return type;
     }
 
     public List<T> findByCriteria(T criteria) {

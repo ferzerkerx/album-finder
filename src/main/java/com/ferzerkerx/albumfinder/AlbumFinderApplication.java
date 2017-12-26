@@ -12,7 +12,7 @@ public class AlbumFinderApplication {
 
     @Bean
     public FilterRegistrationBean corsFilterRegistration() {
-        FilterRegistrationBean registration = new FilterRegistrationBean();
+        FilterRegistrationBean<CorsFilter> registration = new FilterRegistrationBean<>();
         registration.setFilter(corsFilter());
         registration.addUrlPatterns("*");
         registration.setName("corsFilter");
