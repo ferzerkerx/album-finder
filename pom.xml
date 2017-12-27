@@ -41,11 +41,21 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>javax.annotation</groupId>
-            <artifactId>javax.annotation-api</artifactId>
-            <version>1.2</version>
-        </dependency>
+        <!--TODO fix split package-->
+        <!--<dependency>-->
+            <!--<groupId>javax.transaction</groupId>-->
+            <!--<artifactId>javax.transaction-api</artifactId>-->
+            <!--<version>1.2</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.jboss.spec.javax.transaction</groupId>-->
+            <!--<artifactId>jboss-transaction-api_1.2_spec</artifactId>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>javax.transaction</groupId>-->
+            <!--<artifactId>com.springsource.javax.transaction</artifactId>-->
+            <!--<version>1.1.0</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
@@ -67,6 +77,10 @@
                     <groupId>ch.qos.logback</groupId>
                     <artifactId>logback-core</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.apache.tomcat</groupId>
+                    <artifactId>tomcat-annotations-api</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <dependency>
@@ -84,6 +98,14 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>5.2.12.Final</version>
+            <!--TODO fix split package-->
+            <!--<exclusions>-->
+                <!--<exclusion>-->
+                    <!--<groupId>org.jboss.spec.javax.transaction</groupId>-->
+                    <!--<artifactId>jboss-transaction-api_1.2_spec</artifactId>-->
+                <!--</exclusion>-->
+            <!--</exclusions>-->
+
         </dependency>
 
         <dependency>
@@ -152,35 +174,40 @@
                     <!--</execution>-->
                 <!--</executions>-->
             <!--</plugin>-->
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-dependency-plugin</artifactId>-->
-                <!--<version>3.0.2</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>copy-dependencies</id>-->
-                        <!--<phase>package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>copy-dependencies</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<outputDirectory>${project.build.directory}/alternateLocation</outputDirectory>-->
-                            <!--<overWriteReleases>false</overWriteReleases>-->
-                            <!--<overWriteSnapshots>false</overWriteSnapshots>-->
-                            <!--<overWriteIfNewer>true</overWriteIfNewer>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.0.2</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/alternateLocation</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>false</overWriteSnapshots>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.7.0</version>
+                <configuration>
+                    <compilerArgs>
+                        <arg>--add-modules=java.xml.bind</arg>
+                    </compilerArgs>
+                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.20.1</version>
                 <configuration>
-                    <argLine>--add-modules java.xml.bind ${argLine}</argLine> <!-- ${argLine} is for jacoco https://stackoverflow.com/questions/23190107/cannot-use-jacoco-jvm-args-and-surefire-jvm-args-together-in-maven-->
+                    <argLine>--add-modules=java.xml.bind ${argLine}</argLine> <!-- ${argLine} is for jacoco https://stackoverflow.com/questions/23190107/cannot-use-jacoco-jvm-args-and-surefire-jvm-args-together-in-maven-->
                 </configuration>
             </plugin>
             <plugin>
@@ -191,8 +218,11 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
+
+                    <!--TODO remove once this is fixed https://stackoverflow.com/questions/46515230/hibernate-java-9-and-systemexception -->
+                    <!--TODO remove once this is fixed https://stackoverflow.com/questions/43574426/how-to-resolve-java-lang-noclassdeffounderror-javax-xml-bind-jaxbexception-in-j -->
                     <!--TODO remove once this is fixed https://jira.spring.io/browse/SPR-15859 -->
-                    <jvmArguments>--add-modules java.xml.bind --add-opens java.base/java.lang=ALL-UNNAMED</jvmArguments>
+                    <jvmArguments>--add-modules=java.xml.bind --add-opens java.base/java.lang=ALL-UNNAMED</jvmArguments>
                     <mainClass>com.ferzerkerx.albumfinder.AlbumFinderApplication</mainClass>
                 </configuration>
             </plugin>
