@@ -1,5 +1,6 @@
 package com.ferzerkerx.albumfinder.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -25,6 +26,7 @@ public class Album {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "artist_id", nullable = false, updatable = false)
+    @JsonIgnore
     private Artist artist;
 
     @Pattern(regexp="\\d{4}")
