@@ -1,7 +1,7 @@
 package com.ferzerkerx.albumfinder;
 
-import com.ferzerkerx.albumfinder.service.AlbumFinderService;
-import org.mockito.Mockito;
+import com.ferzerkerx.albumfinder.service.ResponseEntityService;
+import com.ferzerkerx.albumfinder.service.ResponseEntityServiceImpl;
 import org.springframework.context.annotation.*;
 
 @Configuration
@@ -12,5 +12,9 @@ import org.springframework.context.annotation.*;
 @Import({DbConfig.class, SecurityWebConfig.class})
 public class TestConfig  {
 
+    @Bean
+    public ResponseEntityService responseEntityService() {
+        return new ResponseEntityServiceImpl();
+    }
 
 }

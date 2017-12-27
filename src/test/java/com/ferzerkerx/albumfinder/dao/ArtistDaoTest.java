@@ -1,7 +1,6 @@
 package com.ferzerkerx.albumfinder.dao;
 
 import com.ferzerkerx.albumfinder.BaseIntegrationTest;
-import com.ferzerkerx.albumfinder.Util;
 import com.ferzerkerx.albumfinder.model.Artist;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,25 +2,26 @@ package com.ferzerkerx.albumfinder.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ferzerkerx.albumfinder.BaseIntegrationTest;
-import org.junit.Before;
+import com.ferzerkerx.albumfinder.TestConfig;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
-@AutoConfigureMockMvc
+@ContextConfiguration(classes = {TestConfig.class})
 public abstract class BaseControllerTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    protected MockMvc getMockMvc() {
+        return mockMvc;
+    }
 
     static RequestPostProcessor admin() {
         return user("admin").password("password").roles("ADMIN");

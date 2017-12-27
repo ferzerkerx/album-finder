@@ -194,7 +194,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <!--TODO remove once this is fixed-->
+                    <!--TODO remove once this is fixed https://jira.spring.io/browse/SPR-15859 -->
                     <jvmArguments>--add-modules java.xml.bind --add-opens java.base/java.lang=ALL-UNNAMED</jvmArguments>
                     <mainClass>com.ferzerkerx.albumfinder.AlbumFinderApplication</mainClass>
                 </configuration>

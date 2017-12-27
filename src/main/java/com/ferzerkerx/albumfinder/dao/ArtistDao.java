@@ -1,9 +1,10 @@
 package com.ferzerkerx.albumfinder.dao;
 
-import java.util.List;
 import com.ferzerkerx.albumfinder.model.Artist;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class ArtistDao extends BaseDao<Artist> {

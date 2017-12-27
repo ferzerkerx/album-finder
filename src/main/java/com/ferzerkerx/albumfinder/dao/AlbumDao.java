@@ -1,6 +1,5 @@
 package com.ferzerkerx.albumfinder.dao;
 
-import java.util.List;
 import com.ferzerkerx.albumfinder.model.Album;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Criteria;
@@ -8,6 +7,8 @@ import org.hibernate.FetchMode;
 import org.hibernate.Query;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 
 @Repository

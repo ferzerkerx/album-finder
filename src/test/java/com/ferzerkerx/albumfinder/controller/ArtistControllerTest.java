@@ -2,18 +2,16 @@ package com.ferzerkerx.albumfinder.controller;
 
 import com.ferzerkerx.albumfinder.model.Artist;
 import com.ferzerkerx.albumfinder.service.AlbumFinderService;
-import org.junit.After;
 import org.junit.Test;
-import org.mockito.Mockito;
-import org.mockito.internal.matchers.GreaterThan;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
 import java.util.List;
 
 import static com.ferzerkerx.albumfinder.Util.createArtist;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -21,22 +19,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@WebMvcTest(ArtistController.class)
 public class ArtistControllerTest extends BaseControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    MockMvc getMockMvc() {
-        return mockMvc;
-    }
-
-    @Autowired
+    @MockBean
     private AlbumFinderService albumFinderService;
-
-    @After
-    public void tearDown() {
-        Mockito.reset(albumFinderService);
-    }
 
     @Test
     public void deleteArtistById() throws Exception {
@@ -115,7 +102,7 @@ public class ArtistControllerTest extends BaseControllerTest {
             .contentType(MediaType.APPLICATION_JSON)
             .content(toJson(artist)))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$.data.id").value(new GreaterThan<>(0)))
+            .andExpect(jsonPath("$.data.id").value(greaterThan(0)))
         ;
     }
 }

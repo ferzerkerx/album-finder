@@ -1,9 +1,10 @@
 package com.ferzerkerx.albumfinder.service;
 
-import java.util.Collection;
-import java.util.List;
 import com.ferzerkerx.albumfinder.model.Album;
 import com.ferzerkerx.albumfinder.model.Artist;
+
+import java.util.Collection;
+import java.util.List;
 
 public interface AlbumFinderService {
     void deleteAlbumById(int recordId);
