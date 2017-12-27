@@ -1,7 +1,4 @@
 module albumfinder.initial {
-    requires java.sql;
-    requires java.xml.bind;
-
     requires spring.beans;
     requires spring.core;
     requires spring.context;
@@ -24,7 +21,7 @@ module albumfinder.initial {
     requires spring.orm;
     requires hibernate.core;
     requires hibernate.jpa;
-
+    requires java.sql;
 
     exports com.ferzerkerx.albumfinder;
 }

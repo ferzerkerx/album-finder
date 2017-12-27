@@ -12,8 +12,10 @@ import java.util.List;
 
 import static com.ferzerkerx.albumfinder.Util.createArtist;
 import static org.hamcrest.Matchers.greaterThan;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
