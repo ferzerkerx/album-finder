@@ -1,11 +1,12 @@
 package com.ferzerkerx.albumfinder.dao;
 
-import org.hibernate.Criteria;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
 public abstract class BaseDao<T> {
@@ -18,10 +19,14 @@ public abstract class BaseDao<T> {
         this.clazz = clazz;
     }
 
+    public Class<T> getClazz() {
+        return clazz;
+    }
+
     @Autowired
     private SessionFactory sessionFactory;
 
-    private Session getCurrentSession() {
+    protected Session getCurrentSession() {
         return sessionFactory.getCurrentSession();
     }
 
@@ -55,18 +60,19 @@ public abstract class BaseDao<T> {
         return getCurrentSession().createQuery(query);
     }
 
-    Criteria createCriteria() {
-        return getCurrentSession().createCriteria(clazz);
+    Query<T> createQuery(CriteriaQuery<T> criteriaQuery) {
+        return getCurrentSession().createQuery(criteriaQuery);
     }
 
-    @SuppressWarnings("unchecked")
-    static <T> List<T> listAndCast(Query query) {
-        return query.list();
+    Query<T> createTypedQuery(String query) {
+        return getCurrentSession().createQuery(query, clazz);
     }
 
-    @SuppressWarnings("unchecked")
-    static <T> List<T> listAndCast(Criteria criteria) {
-        return criteria.list();
+    CriteriaBuilder getCriteriaBuilder() {
+        return getCurrentSession().getCriteriaBuilder();
     }
 
+    CriteriaQuery<T> createCriteriaQuery() {
+        return getCriteriaBuilder().createQuery(clazz);
+    }
 }
