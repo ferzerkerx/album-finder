@@ -1,5 +1,6 @@
 module albumfinder.initial {
     requires java.sql;
+    requires java.xml.bind;
 
     requires spring.beans;
     requires spring.core;
