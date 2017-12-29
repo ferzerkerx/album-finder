@@ -1,27 +1,24 @@
-module albumfinder.initial {
-    requires spring.beans;
-    requires spring.core;
-    requires spring.context;
-    requires spring.tx;
-    requires spring.webmvc;
-    requires spring.boot;
-    requires spring.boot.autoconfigure;
-    requires java.validation;
-    requires spring.web;
-    requires tomcat.embed.core;
-    requires spring.security.web;
-    requires spring.security.config;
-    requires jackson.annotations;
+module ferzerkerx.albumfinder {
     requires commons.lang3;
-    requires slf4j.api;
-    requires spring.jdbc;
-    requires spring.security.core;
-
-    requires java.naming;
-    requires spring.orm;
     requires hibernate.core;
+    requires spring.context;
+    requires spring.core;
     requires hibernate.jpa;
+    requires spring.beans;
+    requires spring.jdbc;
+    requires spring.orm;
     requires java.sql;
+    requires jackson.annotations;
+    requires java.validation;
+    requires spring.boot.autoconfigure;
+    requires spring.tx;
+    requires spring.boot;
+    requires spring.security.web;
+    requires tomcat.embed.core;
+    requires spring.security.core;
+    requires spring.security.config;
+    requires spring.web;
+    requires slf4j.api;
 
     exports com.ferzerkerx.albumfinder;
 }
