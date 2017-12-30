@@ -2,18 +2,19 @@ package com.ferzerkerx.albumfinder.service;
 
 import com.ferzerkerx.albumfinder.model.Meta;
 import com.ferzerkerx.albumfinder.model.Response;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 public class ResponseEntityServiceTest {
 
     private ResponseEntityService responseEntityService;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         responseEntityService = new ResponseEntityServiceImpl();
     }

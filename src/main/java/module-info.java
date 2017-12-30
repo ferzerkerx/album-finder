@@ -19,6 +19,7 @@ module ferzerkerx.albumfinder {
     requires spring.security.config;
     requires spring.web;
     requires slf4j.api;
+    requires java.naming;
 
     exports com.ferzerkerx.albumfinder;
 }

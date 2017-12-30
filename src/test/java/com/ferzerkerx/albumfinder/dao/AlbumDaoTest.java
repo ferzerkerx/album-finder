@@ -3,15 +3,15 @@ package com.ferzerkerx.albumfinder.dao;
 import com.ferzerkerx.albumfinder.BaseIntegrationTest;
 import com.ferzerkerx.albumfinder.model.Album;
 import com.ferzerkerx.albumfinder.model.Artist;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 import static com.ferzerkerx.albumfinder.Util.createAlbum;
 import static com.ferzerkerx.albumfinder.Util.createArtist;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AlbumDaoTest extends BaseIntegrationTest {
 
@@ -23,7 +23,7 @@ public class AlbumDaoTest extends BaseIntegrationTest {
 
     private Artist artist;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         artist = createArtist();
         artistDao.insert(artist);
