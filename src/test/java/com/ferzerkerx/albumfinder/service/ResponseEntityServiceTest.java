@@ -10,17 +10,17 @@ import org.springframework.http.ResponseEntity;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class ResponseEntityServiceTest {
+class ResponseEntityServiceTest {
 
     private ResponseEntityService responseEntityService;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         responseEntityService = new ResponseEntityServiceImpl();
     }
 
     @Test
-    public void data() {
+    void data() {
         String testData = "someData";
         ResponseEntity<Response<String>> response = responseEntityService.data(testData);
         assertNotNull(response);
@@ -32,7 +32,7 @@ public class ResponseEntityServiceTest {
     }
 
     @Test
-    public void unexpectedError() {
+    void unexpectedError() {
         String errorMessage = "someError";
         ResponseEntity<Response<Object>> response = responseEntityService.unexpectedError(new RuntimeException(errorMessage));
         assertNotNull(response);
@@ -45,7 +45,7 @@ public class ResponseEntityServiceTest {
     }
 
     @Test
-    public void status() {
+    void status() {
         HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
         ResponseEntity<Response<String>> response = responseEntityService.status(httpStatus);
         assertNotNull(response);

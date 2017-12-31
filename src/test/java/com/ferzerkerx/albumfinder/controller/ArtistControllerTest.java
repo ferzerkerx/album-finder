@@ -22,25 +22,24 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ArtistController.class)
-public class ArtistControllerTest extends BaseControllerTest {
+class ArtistControllerTest extends BaseControllerTest {
 
     @MockBean
     private AlbumFinderService albumFinderService;
 
     @Test
-    public void deleteArtistById() throws Exception {
+    void deleteArtistById() throws Exception {
         doNothing().when(albumFinderService).deleteArtistWithAlbumsById(1);
 
         getMockMvc().perform(delete("/admin/artist/1")
             .with(csrf())
             .with(admin())
             .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-        ;
+            .andExpect(status().isOk());
     }
 
     @Test
-    public void findMatchedArtistsByName() throws Exception {
+    void findMatchedArtistsByName() throws Exception {
         List<Artist> artists = Collections.singletonList(createArtist());
 
         when(albumFinderService.findMatchedArtistsByName("someArtist")).thenReturn(artists);
@@ -50,13 +49,12 @@ public class ArtistControllerTest extends BaseControllerTest {
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.data[0].id").value(1))
-            .andExpect(jsonPath("$.data[0].name").value("someArtist"))
-        ;
+            .andExpect(jsonPath("$.data[0].name").value("someArtist"));
 
     }
 
     @Test
-    public void updateArtistById() throws Exception {
+    void updateArtistById() throws Exception {
         Artist artist = createArtist();
 
         when(albumFinderService.updateArtist(any())).thenReturn(artist);
@@ -68,12 +66,11 @@ public class ArtistControllerTest extends BaseControllerTest {
             .content(toJson(artist)))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.data.id").value(1))
-            .andExpect(jsonPath("$.data.name").value("someArtist"))
-        ;
+            .andExpect(jsonPath("$.data.name").value("someArtist"));
     }
 
     @Test
-    public void findArtistById() throws Exception {
+    void findArtistById() throws Exception {
         Artist artist = createArtist();
 
         when(albumFinderService.findArtistById(1)).thenReturn(artist);
@@ -83,12 +80,11 @@ public class ArtistControllerTest extends BaseControllerTest {
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.data.id").value(1))
-            .andExpect(jsonPath("$.data.name").value("someArtist"))
-        ;
+            .andExpect(jsonPath("$.data.name").value("someArtist"));
     }
 
     @Test
-    public void saveArtist() throws Exception {
+    void saveArtist() throws Exception {
         Artist artist = createArtist();
         artist.setId(0);
 
@@ -104,7 +100,6 @@ public class ArtistControllerTest extends BaseControllerTest {
             .contentType(MediaType.APPLICATION_JSON)
             .content(toJson(artist)))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$.data.id").value(greaterThan(0)))
-        ;
+            .andExpect(jsonPath("$.data.id").value(greaterThan(0)));
     }
 }

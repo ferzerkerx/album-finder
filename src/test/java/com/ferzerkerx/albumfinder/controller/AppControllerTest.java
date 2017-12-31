@@ -12,10 +12,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(AppController.class)
-public class AppControllerTest extends BaseControllerTest {
+class AppControllerTest extends BaseControllerTest {
 
     @Test
-    public void logout() throws Exception {
+    void logout() throws Exception {
         MockMvc mockMvc = getMockMvc();
         MockHttpServletRequestBuilder requestBuilder = get("/logout").contentType(MediaType.APPLICATION_JSON);
         ResultActions perform = mockMvc.perform(requestBuilder);
@@ -25,7 +25,7 @@ public class AppControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void getUserInfoAdmin() throws Exception {
+    void getUserInfoAdmin() throws Exception {
         getMockMvc().perform(get("/user")
             .with(admin())
             .contentType(MediaType.APPLICATION_JSON))
@@ -35,7 +35,7 @@ public class AppControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void getUserInfoUser() throws Exception {
+    void getUserInfoUser() throws Exception {
         getMockMvc().perform(get("/user")
             .with(authenticatedUser())
             .contentType(MediaType.APPLICATION_JSON))

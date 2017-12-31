@@ -14,12 +14,12 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {TestConfig.class})
-public abstract class BaseControllerTest {
+abstract class BaseControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    protected MockMvc getMockMvc() {
+    MockMvc getMockMvc() {
         return mockMvc;
     }
 

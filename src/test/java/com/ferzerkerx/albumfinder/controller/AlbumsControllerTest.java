@@ -21,13 +21,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(AlbumsController.class)
-public class AlbumsControllerTest extends BaseControllerTest {
+class AlbumsControllerTest extends BaseControllerTest {
 
     @MockBean
     private AlbumFinderService albumFinderService;
 
     @Test
-    public void testGetAlbums() throws Exception {
+    void testGetAlbums() throws Exception {
         List<Album> albums = Collections.singletonList(createAlbum());
 
         when(albumFinderService.findAlbumsByArtist(1)).thenReturn(albums);
@@ -41,7 +41,7 @@ public class AlbumsControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void testGetAlbumsEmpty() throws Exception {
+    void testGetAlbumsEmpty() throws Exception {
         getMockMvc().perform(get("/artist/1/albums")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -49,7 +49,7 @@ public class AlbumsControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void testFindAlbumById() throws Exception {
+    void testFindAlbumById() throws Exception {
         Album album = createAlbum();
         when(albumFinderService.findAlbumById(1)).thenReturn(album);
 
@@ -62,7 +62,7 @@ public class AlbumsControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void testSaveAlbum() throws Exception {
+    void testSaveAlbum() throws Exception {
         Album album = createAlbum();
         album.setId(0);
 
@@ -82,7 +82,7 @@ public class AlbumsControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void testDeleteAlbumById() throws Exception {
+    void testDeleteAlbumById() throws Exception {
         doNothing().when(albumFinderService).deleteAlbumById(1);
 
         getMockMvc().perform(delete("/admin/album/1")
@@ -93,7 +93,7 @@ public class AlbumsControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void testUpdateAlbumById() throws Exception {
+    void testUpdateAlbumById() throws Exception {
         Album album = createAlbum();
         when(albumFinderService.updateAlbum(any())).thenReturn(album);
 
@@ -107,7 +107,7 @@ public class AlbumsControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void testFindMatchedRecordByCriteria() throws Exception {
+    void testFindMatchedRecordByCriteria() throws Exception {
         List<Album> albums = Collections.singletonList(createAlbum());
         when(albumFinderService.findMatchedAlbumByCriteria("someTitle", "someYear")).thenReturn(albums);
 

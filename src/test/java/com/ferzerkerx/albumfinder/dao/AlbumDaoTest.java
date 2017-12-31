@@ -13,7 +13,7 @@ import static com.ferzerkerx.albumfinder.Util.createAlbum;
 import static com.ferzerkerx.albumfinder.Util.createArtist;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class AlbumDaoTest extends BaseIntegrationTest {
+class AlbumDaoTest extends BaseIntegrationTest {
 
     @Autowired
     private AlbumDao albumDao;
@@ -24,13 +24,13 @@ public class AlbumDaoTest extends BaseIntegrationTest {
     private Artist artist;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         artist = createArtist();
         artistDao.insert(artist);
     }
 
     @Test
-    public void deleteRecordsByArtistId() {
+    void deleteRecordsByArtistId() {
         Album album = createAlbum(artist);
         albumDao.insert(album);
 
@@ -48,7 +48,7 @@ public class AlbumDaoTest extends BaseIntegrationTest {
     }
 
     @Test
-    public void deleteById() {
+    void deleteById() {
         Album album = createAlbum(artist);
 
         albumDao.insert(album);
@@ -60,7 +60,7 @@ public class AlbumDaoTest extends BaseIntegrationTest {
     }
 
     @Test
-    public void delete() {
+    void delete() {
         Album album = createAlbum(artist);
 
         albumDao.insert(album);
@@ -72,7 +72,7 @@ public class AlbumDaoTest extends BaseIntegrationTest {
     }
 
     @Test
-    public void update() {
+    void update() {
         Album album = createAlbum(artist);
         albumDao.insert(album);
 
@@ -90,7 +90,7 @@ public class AlbumDaoTest extends BaseIntegrationTest {
     }
 
     @Test
-    public void insert() {
+    void insert() {
         Album album = createAlbum(artist);
         albumDao.insert(album);
 
@@ -98,7 +98,7 @@ public class AlbumDaoTest extends BaseIntegrationTest {
     }
 
     @Test
-    public void findByCriteria() {
+    void findByCriteria() {
         Album album = createAlbum(artist);
         albumDao.insert(album);
 
@@ -128,7 +128,7 @@ public class AlbumDaoTest extends BaseIntegrationTest {
     }
 
     @Test
-    public void findRecordsByArtist() {
+    void findRecordsByArtist() {
         List<Album> emptyRecordsByArtist = albumDao.findRecordsByArtist(artist.getId());
         assertNotNull(emptyRecordsByArtist);
         assertTrue(emptyRecordsByArtist.isEmpty());

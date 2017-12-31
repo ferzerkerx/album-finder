@@ -10,13 +10,13 @@ import java.util.List;
 import static com.ferzerkerx.albumfinder.Util.createArtist;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ArtistDaoTest extends BaseIntegrationTest {
+class ArtistDaoTest extends BaseIntegrationTest {
 
     @Autowired
     private ArtistDao artistDao;
 
     @Test
-    public void findMatchedArtistsByName() {
+    void findMatchedArtistsByName() {
         Artist artist = createArtist();
         artistDao.insert(artist);
 
@@ -29,7 +29,7 @@ public class ArtistDaoTest extends BaseIntegrationTest {
     }
 
     @Test
-    public void findAllArtists() {
+    void findAllArtists() {
         List<Artist> emptyArtists = artistDao.findAllArtists();
         assertNotNull(emptyArtists);
         assertTrue(emptyArtists.isEmpty());
@@ -46,7 +46,7 @@ public class ArtistDaoTest extends BaseIntegrationTest {
 
 
     @Test
-    public void deleteById() {
+    void deleteById() {
         Artist artist = createArtist();
         artistDao.insert(artist);
 
@@ -58,7 +58,7 @@ public class ArtistDaoTest extends BaseIntegrationTest {
     }
 
     @Test
-    public void delete() {
+    void delete() {
         Artist artist = createArtist();
         artistDao.insert(artist);
 
@@ -70,7 +70,7 @@ public class ArtistDaoTest extends BaseIntegrationTest {
     }
 
     @Test
-    public void update() {
+    void update() {
         Artist artist = createArtist();
         artistDao.insert(artist);
 
@@ -85,7 +85,7 @@ public class ArtistDaoTest extends BaseIntegrationTest {
     }
 
     @Test
-    public void insert() {
+    void insert() {
         Artist artist = createArtist();
         artistDao.insert(artist);
 
