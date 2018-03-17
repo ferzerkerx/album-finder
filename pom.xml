@@ -22,21 +22,11 @@
     </properties>
 
     <dependencies>
-        <!--TODO fix split package-->
-        <!--<dependency>-->
-        <!--<groupId>javax.transaction</groupId>-->
-        <!--<artifactId>javax.transaction-api</artifactId>-->
-        <!--<version>1.2</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>org.jboss.spec.javax.transaction</groupId>-->
-        <!--<artifactId>jboss-transaction-api_1.2_spec</artifactId>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>javax.transaction</groupId>-->
-        <!--<artifactId>com.springsource.javax.transaction</artifactId>-->
-        <!--<version>1.1.0</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>javax.transaction</groupId>
+            <artifactId>javax.transaction-api</artifactId>
+            <version>1.3</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
@@ -80,12 +70,12 @@
             <artifactId>hibernate-core</artifactId>
             <version>5.2.12.Final</version>
             <!--TODO fix split package-->
-            <!--<exclusions>-->
-            <!--<exclusion>-->
-            <!--<groupId>org.jboss.spec.javax.transaction</groupId>-->
-            <!--<artifactId>jboss-transaction-api_1.2_spec</artifactId>-->
-            <!--</exclusion>-->
-            <!--</exclusions>-->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jboss.spec.javax.transaction</groupId>
+                    <artifactId>jboss-transaction-api_1.2_spec</artifactId>
+                </exclusion>
+            </exclusions>
 
         </dependency>
 
@@ -140,13 +130,13 @@
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-launcher</artifactId>
-            <version>1.1.0-M1</version>
+            <version>1.1.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-runner</artifactId>
-            <version>1.1.0-M1</version>
+            <version>1.1.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -172,42 +162,26 @@
                     </execution>
                 </executions>
             </plugin>
-            <!--TODO re-visit after spring comes out to verify dependencies-->
-            <!--<plugin>-->
-            <!--<groupId>org.apache.maven.plugins</groupId>-->
-            <!--<artifactId>maven-jdeps-plugin</artifactId>-->
-            <!--<version>3.1.0</version>-->
-            <!--<executions>-->
-            <!--<execution>-->
-            <!--<goals>-->
-            <!--<goal>jdkinternals</goal>-->
-            <!--<goal>test-jdkinternals</goal>-->
-            <!--</goals>-->
-            <!--</execution>-->
-            <!--</executions>-->
-            <!--</plugin>-->
-
-            k
-            <!--<plugin>-->
-                <!--<groupId>org.apache.maven.plugins</groupId>-->
-                <!--<artifactId>maven-dependency-plugin</artifactId>-->
-                <!--<version>3.0.2</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>copy-dependencies</id>-->
-                        <!--<phase>package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>copy-dependencies</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<outputDirectory>${project.build.directory}/alternateLocation</outputDirectory>-->
-                            <!--<overWriteReleases>false</overWriteReleases>-->
-                            <!--<overWriteSnapshots>false</overWriteSnapshots>-->
-                            <!--<overWriteIfNewer>true</overWriteIfNewer>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.0.2</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/alternateLocation</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>false</overWriteSnapshots>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.7.0</version>
@@ -219,15 +193,16 @@
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.19.1</version> <!-- TODO upgrade when the plugin is fixed from heap problems 2.20.1 and works properly -->
+                <version>2.21.0</version>
                 <configuration>
-                    <argLine>--add-modules=java.xml.bind ${argLine}</argLine> <!-- ${argLine} is for jacoco https://stackoverflow.com/questions/23190107/cannot-use-jacoco-jvm-args-and-surefire-jvm-args-together-in-maven-->
+                    <argLine>--add-modules=java.xml.bind ${argLine}
+                    </argLine> <!-- ${argLine} is for jacoco https://stackoverflow.com/questions/23190107/cannot-use-jacoco-jvm-args-and-surefire-jvm-args-together-in-maven-->
                 </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>org.junit.platform</groupId>
                         <artifactId>junit-platform-surefire-provider</artifactId>
-                        <version>1.1.0-M1</version>
+                        <version>1.1.0</version>
                     </dependency>
                     <dependency>
                         <groupId>org.junit.jupiter</groupId>
