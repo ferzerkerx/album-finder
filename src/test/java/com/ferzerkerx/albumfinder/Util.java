@@ -3,7 +3,13 @@ package com.ferzerkerx.albumfinder;
 import com.ferzerkerx.albumfinder.model.Album;
 import com.ferzerkerx.albumfinder.model.Artist;
 
-public class Util {
+public final class Util {
+
+
+    private Util() {
+        throw new AssertionError();
+    }
+
     public static Artist createArtist() {
         Artist artist = new Artist();
         artist.setName("someArtist");
