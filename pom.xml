@@ -219,7 +219,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.21.0</version>
+                <version>2.19.1</version>
                 <configuration>
                     <argLine>--add-modules=java.xml.bind ${argLine}
                     </argLine> <!-- ${argLine} is for jacoco https://stackoverflow.com/questions/23190107/cannot-use-jacoco-jvm-args-and-surefire-jvm-args-together-in-maven-->
