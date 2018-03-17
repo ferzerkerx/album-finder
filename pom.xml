@@ -69,7 +69,6 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>5.2.12.Final</version>
-            <!--TODO fix split package-->
             <exclusions>
                 <exclusion>
                     <groupId>org.jboss.spec.javax.transaction</groupId>
