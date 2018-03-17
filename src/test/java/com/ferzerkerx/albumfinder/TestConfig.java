@@ -1,9 +1,8 @@
 package com.ferzerkerx.albumfinder;
 
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.PropertySource;
+import com.ferzerkerx.albumfinder.service.ResponseEntityService;
+import com.ferzerkerx.albumfinder.service.ResponseEntityServiceImpl;
+import org.springframework.context.annotation.*;
 
 @Configuration
 @PropertySource("classpath:test_application.properties")
@@ -13,5 +12,9 @@ import org.springframework.context.annotation.PropertySource;
 @Import({DbConfig.class, SecurityWebConfig.class})
 public class TestConfig  {
 
+    @Bean
+    public ResponseEntityService responseEntityService() {
+        return new ResponseEntityServiceImpl();
+    }
 
 }

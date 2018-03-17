@@ -2,44 +2,26 @@ package com.ferzerkerx.albumfinder.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ferzerkerx.albumfinder.BaseIntegrationTest;
-import org.junit.Before;
+import com.ferzerkerx.albumfinder.TestConfig;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
-
-public abstract class BaseControllerTest extends BaseIntegrationTest {
-
-    private MockMvc mockMvc;
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = {TestConfig.class})
+abstract class BaseControllerTest {
 
     @Autowired
-    private WebApplicationContext webApplicationContext;
-
-    @Before
-    public void setUp() {
-        mockMvc = createMockMvc();
-    }
-
+    private MockMvc mockMvc;
 
     MockMvc getMockMvc() {
         return mockMvc;
     }
-
-    WebApplicationContext getWebApplicationContext() {
-        return webApplicationContext;
-    }
-
-    private MockMvc createMockMvc() {
-        return MockMvcBuilders.webAppContextSetup(getWebApplicationContext()).apply(springSecurity()).build();
-    }
-
-
 
     static RequestPostProcessor admin() {
         return user("admin").password("password").roles("ADMIN");

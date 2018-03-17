@@ -2,24 +2,25 @@ package com.ferzerkerx.albumfinder.service;
 
 import com.ferzerkerx.albumfinder.model.Meta;
 import com.ferzerkerx.albumfinder.model.Response;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class ResponseEntityServiceTest {
+
+class ResponseEntityServiceTest {
 
     private ResponseEntityService responseEntityService;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         responseEntityService = new ResponseEntityServiceImpl();
     }
 
     @Test
-    public void data() {
+    void data() {
         String testData = "someData";
         ResponseEntity<Response<String>> response = responseEntityService.data(testData);
         assertNotNull(response);
@@ -31,7 +32,7 @@ public class ResponseEntityServiceTest {
     }
 
     @Test
-    public void unexpectedError() {
+    void unexpectedError() {
         String errorMessage = "someError";
         ResponseEntity<Response<Object>> response = responseEntityService.unexpectedError(new RuntimeException(errorMessage));
         assertNotNull(response);
@@ -44,7 +45,7 @@ public class ResponseEntityServiceTest {
     }
 
     @Test
-    public void status() {
+    void status() {
         HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
         ResponseEntity<Response<String>> response = responseEntityService.status(httpStatus);
         assertNotNull(response);

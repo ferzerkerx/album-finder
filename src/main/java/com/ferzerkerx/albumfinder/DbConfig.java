@@ -1,5 +1,6 @@
 package com.ferzerkerx.albumfinder;
 
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -7,7 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -41,6 +43,17 @@ public class DbConfig {
         sessionFactory.setHibernateProperties(hibernateProperties());
 
         return sessionFactory;
+    }
+
+    @Bean
+    public HibernateTransactionManager transactionManager(
+            SessionFactory sessionFactory) {
+
+        HibernateTransactionManager txManager
+                = new HibernateTransactionManager();
+        txManager.setSessionFactory(sessionFactory);
+
+        return txManager;
     }
 
     private Properties hibernateProperties() {

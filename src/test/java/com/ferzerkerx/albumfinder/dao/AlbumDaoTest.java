@@ -1,18 +1,19 @@
 package com.ferzerkerx.albumfinder.dao;
 
-import java.util.List;
 import com.ferzerkerx.albumfinder.BaseIntegrationTest;
 import com.ferzerkerx.albumfinder.model.Album;
 import com.ferzerkerx.albumfinder.model.Artist;
-import org.hibernate.FlushMode;
-import org.hibernate.SessionFactory;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.junit.Assert.*;
+import java.util.List;
 
-public class AlbumDaoTest extends BaseIntegrationTest {
+import static com.ferzerkerx.albumfinder.Util.createAlbum;
+import static com.ferzerkerx.albumfinder.Util.createArtist;
+import static org.junit.jupiter.api.Assertions.*;
+
+class AlbumDaoTest extends BaseIntegrationTest {
 
     @Autowired
     private AlbumDao albumDao;
@@ -22,14 +23,14 @@ public class AlbumDaoTest extends BaseIntegrationTest {
 
     private Artist artist;
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         artist = createArtist();
         artistDao.insert(artist);
     }
 
     @Test
-    public void deleteRecordsByArtistId() {
+    void deleteRecordsByArtistId() {
         Album album = createAlbum(artist);
         albumDao.insert(album);
 
@@ -47,7 +48,7 @@ public class AlbumDaoTest extends BaseIntegrationTest {
     }
 
     @Test
-    public void deleteById() {
+    void deleteById() {
         Album album = createAlbum(artist);
 
         albumDao.insert(album);
@@ -59,7 +60,7 @@ public class AlbumDaoTest extends BaseIntegrationTest {
     }
 
     @Test
-    public void delete() {
+    void delete() {
         Album album = createAlbum(artist);
 
         albumDao.insert(album);
@@ -71,7 +72,7 @@ public class AlbumDaoTest extends BaseIntegrationTest {
     }
 
     @Test
-    public void update() {
+    void update() {
         Album album = createAlbum(artist);
         albumDao.insert(album);
 
@@ -89,7 +90,7 @@ public class AlbumDaoTest extends BaseIntegrationTest {
     }
 
     @Test
-    public void insert() {
+    void insert() {
         Album album = createAlbum(artist);
         albumDao.insert(album);
 
@@ -97,7 +98,7 @@ public class AlbumDaoTest extends BaseIntegrationTest {
     }
 
     @Test
-    public void findByCriteria() {
+    void findByCriteria() {
         Album album = createAlbum(artist);
         albumDao.insert(album);
 
@@ -127,7 +128,7 @@ public class AlbumDaoTest extends BaseIntegrationTest {
     }
 
     @Test
-    public void findRecordsByArtist() {
+    void findRecordsByArtist() {
         List<Album> emptyRecordsByArtist = albumDao.findRecordsByArtist(artist.getId());
         assertNotNull(emptyRecordsByArtist);
         assertTrue(emptyRecordsByArtist.isEmpty());

@@ -1,7 +1,5 @@
 package com.ferzerkerx.albumfinder.service;
 
-import java.util.Collection;
-import java.util.List;
 import com.ferzerkerx.albumfinder.dao.AlbumDao;
 import com.ferzerkerx.albumfinder.dao.ArtistDao;
 import com.ferzerkerx.albumfinder.model.Album;
@@ -9,6 +7,9 @@ import com.ferzerkerx.albumfinder.model.Artist;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collection;
+import java.util.List;
 
 @Transactional
 @Service

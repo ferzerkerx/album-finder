@@ -1,13 +1,17 @@
 package com.ferzerkerx.albumfinder.dao;
 
-import java.util.List;
 import com.ferzerkerx.albumfinder.model.Album;
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.Criteria;
-import org.hibernate.FetchMode;
-import org.hibernate.Query;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.CollectionUtils;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.LinkedList;
+import java.util.List;
 
 
 @Repository
@@ -23,24 +27,40 @@ public class AlbumDao extends BaseDao<Album> {
         .executeUpdate();
     }
 
-
     public List<Album> findRecordsByArtist(int artistId) {
-        Query query = createQuery("SELECT a FROM Album a WHERE a.artist.id = :id").setParameter("id", artistId);
-        return listAndCast(query);
+        Query<Album> query = createTypedQuery("SELECT a FROM Album a WHERE a.artist.id = :id")
+                .setParameter("id", artistId);
+        return query.getResultList();
     }
 
 
     @Override
     public List<Album> findByCriteria(Album example) {
-        Criteria criteria = createCriteria().setMaxResults(MAX_RESULTS).setFetchMode("artist", FetchMode.JOIN);
 
+        CriteriaBuilder builder = getCriteriaBuilder();
+
+        CriteriaQuery<Album> criteria = createCriteriaQuery();
+        Root<Album> root = criteria.from(getClazz());
+        root.fetch("artist");
+        criteria.select(root);
+
+        List<Predicate> predicates = new LinkedList<>();
         if (StringUtils.isNotEmpty(example.getTitle())) {
-            criteria.add(Restrictions.ilike("title", "%" + example.getTitle() + "%"));
+            Predicate titlePredicate = builder.like(root.get("title"), "%" + example.getTitle() + "%");
+            predicates.add(titlePredicate);
         }
 
         if (StringUtils.isNotEmpty(example.getYear())) {
-            criteria.add(Restrictions.ilike("year", example.getYear()));
+            Predicate yearPredicate = builder.equal(root.get("year"), example.getYear());
+            predicates.add(yearPredicate);
         }
-        return listAndCast(criteria);
+
+        if (!CollectionUtils.isEmpty(predicates)) {
+            criteria.where(predicates.toArray(new Predicate[predicates.size()]));
+        }
+
+        Query<Album> query = createQuery(criteria);
+        query.setMaxResults(MAX_RESULTS);
+        return query.getResultList();
     }
 }

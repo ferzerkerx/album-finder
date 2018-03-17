@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-class ResponseEntityServiceImpl implements ResponseEntityService {
+public class ResponseEntityServiceImpl implements ResponseEntityService {
 
     private static final Logger LOG = LoggerFactory.getLogger(ResponseEntityServiceImpl.class);
 

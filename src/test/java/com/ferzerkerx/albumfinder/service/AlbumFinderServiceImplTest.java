@@ -4,46 +4,46 @@ import com.ferzerkerx.albumfinder.dao.AlbumDao;
 import com.ferzerkerx.albumfinder.dao.ArtistDao;
 import com.ferzerkerx.albumfinder.model.Album;
 import com.ferzerkerx.albumfinder.model.Artist;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.Verifier;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
-public class AlbumFinderServiceImplTest {
+class AlbumFinderServiceImplTest {
 
     private AlbumDao albumDao;
     private AlbumFinderService albumFinderService;
     private ArtistDao artistDao;
 
-    @Rule
-    public Verifier collector = new Verifier() {
-        @Override
-        protected void verify() {
-            verifyNoMoreInteractions(albumDao);
-            verifyNoMoreInteractions(artistDao);
-        }
-    };
 
-    @Before
-    public void setUp() {
+    @BeforeEach
+    void setUp() {
         artistDao = mock(ArtistDao.class);
         albumDao = mock(AlbumDao.class);
         albumFinderService = new AlbumFinderServiceImpl(artistDao, albumDao);
     }
 
+    @AfterEach
+    void tearDown() {
+        verifyNoMoreInteractions(albumDao);
+        verifyNoMoreInteractions(artistDao);
+    }
+
     @Test
-    public void deleteAlbumById() {
+    void deleteAlbumById() {
         int albumId = 1;
         albumFinderService.deleteAlbumById(albumId);
         verify(albumDao).deleteById(albumId);
     }
 
     @Test
-    public void deleteArtistWithAlbumsById() {
+    void deleteArtistWithAlbumsById() {
         int artistId = 1;
         albumFinderService.deleteArtistWithAlbumsById(artistId);
         verify(albumDao).deleteRecordsByArtistId(artistId);
@@ -51,21 +51,21 @@ public class AlbumFinderServiceImplTest {
     }
 
     @Test
-    public void updateAlbum() {
+    void updateAlbum() {
         Album album = new Album();
         albumFinderService.updateAlbum(album);
         verify(albumDao).update(album);
     }
 
     @Test
-    public void updateArtist() {
+    void updateArtist() {
         Artist artist = new Artist();
         albumFinderService.updateArtist(artist);
         verify(artistDao).update(artist);
     }
 
     @Test
-    public void saveAlbum() {
+    void saveAlbum() {
         Album album = new Album();
         album.setTitle("someTitle");
         album.setYear("1995");
@@ -85,28 +85,28 @@ public class AlbumFinderServiceImplTest {
     }
 
     @Test
-    public void saveArtist() {
+    void saveArtist() {
         Artist artist = new Artist();
         albumFinderService.saveArtist(artist);
         verify(artistDao).insert(artist);
     }
 
     @Test
-    public void findAlbumsByArtist() {
+    void findAlbumsByArtist() {
         int artistId = 1;
         albumFinderService.findAlbumsByArtist(artistId);
         verify(albumDao).findRecordsByArtist(artistId);
     }
 
     @Test
-    public void findAlbumById() {
+    void findAlbumById() {
         int albumId = 1;
         albumFinderService.findAlbumById(albumId);
         verify(albumDao).findById(albumId);
     }
 
     @Test
-    public void findMatchedAlbumByCriteria() {
+    void findMatchedAlbumByCriteria() {
         ArgumentCaptor<Album> albumArgumentCaptor = ArgumentCaptor.forClass(Album.class);
 
         String title = "someTitle";
@@ -121,22 +121,23 @@ public class AlbumFinderServiceImplTest {
     }
 
     @Test
-    public void findMatchedArtistsByName() {
+    void findMatchedArtistsByName() {
         String name = "name";
         albumFinderService.findMatchedArtistsByName(name);
         verify(artistDao).findMatchedArtistsByName(name);
     }
 
     @Test
-    public void findArtistById() {
+    void findArtistById() {
         int artistId = 1;
         albumFinderService.findArtistById(artistId);
         verify(artistDao).findById(artistId);
     }
 
     @Test
-    public void findAllArtists() {
+    void findAllArtists() {
         albumFinderService.findAllArtists();
         verify(artistDao).findAllArtists();
     }
+
 }
