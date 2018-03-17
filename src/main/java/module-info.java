@@ -8,7 +8,6 @@ module ferzerkerx.albumfinder {
     requires spring.jdbc;
     requires spring.orm;
     requires java.sql;
-    requires jackson.annotations;
     requires java.validation;
     requires spring.boot.autoconfigure;
     requires spring.tx;
@@ -20,6 +19,7 @@ module ferzerkerx.albumfinder {
     requires spring.web;
     requires slf4j.api;
     requires java.naming;
+    requires com.fasterxml.jackson.annotation;
 
     exports com.ferzerkerx.albumfinder;
 }
