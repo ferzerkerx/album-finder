@@ -10,6 +10,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 
 public class CsrfHeaderFilter extends OncePerRequestFilter {
 
@@ -21,13 +22,17 @@ public class CsrfHeaderFilter extends OncePerRequestFilter {
         if (csrf != null) {
             Cookie cookie = WebUtils.getCookie(request, "XSRF-TOKEN");
             String token = csrf.getToken();
-            if (cookie == null || (token != null && !token.equals(cookie.getValue()))) {
+            if (isCsrfCookieNotSet(cookie, token)) {
                 cookie = new Cookie("XSRF-TOKEN", token);
                 cookie.setPath("/");
                 response.addCookie(cookie);
             }
         }
         filterChain.doFilter(request, response);
+    }
+
+    private static boolean isCsrfCookieNotSet(Cookie cookie, String token) {
+        return Objects.isNull(cookie) || (token != null && !token.equals(cookie.getValue()));
     }
 
 }
