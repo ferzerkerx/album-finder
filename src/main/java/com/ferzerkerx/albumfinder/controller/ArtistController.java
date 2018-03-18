@@ -21,29 +21,29 @@ public class ArtistController extends AbstractController {
         this.albumFinderService = albumFinderService;
     }
 
-    @RequestMapping(value = {"/admin/artist"}, method = RequestMethod.POST)
+    @PostMapping(value = {"/admin/artist"})
     public ResponseEntity<Response<Artist>> saveArtist(@RequestBody Artist artist) {
         albumFinderService.saveArtist(artist);
         return data(artist);
     }
 
-    @RequestMapping(value = {"/artist/{id}"}, method = RequestMethod.GET)
+    @GetMapping(value = {"/artist/{id}"})
     public ResponseEntity<Response<Artist>> findArtistById(@PathVariable(value = "id") int artistId) {
         return data(albumFinderService.findArtistById(artistId));
     }
 
-    @RequestMapping(value = {"/admin/artist/{id}"}, method = RequestMethod.DELETE)
+    @DeleteMapping(value = {"/admin/artist/{id}"})
     public void deleteArtistById(@PathVariable(value = "id") int artistId) {
         albumFinderService.deleteArtistWithAlbumsById(artistId);
     }
 
-    @RequestMapping(value = {"/admin/artist/{id}"}, method = RequestMethod.PUT)
+    @PutMapping(value = {"/admin/artist/{id}"})
     public ResponseEntity<Response<Artist>> updateArtistById(@PathVariable(value = "id") int artistId, @RequestBody Artist artist) {
         artist.setId(artistId);
         return data(albumFinderService.updateArtist(artist));
     }
 
-    @RequestMapping(value = {"/artist/search"}, method = RequestMethod.GET)
+    @GetMapping(value = {"/artist/search"})
     public ResponseEntity<Response<List<Artist>>> findMatchedArtistsByName(@RequestParam(value = "name") String name) {
         return data(albumFinderService.findMatchedArtistsByName(name));
     }

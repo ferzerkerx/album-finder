@@ -22,35 +22,35 @@ public class AlbumsController extends AbstractController {
         this.albumFinderService = albumFinderService;
     }
 
-    @RequestMapping(value = {"/artist/{id}/albums"}, method = RequestMethod.GET)
+    @GetMapping(value = {"/artist/{id}/albums"})
     public ResponseEntity<Response<List<Album>>> showRecordsForArtist(@PathVariable(value = "id") int artistId) {
         return data(albumFinderService.findAlbumsByArtist(artistId));
     }
 
-    @RequestMapping(value = {"/admin/artist/{id}/album"}, method = RequestMethod.POST)
+    @PostMapping(value = {"/admin/artist/{id}/album"})
     public ResponseEntity<Response<Album>> saveAlbum(@PathVariable(value = "id") int artistId, @RequestBody Album album) {
         albumFinderService.saveAlbum(artistId, album);
         return data(album);
     }
 
-    @RequestMapping(value = {"/album/{id}"}, method = RequestMethod.GET)
+    @GetMapping(value = {"/album/{id}"})
     public ResponseEntity<Response<Album>> findAlbumById(@PathVariable(value = "id") int recordId) {
         return data(albumFinderService.findAlbumById(recordId));
     }
 
-    @RequestMapping(value = {"/admin/album/{id}"}, method = RequestMethod.DELETE)
+    @DeleteMapping(value = {"/admin/album/{id}"})
     public ResponseEntity<Response<Object>> deleteAlbumById(@PathVariable(value = "id") int albumId) {
         albumFinderService.deleteAlbumById(albumId);
         return status(HttpStatus.OK);
     }
 
-    @RequestMapping(value = {"/admin/album/{id}"}, method = RequestMethod.PUT)
+    @PutMapping(value = {"/admin/album/{id}"})
     public ResponseEntity<Response<Album>> updateAlbumById(@PathVariable(value = "id") int albumId, @RequestBody Album album) {
         album.setId(albumId);
         return data(albumFinderService.updateAlbum(album));
     }
 
-    @RequestMapping(value = {"/albums/search"}, method = RequestMethod.GET)
+    @GetMapping(value = {"/albums/search"})
     public ResponseEntity<Response<List<Album>>> findMatchedRecordByCriteria(
         @RequestParam(value = "title", required = false) String title,
         @RequestParam(value = "year", required = false) String year) {

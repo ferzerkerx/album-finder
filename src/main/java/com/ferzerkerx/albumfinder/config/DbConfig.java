@@ -1,4 +1,4 @@
-package com.ferzerkerx.albumfinder;
+package com.ferzerkerx.albumfinder.config;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

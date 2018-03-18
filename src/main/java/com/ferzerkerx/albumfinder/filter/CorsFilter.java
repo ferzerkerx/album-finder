@@ -1,4 +1,4 @@
-package com.ferzerkerx.albumfinder;
+package com.ferzerkerx.albumfinder.filter;
 
 import org.springframework.web.filter.OncePerRequestFilter;
 
