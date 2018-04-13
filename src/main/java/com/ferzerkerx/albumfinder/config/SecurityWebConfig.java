@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
@@ -18,12 +19,17 @@ import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 @Order(SecurityProperties.BASIC_AUTH_ORDER)
 public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
 
+    private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+
     @Autowired
-    private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+    public SecurityWebConfig(RestAuthenticationEntryPoint restAuthenticationEntryPoint) {
+        this.restAuthenticationEntryPoint = restAuthenticationEntryPoint;
+    }
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
+            .passwordEncoder(NoOpPasswordEncoder.getInstance())
             .withUser("user").password("password").roles("AUTHENTICATED_USER")
             .and()
             .withUser("admin").password("password").roles("ADMIN");
