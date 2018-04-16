@@ -1,6 +1,5 @@
 package com.ferzerkerx.albumfinder;
 
-import com.ferzerkerx.albumfinder.config.DbConfig;
 import com.ferzerkerx.albumfinder.config.SecurityWebConfig;
 import com.ferzerkerx.albumfinder.service.ResponseEntityService;
 import com.ferzerkerx.albumfinder.service.ResponseEntityServiceImpl;
@@ -11,7 +10,7 @@ import org.springframework.context.annotation.*;
 @ComponentScan(basePackages = {
     "com.ferzerkerx.albumfinder",
 })
-@Import({DbConfig.class, SecurityWebConfig.class})
+@Import({SecurityWebConfig.class})
 public class TestConfig  {
 
     @Bean

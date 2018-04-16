@@ -1,28 +1,39 @@
 package com.ferzerkerx.albumfinder.controller;
 
+import com.ferzerkerx.albumfinder.TestConfig;
 import com.ferzerkerx.albumfinder.model.Artist;
 import com.ferzerkerx.albumfinder.service.AlbumFinderService;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
 import java.util.List;
 
 import static com.ferzerkerx.albumfinder.Util.createArtist;
+import static com.ferzerkerx.albumfinder.controller.TestUtil.admin;
+import static com.ferzerkerx.albumfinder.controller.TestUtil.toJson;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = {TestConfig.class})
 @WebMvcTest(ArtistController.class)
-class ArtistControllerTest extends BaseControllerTest {
+class ArtistControllerTest  {
+
+    @Autowired
+    private MockMvc mockMvc;
 
     @MockBean
     private AlbumFinderService albumFinderService;
@@ -31,7 +42,7 @@ class ArtistControllerTest extends BaseControllerTest {
     void deleteArtistById() throws Exception {
         doNothing().when(albumFinderService).deleteArtistWithAlbumsById(1);
 
-        getMockMvc().perform(delete("/admin/artist/1")
+        mockMvc.perform(delete("/admin/artist/1")
             .with(csrf())
             .with(admin())
             .contentType(MediaType.APPLICATION_JSON))
@@ -44,7 +55,7 @@ class ArtistControllerTest extends BaseControllerTest {
 
         when(albumFinderService.findMatchedArtistsByName("someArtist")).thenReturn(artists);
 
-        getMockMvc().perform(get("/artist/search")
+        mockMvc.perform(get("/artist/search")
             .param("name", "someArtist")
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
@@ -59,7 +70,7 @@ class ArtistControllerTest extends BaseControllerTest {
 
         when(albumFinderService.updateArtist(any())).thenReturn(artist);
 
-        getMockMvc().perform(put("/admin/artist/1")
+        mockMvc.perform(put("/admin/artist/1")
             .with(csrf())
             .with(admin())
             .contentType(MediaType.APPLICATION_JSON)
@@ -75,7 +86,7 @@ class ArtistControllerTest extends BaseControllerTest {
 
         when(albumFinderService.findArtistById(1)).thenReturn(artist);
 
-        getMockMvc().perform(get("/artist/1")
+        mockMvc.perform(get("/artist/1")
             .param("name", "someArtist")
             .contentType(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
@@ -94,7 +105,7 @@ class ArtistControllerTest extends BaseControllerTest {
             return artist1;
         }).when(albumFinderService).saveArtist(any());
 
-        getMockMvc().perform(post("/admin/artist")
+        mockMvc.perform(post("/admin/artist")
             .with(csrf())
             .with(admin())
             .contentType(MediaType.APPLICATION_JSON)

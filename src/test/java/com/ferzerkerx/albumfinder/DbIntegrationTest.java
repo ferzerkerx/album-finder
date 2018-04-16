@@ -9,10 +9,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = { TestConfig.class})
+@ContextConfiguration(classes = { DbTestConfig.class})
 @Transactional(transactionManager="transactionManager")
 @Rollback
-public abstract class BaseIntegrationTest {
+public abstract class DbIntegrationTest {
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -22,3 +22,4 @@ public abstract class BaseIntegrationTest {
     }
 
 }
+

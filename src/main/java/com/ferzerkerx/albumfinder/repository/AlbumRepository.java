@@ -1,4 +1,4 @@
-package com.ferzerkerx.albumfinder.dao;
+package com.ferzerkerx.albumfinder.repository;
 
 import com.ferzerkerx.albumfinder.model.Album;
 import org.apache.commons.lang3.StringUtils;
@@ -15,9 +15,9 @@ import java.util.List;
 
 
 @Repository
-public class AlbumDao extends BaseDao<Album> {
+public class AlbumRepository extends BaseRepository<Album> {
 
-    public AlbumDao() {
+    public AlbumRepository() {
         super(Album.class);
     }
 

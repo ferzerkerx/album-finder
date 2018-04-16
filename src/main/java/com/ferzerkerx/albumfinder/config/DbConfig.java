@@ -17,11 +17,15 @@ import java.util.Properties;
 @Configuration
 public class DbConfig {
 
-    @Autowired
-    private Environment env;
+    private final Environment env;
 
-    @Value("${album_finder.pre_populate_db}")
+    @Value("${album_finder.pre_populate_db:false}")
     private boolean shouldInsertData;
+
+    @Autowired
+    public DbConfig(Environment env) {
+        this.env = env;
+    }
 
     @Bean
     public DataSource getDataSource() {
@@ -48,12 +52,7 @@ public class DbConfig {
     @Bean
     public HibernateTransactionManager transactionManager(
             SessionFactory sessionFactory) {
-
-        HibernateTransactionManager txManager
-                = new HibernateTransactionManager();
-        txManager.setSessionFactory(sessionFactory);
-
-        return txManager;
+        return new HibernateTransactionManager(sessionFactory);
     }
 
     private Properties hibernateProperties() {

@@ -1,4 +1,4 @@
-package com.ferzerkerx.albumfinder.dao;
+package com.ferzerkerx.albumfinder.repository;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,13 +9,13 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
-public abstract class BaseDao<T> {
+public abstract class BaseRepository<T> {
 
     static final int MAX_RESULTS = 200;
 
     private final Class<T> clazz;
 
-    BaseDao(Class<T> clazz) {
+    BaseRepository(Class<T> clazz) {
         this.clazz = clazz;
     }
 

@@ -1,16 +1,24 @@
 package com.ferzerkerx.albumfinder.controller;
 
+import com.ferzerkerx.albumfinder.TestConfig;
 import com.ferzerkerx.albumfinder.model.Album;
 import com.ferzerkerx.albumfinder.service.AlbumFinderService;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
 import java.util.List;
 
 import static com.ferzerkerx.albumfinder.Util.createAlbum;
+import static com.ferzerkerx.albumfinder.controller.TestUtil.admin;
+import static com.ferzerkerx.albumfinder.controller.TestUtil.toJson;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -20,9 +28,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = {TestConfig.class})
 @WebMvcTest(AlbumsController.class)
-class AlbumsControllerTest extends BaseControllerTest {
+class AlbumsControllerTest {
 
+    @Autowired
+    private MockMvc mockMvc;
+    
     @MockBean
     private AlbumFinderService albumFinderService;
 
@@ -32,7 +45,7 @@ class AlbumsControllerTest extends BaseControllerTest {
 
         when(albumFinderService.findAlbumsByArtist(1)).thenReturn(albums);
 
-        getMockMvc().perform(get("/artist/1/albums").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/artist/1/albums").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data[0].id").value(1))
                 .andExpect(jsonPath("$.data[0].title").value("some title"))
@@ -42,7 +55,7 @@ class AlbumsControllerTest extends BaseControllerTest {
 
     @Test
     void testGetAlbumsEmpty() throws Exception {
-        getMockMvc().perform(get("/artist/1/albums")
+        mockMvc.perform(get("/artist/1/albums")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data").isEmpty());
@@ -53,7 +66,7 @@ class AlbumsControllerTest extends BaseControllerTest {
         Album album = createAlbum();
         when(albumFinderService.findAlbumById(1)).thenReturn(album);
 
-        getMockMvc().perform(get("/album/1")
+        mockMvc.perform(get("/album/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.id").value(1))
@@ -72,7 +85,7 @@ class AlbumsControllerTest extends BaseControllerTest {
             return album1;
         }).when(albumFinderService).saveAlbum(eq(1), any());
 
-        getMockMvc().perform(post("/admin/artist/1/album")
+        mockMvc.perform(post("/admin/artist/1/album")
                 .with(csrf())
                 .with(admin())
                 .contentType(MediaType.APPLICATION_JSON)
@@ -85,7 +98,7 @@ class AlbumsControllerTest extends BaseControllerTest {
     void testDeleteAlbumById() throws Exception {
         doNothing().when(albumFinderService).deleteAlbumById(1);
 
-        getMockMvc().perform(delete("/admin/album/1")
+        mockMvc.perform(delete("/admin/album/1")
                 .with(csrf())
                 .with(admin())
                 .contentType(MediaType.APPLICATION_JSON))
@@ -97,7 +110,7 @@ class AlbumsControllerTest extends BaseControllerTest {
         Album album = createAlbum();
         when(albumFinderService.updateAlbum(any())).thenReturn(album);
 
-        getMockMvc().perform(put("/admin/album/1")
+        mockMvc.perform(put("/admin/album/1")
                 .with(csrf())
                 .with(admin())
                 .contentType(MediaType.APPLICATION_JSON)
@@ -111,7 +124,7 @@ class AlbumsControllerTest extends BaseControllerTest {
         List<Album> albums = Collections.singletonList(createAlbum());
         when(albumFinderService.findMatchedAlbumByCriteria("someTitle", "someYear")).thenReturn(albums);
 
-        getMockMvc().perform(get("/albums/search")
+        mockMvc.perform(get("/albums/search")
                 .param("title", "someTitle")
                 .param("year", "someYear")
                 .contentType(MediaType.APPLICATION_JSON))

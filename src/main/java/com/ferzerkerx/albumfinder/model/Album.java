@@ -18,7 +18,7 @@ public class Album {
     @SequenceGenerator(name = "pk_sequence", sequenceName = "album_album_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
     @Column(name="album_id")
-    private int id;
+    private Integer id;
 
     @NotBlank
     @Column(name="title", nullable = false)
@@ -33,11 +33,11 @@ public class Album {
     @Column(length = 4)
     private String year;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -77,11 +77,19 @@ public class Album {
 
         Album album = (Album) o;
 
-        return new EqualsBuilder().append(id, album.id).append(title, album.title).append(year, album.year).isEquals();
+        return new EqualsBuilder()
+                .append(id, album.id)
+                .append(title, album.title)
+                .append(year, album.year)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(id).append(title).append(year).toHashCode();
+        return new HashCodeBuilder(17, 37)
+                .append(id)
+                .append(title)
+                .append(year)
+                .toHashCode();
     }
 }

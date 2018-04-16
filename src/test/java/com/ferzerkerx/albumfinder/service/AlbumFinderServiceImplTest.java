@@ -1,9 +1,9 @@
 package com.ferzerkerx.albumfinder.service;
 
-import com.ferzerkerx.albumfinder.dao.AlbumDao;
-import com.ferzerkerx.albumfinder.dao.ArtistDao;
 import com.ferzerkerx.albumfinder.model.Album;
 import com.ferzerkerx.albumfinder.model.Artist;
+import com.ferzerkerx.albumfinder.repository.AlbumRepository;
+import com.ferzerkerx.albumfinder.repository.ArtistRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,28 +11,26 @@ import org.mockito.ArgumentCaptor;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.*;
 
 class AlbumFinderServiceImplTest {
 
-    private AlbumDao albumDao;
+    private AlbumRepository albumDao;
     private AlbumFinderService albumFinderService;
-    private ArtistDao artistDao;
+    private ArtistRepository artistRepository;
 
 
     @BeforeEach
     void setUp() {
-        artistDao = mock(ArtistDao.class);
-        albumDao = mock(AlbumDao.class);
-        albumFinderService = new AlbumFinderServiceImpl(artistDao, albumDao);
+        artistRepository = mock(ArtistRepository.class);
+        albumDao = mock(AlbumRepository.class);
+        albumFinderService = new AlbumFinderServiceImpl(artistRepository, albumDao);
     }
 
     @AfterEach
     void tearDown() {
         verifyNoMoreInteractions(albumDao);
-        verifyNoMoreInteractions(artistDao);
+        verifyNoMoreInteractions(artistRepository);
     }
 
     @Test
@@ -47,7 +45,7 @@ class AlbumFinderServiceImplTest {
         int artistId = 1;
         albumFinderService.deleteArtistWithAlbumsById(artistId);
         verify(albumDao).deleteRecordsByArtistId(artistId);
-        verify(artistDao).deleteById(artistId);
+        verify(artistRepository).deleteById(artistId);
     }
 
     @Test
@@ -61,7 +59,7 @@ class AlbumFinderServiceImplTest {
     void updateArtist() {
         Artist artist = new Artist();
         albumFinderService.updateArtist(artist);
-        verify(artistDao).update(artist);
+        verify(artistRepository).update(artist);
     }
 
     @Test
@@ -69,7 +67,7 @@ class AlbumFinderServiceImplTest {
         Album album = new Album();
         album.setTitle("someTitle");
         album.setYear("1995");
-        int artistId = 1;
+        Integer artistId = 1;
 
         ArgumentCaptor<Album> albumArgumentCaptor = ArgumentCaptor.forClass(Album.class);
 
@@ -88,7 +86,7 @@ class AlbumFinderServiceImplTest {
     void saveArtist() {
         Artist artist = new Artist();
         albumFinderService.saveArtist(artist);
-        verify(artistDao).insert(artist);
+        verify(artistRepository).insert(artist);
     }
 
     @Test
@@ -124,20 +122,20 @@ class AlbumFinderServiceImplTest {
     void findMatchedArtistsByName() {
         String name = "name";
         albumFinderService.findMatchedArtistsByName(name);
-        verify(artistDao).findMatchedArtistsByName(name);
+        verify(artistRepository).findMatchedArtistsByName(name);
     }
 
     @Test
     void findArtistById() {
         int artistId = 1;
         albumFinderService.findArtistById(artistId);
-        verify(artistDao).findById(artistId);
+        verify(artistRepository).findById(artistId);
     }
 
     @Test
     void findAllArtists() {
         albumFinderService.findAllArtists();
-        verify(artistDao).findAllArtists();
+        verify(artistRepository).findAllArtists();
     }
 
 }

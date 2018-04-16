@@ -18,7 +18,7 @@ public class Artist {
     @SequenceGenerator(name = "pk_sequence", sequenceName = "artist_artist_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
     @Column(name="artist_id")
-    private int id;
+    private Integer id;
 
     @NotBlank
     @Column(name="name", nullable = false)
@@ -28,11 +28,11 @@ public class Artist {
     @OneToMany(mappedBy="artist", cascade={CascadeType.DETACH}, fetch = FetchType.LAZY)
     private List<Album> albums;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

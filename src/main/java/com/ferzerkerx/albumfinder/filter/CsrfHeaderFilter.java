@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
+
 public class CsrfHeaderFilter extends OncePerRequestFilter {
 
     @Override
@@ -32,7 +35,7 @@ public class CsrfHeaderFilter extends OncePerRequestFilter {
     }
 
     private static boolean isCsrfCookieNotSet(Cookie cookie, String token) {
-        return Objects.isNull(cookie) || (token != null && !token.equals(cookie.getValue()));
+        return isNull(cookie) || (nonNull(token) && !Objects.equals(token, cookie.getValue()));
     }
 
 }

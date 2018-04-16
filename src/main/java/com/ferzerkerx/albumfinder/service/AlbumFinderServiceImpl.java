@@ -1,9 +1,9 @@
 package com.ferzerkerx.albumfinder.service;
 
-import com.ferzerkerx.albumfinder.dao.AlbumDao;
-import com.ferzerkerx.albumfinder.dao.ArtistDao;
 import com.ferzerkerx.albumfinder.model.Album;
 import com.ferzerkerx.albumfinder.model.Artist;
+import com.ferzerkerx.albumfinder.repository.AlbumRepository;
+import com.ferzerkerx.albumfinder.repository.ArtistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,12 +14,12 @@ import java.util.List;
 @Transactional
 @Service
 public class AlbumFinderServiceImpl implements AlbumFinderService {
-    private final ArtistDao artistDao;
-    private final AlbumDao albumDao;
+    private final ArtistRepository artistRepository;
+    private final AlbumRepository albumDao;
 
     @Autowired
-    public AlbumFinderServiceImpl(ArtistDao artistDao, AlbumDao albumDao) {
-        this.artistDao = artistDao;
+    public AlbumFinderServiceImpl(ArtistRepository artistRepository, AlbumRepository albumDao) {
+        this.artistRepository = artistRepository;
         this.albumDao = albumDao;
     }
 
@@ -31,22 +31,22 @@ public class AlbumFinderServiceImpl implements AlbumFinderService {
     @Override
     public void deleteArtistWithAlbumsById(int artistId) {
         albumDao.deleteRecordsByArtistId(artistId);
-        artistDao.deleteById(artistId);
+        artistRepository.deleteById(artistId);
     }
 
     @Override
     public Collection<Artist> findAllArtists() {
-        return artistDao.findAllArtists();
+        return artistRepository.findAllArtists();
     }
 
     @Override
     public Artist findArtistById(int artistId) {
-        return artistDao.findById(artistId);
+        return artistRepository.findById(artistId);
     }
 
     @Override
     public List<Artist> findMatchedArtistsByName(String name) {
-        return artistDao.findMatchedArtistsByName(name);
+        return artistRepository.findMatchedArtistsByName(name);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class AlbumFinderServiceImpl implements AlbumFinderService {
 
     @Override
     public void saveArtist(Artist artist) {
-        artistDao.insert(artist);
+        artistRepository.insert(artist);
     }
 
     @Override
@@ -83,7 +83,7 @@ public class AlbumFinderServiceImpl implements AlbumFinderService {
 
     @Override
     public Artist updateArtist(Artist artist) {
-        return artistDao.update(artist);
+        return artistRepository.update(artist);
     }
 
     @Override

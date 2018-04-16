@@ -1,4 +1,4 @@
-package com.ferzerkerx.albumfinder.dao;
+package com.ferzerkerx.albumfinder.repository;
 
 import com.ferzerkerx.albumfinder.model.Artist;
 import org.hibernate.query.Query;
@@ -7,9 +7,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class ArtistDao extends BaseDao<Artist> {
+public class ArtistRepository extends BaseRepository<Artist> {
 
-    public ArtistDao() {
+    public ArtistRepository() {
         super(Artist.class);
     }
 

@@ -1,6 +1,6 @@
-package com.ferzerkerx.albumfinder.dao;
+package com.ferzerkerx.albumfinder.repository;
 
-import com.ferzerkerx.albumfinder.BaseIntegrationTest;
+import com.ferzerkerx.albumfinder.DbIntegrationTest;
 import com.ferzerkerx.albumfinder.model.Album;
 import com.ferzerkerx.albumfinder.model.Artist;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,20 +13,20 @@ import static com.ferzerkerx.albumfinder.Util.createAlbum;
 import static com.ferzerkerx.albumfinder.Util.createArtist;
 import static org.junit.jupiter.api.Assertions.*;
 
-class AlbumDaoTest extends BaseIntegrationTest {
+class AlbumDaoTest extends DbIntegrationTest {
 
     @Autowired
-    private AlbumDao albumDao;
+    private AlbumRepository albumDao;
 
     @Autowired
-    private ArtistDao artistDao;
+    private ArtistRepository artistRepository;
 
     private Artist artist;
 
     @BeforeEach
     void setUp() {
         artist = createArtist();
-        artistDao.insert(artist);
+        artistRepository.insert(artist);
     }
 
     @Test
@@ -64,7 +64,7 @@ class AlbumDaoTest extends BaseIntegrationTest {
         Album album = createAlbum(artist);
 
         albumDao.insert(album);
-        int id = album.getId();
+        Integer id = album.getId();
         assertNotNull(albumDao.findById(id));
 
         albumDao.delete(album);
