@@ -12,6 +12,8 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 
 import javax.sql.DataSource;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 @Configuration
@@ -29,14 +31,18 @@ public class DbConfig {
 
     @Bean
     public DataSource getDataSource() {
-        EmbeddedDatabaseBuilder embeddedDatabaseBuilder =
-            new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.HSQL).addScript("sql/create-db.sql");
+        return new EmbeddedDatabaseBuilder()
+                .setType(EmbeddedDatabaseType.HSQL)
+                .addScripts(initSqlFiles())
+                .build();
+    }
 
-            if (shouldInsertData) {
-                embeddedDatabaseBuilder.addScript("sql/insert-data.sql");
-            }
-
-        return embeddedDatabaseBuilder.build();
+    private String[] initSqlFiles() {
+        List<String> sqlFiles = new ArrayList<>(List.of("sql/create-db.sql"));
+        if (shouldInsertData) {
+            sqlFiles.add("sql/insert-data.sql");
+        }
+        return sqlFiles.toArray(new String[0]);
     }
 
     @Bean

@@ -4,8 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,13 +17,13 @@ import static java.util.Objects.requireNonNull;
 @RestController
 public class AppController {
 
-    @RequestMapping("/user")
+    @PostMapping("/user")
     public Object getUserInfo(Authentication authentication) {
         requireNonNull(authentication);
         return authentication.getPrincipal();
     }
 
-    @GetMapping(value="/logout")
+    @PostMapping(value="/logout")
     @ResponseStatus(HttpStatus.OK)
     public void logout (HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

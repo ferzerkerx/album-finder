@@ -12,7 +12,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static com.ferzerkerx.albumfinder.controller.TestUtil.admin;
 import static com.ferzerkerx.albumfinder.controller.TestUtil.authenticatedUser;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -26,15 +27,16 @@ class AppControllerTest {
 
     @Test
     void logout() throws Exception {
-        mockMvc.perform(get("/logout")
+        mockMvc.perform(post("/logout")
+                .with(authenticatedUser()).with(csrf())
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().is3xxRedirection());
     }
 
     @Test
-    void getUserInfoAdmin() throws Exception {
-        mockMvc.perform(get("/user")
-                .with(admin())
+    void adminLogin() throws Exception {
+        mockMvc.perform(post("/user")
+                .with(admin()).with(csrf())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.username").value("admin"))
@@ -42,9 +44,9 @@ class AppControllerTest {
     }
 
     @Test
-    void getUserInfoUser() throws Exception {
-        mockMvc.perform(get("/user")
-                .with(authenticatedUser())
+    void userLogin() throws Exception {
+        mockMvc.perform(post("/user")
+                .with(authenticatedUser()).with(csrf())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.username").value("user"))

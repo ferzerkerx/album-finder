@@ -2,7 +2,6 @@ package com.ferzerkerx.albumfinder.filter;
 
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.filter.OncePerRequestFilter;
-import org.springframework.web.util.WebUtils;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -21,16 +20,20 @@ public class CsrfHeaderFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
         HttpServletResponse response, FilterChain filterChain)
         throws ServletException, IOException {
+
         CsrfToken csrf = (CsrfToken) request.getAttribute(CsrfToken.class.getName());
-        if (csrf != null) {
-            Cookie cookie = WebUtils.getCookie(request, "XSRF-TOKEN");
-            String token = csrf.getToken();
-            if (isCsrfCookieNotSet(cookie, token)) {
-                cookie = new Cookie("XSRF-TOKEN", token);
-                cookie.setPath("/");
-                response.addCookie(cookie);
-            }
+        if (nonNull(csrf)) {
+            response.setHeader(csrf.getHeaderName(), csrf.getToken());
         }
+//        if (nonNull(csrf)) {
+//            Cookie cookie = WebUtils.getCookie(request, "XSRF-TOKEN");
+//            String token = csrf.getToken();
+//            if (isCsrfCookieNotSet(cookie, token)) {
+//                cookie = new Cookie("XSRF-TOKEN", token);
+//                cookie.setPath("/");
+//                response.addCookie(cookie);
+//            }
+//        }
         filterChain.doFilter(request, response);
     }
 

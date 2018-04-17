@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -37,22 +38,28 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            .cors().and()
-            .httpBasic()
+            .cors()
                 .and()
-            .authorizeRequests()
-            .antMatchers("/admin/**").access("hasRole('ADMIN')")
-                .antMatchers("/**").permitAll()
-            .anyRequest().authenticated()
+            .csrf()
+                .csrfTokenRepository(csrfTokenRepository())
                 .and()
                 .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
-                .csrf()
-                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                .httpBasic()
+                .and()
+            .authorizeRequests()
+                .antMatchers("/admin/**").access("hasRole('ADMIN')")
+                .antMatchers("/**").permitAll()
+//            .anyRequest().authenticated()
                 .and()
             .logout()
                 .deleteCookies("remove")
                 .invalidateHttpSession(true)
                 .logoutUrl("/logout");
+    }
+
+    @Bean
+    public CsrfTokenRepository csrfTokenRepository() {
+        return CookieCsrfTokenRepository.withHttpOnlyFalse();
     }
 
     @Bean
