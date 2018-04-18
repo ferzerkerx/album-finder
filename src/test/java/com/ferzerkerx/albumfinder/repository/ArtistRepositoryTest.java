@@ -2,7 +2,6 @@ package com.ferzerkerx.albumfinder.repository;
 
 import com.ferzerkerx.albumfinder.DbIntegrationTest;
 import com.ferzerkerx.albumfinder.model.Artist;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,7 +10,6 @@ import java.util.List;
 import static com.ferzerkerx.albumfinder.Util.createArtist;
 import static org.junit.jupiter.api.Assertions.*;
 
-@Disabled
 class ArtistRepositoryTest extends DbIntegrationTest {
 
     @Autowired
