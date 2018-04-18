@@ -1,7 +1,7 @@
 package com.ferzerkerx.albumfinder.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -12,6 +12,7 @@ import javax.validation.constraints.Pattern;
 @Entity
 @Table(name="album")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Album {
 
     @Id
@@ -26,7 +27,6 @@ public class Album {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "artist_id", nullable = false, updatable = false)
-    @JsonIgnore
     private Artist artist;
 
     @Pattern(regexp="\\d{4}")

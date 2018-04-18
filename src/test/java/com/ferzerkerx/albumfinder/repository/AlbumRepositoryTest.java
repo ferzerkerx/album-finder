@@ -13,10 +13,10 @@ import static com.ferzerkerx.albumfinder.Util.createAlbum;
 import static com.ferzerkerx.albumfinder.Util.createArtist;
 import static org.junit.jupiter.api.Assertions.*;
 
-class AlbumDaoTest extends DbIntegrationTest {
+class AlbumRepositoryTest extends DbIntegrationTest {
 
     @Autowired
-    private AlbumRepository albumDao;
+    private AlbumRepository albumRepository;
 
     @Autowired
     private ArtistRepository artistRepository;
@@ -32,17 +32,17 @@ class AlbumDaoTest extends DbIntegrationTest {
     @Test
     void deleteRecordsByArtistId() {
         Album album = createAlbum(artist);
-        albumDao.insert(album);
+        albumRepository.insert(album);
 
         flush();
 
-        List<Album> recordsByArtist = albumDao.findRecordsByArtist(artist.getId());
+        List<Album> recordsByArtist = albumRepository.findRecordsByArtist(artist.getId());
         assertNotNull(recordsByArtist);
         assertEquals(1, recordsByArtist.size());
 
-        albumDao.deleteRecordsByArtistId(artist.getId());
+        albumRepository.deleteRecordsByArtistId(artist.getId());
 
-        List<Album> emptyByArtist = albumDao.findRecordsByArtist(artist.getId());
+        List<Album> emptyByArtist = albumRepository.findRecordsByArtist(artist.getId());
         assertNotNull(emptyByArtist);
         assertTrue(emptyByArtist.isEmpty());
     }
@@ -51,40 +51,40 @@ class AlbumDaoTest extends DbIntegrationTest {
     void deleteById() {
         Album album = createAlbum(artist);
 
-        albumDao.insert(album);
+        albumRepository.insert(album);
         int id = album.getId();
-        assertNotNull(albumDao.findById(id));
+        assertNotNull(albumRepository.findById(id));
 
-        albumDao.deleteById(id);
-        assertNull(albumDao.findById(id));
+        albumRepository.deleteById(id);
+        assertNull(albumRepository.findById(id));
     }
 
     @Test
     void delete() {
         Album album = createAlbum(artist);
 
-        albumDao.insert(album);
+        albumRepository.insert(album);
         Integer id = album.getId();
-        assertNotNull(albumDao.findById(id));
+        assertNotNull(albumRepository.findById(id));
 
-        albumDao.delete(album);
-        assertNull(albumDao.findById(id));
+        albumRepository.delete(album);
+        assertNull(albumRepository.findById(id));
     }
 
     @Test
     void update() {
         Album album = createAlbum(artist);
-        albumDao.insert(album);
+        albumRepository.insert(album);
 
-        Album fetchedAlbum = albumDao.findById(album.getId());
+        Album fetchedAlbum = albumRepository.findById(album.getId());
         assertEquals(album, fetchedAlbum);
 
         fetchedAlbum.setTitle("some title");
         fetchedAlbum.setYear("2004");
 
-        albumDao.update(fetchedAlbum);
+        albumRepository.update(fetchedAlbum);
 
-        Album updatedAlbum = albumDao.findById(album.getId());
+        Album updatedAlbum = albumRepository.findById(album.getId());
         assertEquals(fetchedAlbum, updatedAlbum);
 
     }
@@ -92,19 +92,19 @@ class AlbumDaoTest extends DbIntegrationTest {
     @Test
     void insert() {
         Album album = createAlbum(artist);
-        albumDao.insert(album);
+        albumRepository.insert(album);
 
-        assertEquals(album, albumDao.findById(album.getId()));
+        assertEquals(album, albumRepository.findById(album.getId()));
     }
 
     @Test
     void findByCriteria() {
         Album album = createAlbum(artist);
-        albumDao.insert(album);
+        albumRepository.insert(album);
 
         flush();
 
-        List<Album> byFullCriteria = albumDao.findByCriteria(album);
+        List<Album> byFullCriteria = albumRepository.findByCriteria(album);
         assertNotNull(byFullCriteria);
         assertEquals(1, byFullCriteria.size());
         assertEquals(album, byFullCriteria.get(0));
@@ -112,33 +112,34 @@ class AlbumDaoTest extends DbIntegrationTest {
         Album titleAlbum = new Album();
         titleAlbum.setTitle(album.getTitle());
 
-        List<Album> byTitle = albumDao.findByCriteria(titleAlbum);
+        List<Album> byTitle = albumRepository.findByCriteria(titleAlbum);
         assertNotNull(byTitle);
         assertEquals(1, byTitle.size());
         assertEquals(album, byTitle.get(0));
-
+        assertNotNull(byTitle.get(0).getArtist());
 
         Album yearAlbum = new Album();
         yearAlbum.setYear(album.getYear());
 
-        List<Album> byYear = albumDao.findByCriteria(yearAlbum);
+        List<Album> byYear = albumRepository.findByCriteria(yearAlbum);
         assertNotNull(byYear);
         assertEquals(1, byYear.size());
         assertEquals(album, byYear.get(0));
+        assertNotNull(byTitle.get(0).getArtist());
     }
 
     @Test
     void findRecordsByArtist() {
-        List<Album> emptyRecordsByArtist = albumDao.findRecordsByArtist(artist.getId());
+        List<Album> emptyRecordsByArtist = albumRepository.findRecordsByArtist(artist.getId());
         assertNotNull(emptyRecordsByArtist);
         assertTrue(emptyRecordsByArtist.isEmpty());
 
         Album album = createAlbum(artist);
-        albumDao.insert(album);
+        albumRepository.insert(album);
 
         flush();
 
-        List<Album> recordsByArtist = albumDao.findRecordsByArtist(artist.getId());
+        List<Album> recordsByArtist = albumRepository.findRecordsByArtist(artist.getId());
         assertNotNull(recordsByArtist);
         assertEquals(1, recordsByArtist.size());
 

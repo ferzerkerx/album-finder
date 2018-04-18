@@ -56,7 +56,7 @@ public class AlbumRepository extends BaseRepository<Album> {
         }
 
         if (!CollectionUtils.isEmpty(predicates)) {
-            criteria.where(predicates.toArray(new Predicate[predicates.size()]));
+            criteria.where(predicates.toArray(new Predicate[0]));
         }
 
         Query<Album> query = createQuery(criteria);
