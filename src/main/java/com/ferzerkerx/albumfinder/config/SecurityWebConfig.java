@@ -51,6 +51,8 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**").permitAll()
                 .and()
             .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/successful-logout")
                 .deleteCookies("remove")
                 .invalidateHttpSession(true)
                 .logoutUrl("/logout");
