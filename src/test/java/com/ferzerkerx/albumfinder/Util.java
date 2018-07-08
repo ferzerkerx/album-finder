@@ -5,7 +5,6 @@ import com.ferzerkerx.albumfinder.model.Artist;
 
 public final class Util {
 
-
     private Util() {
         throw new AssertionError();
     }

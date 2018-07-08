@@ -28,7 +28,8 @@ public class AlbumsController extends AbstractController {
     }
 
     @PostMapping(value = {"/admin/artist/{id}/album"})
-    public ResponseEntity<Response<Album>> saveAlbum(@PathVariable(value = "id") int artistId, @RequestBody Album album) {
+    public ResponseEntity<Response<Album>> saveAlbum(@PathVariable(value = "id") int artistId, @RequestBody AlbumDto albumDto) {
+        Album album = albumDto.toEntity();
         albumFinderService.saveAlbum(artistId, album);
         return data(album);
     }
@@ -45,9 +46,11 @@ public class AlbumsController extends AbstractController {
     }
 
     @PutMapping(value = {"/admin/album/{id}"})
-    public ResponseEntity<Response<Album>> updateAlbumById(@PathVariable(value = "id") int albumId, @RequestBody Album album) {
-        album.setId(albumId);
-        return data(albumFinderService.updateAlbum(album));
+    public ResponseEntity<Response<Album>> updateAlbumById(@PathVariable(value = "id") int albumId, @RequestBody AlbumDto albumDto) {
+        albumDto.setId(albumId);
+        Album album = albumDto.toEntity();
+        Album updatedAlbum = albumFinderService.updateAlbum(album);
+        return data(updatedAlbum);
     }
 
     @GetMapping(value = {"/albums/search"})
@@ -56,5 +59,31 @@ public class AlbumsController extends AbstractController {
         @RequestParam(value = "year", required = false) String year) {
 
         return data(albumFinderService.findMatchedAlbumByCriteria(title, year));
+    }
+
+    static class AlbumDto {
+        private Integer id;
+        private String title;
+        private String year;
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public void setYear(String year) {
+            this.year = year;
+        }
+
+        Album toEntity() {
+            Album album = new Album();
+            album.setId(id);
+            album.setTitle(title);
+            album.setYear(year);
+            return album;
+        }
     }
 }

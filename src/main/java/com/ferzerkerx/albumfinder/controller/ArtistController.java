@@ -22,7 +22,8 @@ public class ArtistController extends AbstractController {
     }
 
     @PostMapping(value = {"/admin/artist"})
-    public ResponseEntity<Response<Artist>> saveArtist(@RequestBody Artist artist) {
+    public ResponseEntity<Response<Artist>> saveArtist(@RequestBody ArtistDto artistDto) {
+        Artist artist = artistDto.toEntity();
         albumFinderService.saveArtist(artist);
         return data(artist);
     }
@@ -38,13 +39,35 @@ public class ArtistController extends AbstractController {
     }
 
     @PutMapping(value = {"/admin/artist/{id}"})
-    public ResponseEntity<Response<Artist>> updateArtistById(@PathVariable(value = "id") int artistId, @RequestBody Artist artist) {
-        artist.setId(artistId);
-        return data(albumFinderService.updateArtist(artist));
+    public ResponseEntity<Response<Artist>> updateArtistById(@PathVariable(value = "id") int artistId, @RequestBody ArtistDto artistDto) {
+        artistDto.setId(artistId);
+        Artist updateArtist = albumFinderService.updateArtist(artistDto.toEntity());
+        return data(updateArtist);
     }
 
     @GetMapping(value = {"/artist/search"})
     public ResponseEntity<Response<List<Artist>>> findMatchedArtistsByName(@RequestParam(value = "name") String name) {
-        return data(albumFinderService.findMatchedArtistsByName(name));
+        List<Artist> matchedArtistsByName = albumFinderService.findMatchedArtistsByName(name);
+        return data(matchedArtistsByName);
+    }
+
+    static class ArtistDto {
+        private Integer id;
+        private String name;
+
+        Artist toEntity() {
+            Artist artist = new Artist();
+            artist.setId(id);
+            artist.setName(name);
+            return artist;
+        }
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
     }
 }
