@@ -30,7 +30,7 @@ class AppControllerTest {
         mockMvc.perform(post("/logout")
                 .with(authenticatedUser()).with(csrf())
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is3xxRedirection());
+                .andExpect(status().is2xxSuccessful());
     }
 
     @Test

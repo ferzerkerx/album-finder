@@ -10,8 +10,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class BaseControllerAdvice {
 
+    private final ResponseEntityService responseEntityService;
+
     @Autowired
-    private ResponseEntityService responseEntityService;
+    public BaseControllerAdvice(ResponseEntityService responseEntityService) {
+        this.responseEntityService = responseEntityService;
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Response<Object>> handleUncaughtException(Exception e) {
