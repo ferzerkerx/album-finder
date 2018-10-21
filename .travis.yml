@@ -15,7 +15,6 @@ install:
 
 script:
   - "mvn -Dmaven.test.failure.ignore=false org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar"
-  - "snyk test"
 
 after_success:
   - snyk monitor
