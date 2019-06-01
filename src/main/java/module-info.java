@@ -1,6 +1,5 @@
 module ferzerkerx.albumfinder {
     requires commons.lang3;
-    requires hibernate.core;
     requires spring.context;
     requires spring.core;
     requires spring.beans;
@@ -20,6 +19,7 @@ module ferzerkerx.albumfinder {
     requires java.naming;
     requires java.persistence;
     requires jackson.annotations;
+    requires org.hibernate.orm.core;
 
     exports com.ferzerkerx.albumfinder;
 }
