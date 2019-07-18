@@ -29,8 +29,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {TestConfig.class})
-@WebMvcTest(AlbumsController.class)
+@ContextConfiguration(classes = {AlbumsController.class, TestConfig.class})
+@WebMvcTest
 class AlbumsControllerTest {
 
     @Autowired

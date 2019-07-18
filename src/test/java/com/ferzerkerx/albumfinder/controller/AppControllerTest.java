@@ -18,8 +18,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {TestConfig.class})
-@WebMvcTest(AppController.class)
+@ContextConfiguration(classes = {AppController.class, TestConfig.class})
+@WebMvcTest
 class AppControllerTest {
 
     @Autowired
