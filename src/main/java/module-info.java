@@ -16,10 +16,10 @@ module ferzerkerx.albumfinder {
     requires spring.web;
     requires slf4j.api;
     requires java.naming;
-    requires com.fasterxml.jackson.annotation;
     requires org.hibernate.orm.core;
     requires org.apache.commons.lang3;
     requires java.persistence;
+    requires jackson.annotations;
 
     exports com.ferzerkerx.albumfinder;
     opens com.ferzerkerx.albumfinder;
