@@ -1,6 +1,6 @@
 language: java
 jdk:
-  - oraclejdk9
+  - openjdk9
 addons:
   sonarcloud:
     organization: "ferzerkerx-github"
