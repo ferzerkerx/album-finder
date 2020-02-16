@@ -23,4 +23,6 @@ module ferzerkerx.albumfinder {
 
     exports com.ferzerkerx.albumfinder;
     opens com.ferzerkerx.albumfinder;
+    opens com.ferzerkerx.albumfinder.controller;
+    opens com.ferzerkerx.albumfinder.service;
 }
