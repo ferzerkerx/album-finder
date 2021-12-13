@@ -18,7 +18,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
     </properties>
 
     <dependencies>
@@ -139,20 +139,6 @@
             <version>1.8.2</version>
             <scope>test</scope>
         </dependency>
-<!--        &lt;!&ndash; JAXB API v3.0.1 &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>jakarta.xml.bind</groupId>-->
-<!--            <artifactId>jakarta.xml.bind-api</artifactId>-->
-<!--            <version>3.0.1</version>-->
-<!--        </dependency>-->
-
-<!--        &lt;!&ndash; JAXB v3.0.2 reference implementation (curiously with com.sun coordinates) &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>com.sun.xml.bind</groupId>-->
-<!--            <artifactId>jaxb-impl</artifactId>-->
-<!--            <version>3.0.2</version>-->
-<!--            <scope>runtime</scope>-->
-<!--        </dependency>-->
     </dependencies>
 
     <build>
@@ -208,7 +194,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.22.2</version>
+                <version>3.0.0-M5</version>
             </plugin>
             <plugin>
                 <artifactId>maven-jar-plugin</artifactId>
