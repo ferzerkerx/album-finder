@@ -55,8 +55,8 @@ public class AlbumsController extends AbstractController {
 
     @GetMapping(value = {"/albums/search"})
     public ResponseEntity<Response<List<Album>>> findMatchedRecordByCriteria(
-        @RequestParam(value = "title", required = false) String title,
-        @RequestParam(value = "year", required = false) String year) {
+            @RequestParam(value = "title", required = false) String title,
+            @RequestParam(value = "year", required = false) String year) {
 
         return data(albumFinderService.findMatchedAlbumByCriteria(title, year));
     }

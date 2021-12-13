@@ -9,7 +9,7 @@ import org.springframework.context.annotation.PropertySource;
 @TestConfiguration
 @PropertySource("classpath:test_application.properties")
 @ComponentScan(basePackages = {
-    "com.ferzerkerx.albumfinder",
+        "com.ferzerkerx.albumfinder",
 })
 @Import({DbConfig.class})
 public class DbTestConfig {

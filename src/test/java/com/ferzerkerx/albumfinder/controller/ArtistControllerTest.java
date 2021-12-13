@@ -30,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {ArtistController.class, TestConfig.class})
 @WebMvcTest
-class ArtistControllerTest  {
+class ArtistControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -43,10 +43,10 @@ class ArtistControllerTest  {
         doNothing().when(albumFinderService).deleteArtistWithAlbumsById(1);
 
         mockMvc.perform(delete("/admin/artist/1")
-            .with(csrf())
-            .with(admin())
-            .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk());
+                        .with(csrf())
+                        .with(admin())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -56,11 +56,11 @@ class ArtistControllerTest  {
         when(albumFinderService.findMatchedArtistsByName("someArtist")).thenReturn(artists);
 
         mockMvc.perform(get("/artist/search")
-            .param("name", "someArtist")
-            .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.data[0].id").value(1))
-            .andExpect(jsonPath("$.data[0].name").value("someArtist"));
+                        .param("name", "someArtist")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data[0].id").value(1))
+                .andExpect(jsonPath("$.data[0].name").value("someArtist"));
 
     }
 
@@ -71,13 +71,13 @@ class ArtistControllerTest  {
         when(albumFinderService.updateArtist(any())).thenReturn(artist);
 
         mockMvc.perform(put("/admin/artist/1")
-            .with(csrf())
-            .with(admin())
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(toJson(artist)))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.data.id").value(1))
-            .andExpect(jsonPath("$.data.name").value("someArtist"));
+                        .with(csrf())
+                        .with(admin())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(toJson(artist)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.id").value(1))
+                .andExpect(jsonPath("$.data.name").value("someArtist"));
     }
 
     @Test
@@ -87,11 +87,11 @@ class ArtistControllerTest  {
         when(albumFinderService.findArtistById(1)).thenReturn(artist);
 
         mockMvc.perform(get("/artist/1")
-            .param("name", "someArtist")
-            .contentType(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.data.id").value(1))
-            .andExpect(jsonPath("$.data.name").value("someArtist"));
+                        .param("name", "someArtist")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.id").value(1))
+                .andExpect(jsonPath("$.data.name").value("someArtist"));
     }
 
     @Test
@@ -106,11 +106,11 @@ class ArtistControllerTest  {
         }).when(albumFinderService).saveArtist(any());
 
         mockMvc.perform(post("/admin/artist")
-            .with(csrf())
-            .with(admin())
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(toJson(artist)))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.data.id").value(greaterThan(0)));
+                        .with(csrf())
+                        .with(admin())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(toJson(artist)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.id").value(greaterThan(0)));
     }
 }

@@ -29,28 +29,28 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-            .passwordEncoder(passwordEncoder())
-            .withUser("user").password("password").roles("AUTHENTICATED_USER")
-            .and()
-            .withUser("admin").password("password").roles("ADMIN");
+                .passwordEncoder(passwordEncoder())
+                .withUser("user").password("password").roles("AUTHENTICATED_USER")
+                .and()
+                .withUser("admin").password("password").roles("ADMIN");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-            .cors()
+                .cors()
                 .and()
-            .csrf()
+                .csrf()
                 .csrfTokenRepository(csrfTokenRepository())
                 .and()
                 .addFilterAfter(new CsrfHeaderFilter(), CsrfFilter.class)
                 .httpBasic()
                 .and()
-            .authorizeRequests()
+                .authorizeRequests()
                 .antMatchers("/admin/**").access("hasRole('ADMIN')")
                 .antMatchers("/**").permitAll()
                 .and()
-            .logout()
+                .logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/successful-logout")
                 .deleteCookies("remove")
@@ -67,7 +67,7 @@ public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Collections.singletonList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST", "DELETE", "PUT", "OPTIONS"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PUT", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-XSRF-TOKEN"));
         configuration.setAllowCredentials(true);
         configuration.setMaxAge(3600L);

@@ -35,7 +35,7 @@ class AlbumsControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-    
+
     @MockBean
     private AlbumFinderService albumFinderService;
 
@@ -56,7 +56,7 @@ class AlbumsControllerTest {
     @Test
     void testGetAlbumsEmpty() throws Exception {
         mockMvc.perform(get("/artist/1/albums")
-                .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data").isEmpty());
     }
@@ -67,7 +67,7 @@ class AlbumsControllerTest {
         when(albumFinderService.findAlbumById(1)).thenReturn(album);
 
         mockMvc.perform(get("/album/1")
-                .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.id").value(1))
                 .andExpect(jsonPath("$.data.title").value("some title"))
@@ -86,10 +86,10 @@ class AlbumsControllerTest {
         }).when(albumFinderService).saveAlbum(eq(1), any());
 
         mockMvc.perform(post("/admin/artist/1/album")
-                .with(csrf())
-                .with(admin())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(toJson(album)))
+                        .with(csrf())
+                        .with(admin())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(toJson(album)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.id").value(greaterThan(0)));
     }
@@ -99,9 +99,9 @@ class AlbumsControllerTest {
         doNothing().when(albumFinderService).deleteAlbumById(1);
 
         mockMvc.perform(delete("/admin/album/1")
-                .with(csrf())
-                .with(admin())
-                .contentType(MediaType.APPLICATION_JSON))
+                        .with(csrf())
+                        .with(admin())
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
@@ -111,10 +111,10 @@ class AlbumsControllerTest {
         when(albumFinderService.updateAlbum(any())).thenReturn(album);
 
         mockMvc.perform(put("/admin/album/1")
-                .with(csrf())
-                .with(admin())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(toJson(album)))
+                        .with(csrf())
+                        .with(admin())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(toJson(album)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.id").value(greaterThan(0)));
     }
@@ -125,9 +125,9 @@ class AlbumsControllerTest {
         when(albumFinderService.findMatchedAlbumByCriteria("someTitle", "someYear")).thenReturn(albums);
 
         mockMvc.perform(get("/albums/search")
-                .param("title", "someTitle")
-                .param("year", "someYear")
-                .contentType(MediaType.APPLICATION_JSON))
+                        .param("title", "someTitle")
+                        .param("year", "someYear")
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data[0].id").value(1))
                 .andExpect(jsonPath("$.data[0].title").value("some title"))

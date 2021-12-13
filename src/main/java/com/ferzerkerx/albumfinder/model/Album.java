@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 @Entity
-@Table(name="album")
+@Table(name = "album")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Album {
@@ -18,18 +18,18 @@ public class Album {
     @Id
     @SequenceGenerator(name = "pk_sequence", sequenceName = "album_album_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
-    @Column(name="album_id")
+    @Column(name = "album_id")
     private Integer id;
 
     @NotBlank
-    @Column(name="title", nullable = false)
+    @Column(name = "title", nullable = false)
     private String title;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "artist_id", nullable = false, updatable = false)
     private Artist artist;
 
-    @Pattern(regexp="\\d{4}")
+    @Pattern(regexp = "\\d{4}")
     @Column(length = 4)
     private String year;
 

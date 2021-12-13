@@ -10,22 +10,22 @@ import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
-@Table(name="artist")
+@Table(name = "artist")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Artist {
 
     @Id
     @SequenceGenerator(name = "pk_sequence", sequenceName = "artist_artist_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_sequence")
-    @Column(name="artist_id")
+    @Column(name = "artist_id")
     private Integer id;
 
     @NotBlank
-    @Column(name="name", nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @JsonIgnore
-    @OneToMany(mappedBy="artist", cascade={CascadeType.DETACH}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "artist", cascade = {CascadeType.DETACH}, fetch = FetchType.LAZY)
     private List<Album> albums;
 
     public Integer getId() {

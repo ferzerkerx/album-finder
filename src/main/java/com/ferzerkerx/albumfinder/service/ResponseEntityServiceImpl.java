@@ -30,7 +30,7 @@ public class ResponseEntityServiceImpl implements ResponseEntityService {
     public ResponseEntity<Response<Object>> unexpectedError(Exception e) {
         logException(e);
         String message = "Unexpected Error";
-        HttpStatus status  = HttpStatus.INTERNAL_SERVER_ERROR;
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         if (e instanceof BaseException) {
             message = e.getMessage();
             status = HttpStatus.OK;

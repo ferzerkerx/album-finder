@@ -9,8 +9,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = { DbTestConfig.class})
-@Transactional(transactionManager="transactionManager")
+@ContextConfiguration(classes = {DbTestConfig.class})
+@Transactional(transactionManager = "transactionManager")
 @Rollback
 public abstract class DbIntegrationTest {
 

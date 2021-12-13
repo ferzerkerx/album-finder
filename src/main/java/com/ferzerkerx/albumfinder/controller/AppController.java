@@ -24,9 +24,9 @@ public class AppController {
         return authentication.getPrincipal();
     }
 
-    @GetMapping(value="/successful-logout")
+    @GetMapping(value = "/successful-logout")
     @ResponseStatus(HttpStatus.OK)
-    public void logout (HttpServletRequest request, HttpServletResponse response) {
+    public void logout(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (nonNull(auth)) {
             new SecurityContextLogoutHandler().logout(request, response, auth);

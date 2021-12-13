@@ -23,8 +23,8 @@ public class AlbumRepository extends BaseRepository<Album> {
 
     public void deleteRecordsByArtistId(int artistId) {
         createQuery("DELETE FROM Album a WHERE a.artist.id = :id")
-        .setParameter("id", artistId)
-        .executeUpdate();
+                .setParameter("id", artistId)
+                .executeUpdate();
     }
 
     public List<Album> findRecordsByArtist(int artistId) {

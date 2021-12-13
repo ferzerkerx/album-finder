@@ -28,16 +28,16 @@ class AppControllerTest {
     @Test
     void logout() throws Exception {
         mockMvc.perform(post("/logout")
-                .with(authenticatedUser()).with(csrf())
-                .contentType(MediaType.APPLICATION_JSON))
+                        .with(authenticatedUser()).with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
     }
 
     @Test
     void adminLogin() throws Exception {
         mockMvc.perform(post("/user")
-                .with(admin()).with(csrf())
-                .contentType(MediaType.APPLICATION_JSON))
+                        .with(admin()).with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.username").value("admin"))
                 .andExpect(jsonPath("$.authorities[0].authority").value("ROLE_ADMIN"));
@@ -46,8 +46,8 @@ class AppControllerTest {
     @Test
     void userLogin() throws Exception {
         mockMvc.perform(post("/user")
-                .with(authenticatedUser()).with(csrf())
-                .contentType(MediaType.APPLICATION_JSON))
+                        .with(authenticatedUser()).with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.username").value("user"))
                 .andExpect(jsonPath("$.authorities[0].authority").value("ROLE_AUTHENTICATED_USER"));

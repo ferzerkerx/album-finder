@@ -14,10 +14,10 @@ import org.springframework.context.annotation.PropertySource;
 @TestConfiguration
 @PropertySource("classpath:test_application.properties")
 @ComponentScan(basePackages = {
-    "com.ferzerkerx.albumfinder",
+        "com.ferzerkerx.albumfinder",
 })
 @Import({SecurityWebConfig.class})
-public class TestConfig  {
+public class TestConfig {
 
     @Bean
     public ResponseEntityService responseEntityService() {
