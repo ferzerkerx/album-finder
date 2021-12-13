@@ -68,7 +68,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>5.6.1.Final</version>
+            <version>5.6.2.Final</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.jboss.spec.javax.transaction</groupId>
@@ -86,6 +86,7 @@
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
+            <version>2.6.1</version>
             <scope>runtime</scope>
         </dependency>
 
@@ -159,7 +160,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.5</version>
+                <version>0.8.7</version>
                 <configuration>
                     <excludes>
                         <exclude>**/*Config.*</exclude>
@@ -184,7 +185,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.1.2</version>
+                <version>3.2.0</version>
                 <executions>
                     <execution>
                         <id>copy-dependencies</id>
@@ -211,7 +212,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.1.2</version>
+                <version>3.2.0</version>
             </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
