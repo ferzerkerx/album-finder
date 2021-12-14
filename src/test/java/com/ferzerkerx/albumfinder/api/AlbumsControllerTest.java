@@ -9,10 +9,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Collections;
 import java.util.List;
 
-import static com.ferzerkerx.albumfinder.Fixtures.createAlbum;
+import static com.ferzerkerx.albumfinder.Fixtures.album;
+import static com.ferzerkerx.albumfinder.Fixtures.albumEntity;
 import static com.ferzerkerx.albumfinder.api.TestUtil.admin;
 import static com.ferzerkerx.albumfinder.api.TestUtil.toJson;
 import static org.hamcrest.Matchers.greaterThan;
@@ -35,9 +35,8 @@ class AlbumsControllerTest {
 
     @Test
     void testGetAlbums() throws Exception {
-        List<AlbumEntity> albumEntityEntities = Collections.singletonList(createAlbum());
 
-        when(albumFinderService.findAlbumsByArtist(1)).thenReturn(albumEntityEntities);
+        when(albumFinderService.findAlbumsByArtist(1)).thenReturn(List.of(album()));
 
         mockMvc.perform(get("/artist/1/albums").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -57,8 +56,7 @@ class AlbumsControllerTest {
 
     @Test
     void testFindAlbumById() throws Exception {
-        AlbumEntity albumEntity = createAlbum();
-        when(albumFinderService.findAlbumById(1)).thenReturn(albumEntity);
+        when(albumFinderService.findAlbumById(1)).thenReturn(album());
 
         mockMvc.perform(get("/album/1")
                         .contentType(MediaType.APPLICATION_JSON))
@@ -70,7 +68,7 @@ class AlbumsControllerTest {
 
     @Test
     void testSaveAlbum() throws Exception {
-        AlbumEntity albumEntity = createAlbum();
+        AlbumEntity albumEntity = albumEntity();
         albumEntity.setId(0);
 
         doAnswer(invocationOnMock -> {
@@ -101,22 +99,20 @@ class AlbumsControllerTest {
 
     @Test
     void testUpdateAlbumById() throws Exception {
-        AlbumEntity albumEntity = createAlbum();
-        when(albumFinderService.updateAlbum(any())).thenReturn(albumEntity);
+        when(albumFinderService.updateAlbum(any())).thenReturn(album());
 
         mockMvc.perform(put("/admin/album/1")
                         .with(csrf())
                         .with(admin())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(toJson(albumEntity)))
+                        .content(toJson(albumEntity())))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.id").value(greaterThan(0)));
     }
 
     @Test
     void testFindMatchedRecordByCriteria() throws Exception {
-        List<AlbumEntity> albumEntityEntities = Collections.singletonList(createAlbum());
-        when(albumFinderService.findMatchedAlbumByCriteria("someTitle", "someYear")).thenReturn(albumEntityEntities);
+        when(albumFinderService.findMatchedAlbumByCriteria("someTitle", "someYear")).thenReturn(List.of(album()));
 
         mockMvc.perform(get("/albums/search")
                         .param("title", "someTitle")

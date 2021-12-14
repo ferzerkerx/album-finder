@@ -1,6 +1,7 @@
 package com.ferzerkerx.albumfinder.infrastructure;
 
 import com.ferzerkerx.albumfinder.DbIntegrationTest;
+import com.ferzerkerx.albumfinder.Fixtures;
 import com.ferzerkerx.albumfinder.infrastructure.entity.AlbumEntity;
 import com.ferzerkerx.albumfinder.infrastructure.entity.ArtistEntity;
 import org.hibernate.SessionFactory;
@@ -12,8 +13,7 @@ import org.springframework.context.annotation.Bean;
 
 import java.util.List;
 
-import static com.ferzerkerx.albumfinder.Fixtures.createAlbum;
-import static com.ferzerkerx.albumfinder.Fixtures.createArtist;
+import static com.ferzerkerx.albumfinder.Fixtures.artistEntity;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AlbumEntityRepositoryTest extends DbIntegrationTest {
@@ -28,13 +28,13 @@ class AlbumEntityRepositoryTest extends DbIntegrationTest {
 
     @BeforeEach
     void setUp() {
-        artistEntity = createArtist();
+        artistEntity = artistEntity();
         artistRepository.insert(artistEntity);
     }
 
     @Test
     void deleteRecordsByArtistId() {
-        AlbumEntity albumEntity = createAlbum(artistEntity);
+        AlbumEntity albumEntity = Fixtures.albumEntityOf(artistEntity);
         albumRepository.insert(albumEntity);
 
         flush();
@@ -52,7 +52,7 @@ class AlbumEntityRepositoryTest extends DbIntegrationTest {
 
     @Test
     void deleteById() {
-        AlbumEntity albumEntity = createAlbum(artistEntity);
+        AlbumEntity albumEntity = Fixtures.albumEntityOf(artistEntity);
 
         albumRepository.insert(albumEntity);
         int id = albumEntity.getId();
@@ -64,7 +64,7 @@ class AlbumEntityRepositoryTest extends DbIntegrationTest {
 
     @Test
     void delete() {
-        AlbumEntity albumEntity = createAlbum(artistEntity);
+        AlbumEntity albumEntity = Fixtures.albumEntityOf(artistEntity);
 
         albumRepository.insert(albumEntity);
         Integer id = albumEntity.getId();
@@ -76,7 +76,7 @@ class AlbumEntityRepositoryTest extends DbIntegrationTest {
 
     @Test
     void update() {
-        AlbumEntity albumEntity = createAlbum(artistEntity);
+        AlbumEntity albumEntity = Fixtures.albumEntityOf(artistEntity);
         albumRepository.insert(albumEntity);
 
         AlbumEntity fetchedAlbumEntity = albumRepository.findById(albumEntity.getId());
@@ -94,7 +94,7 @@ class AlbumEntityRepositoryTest extends DbIntegrationTest {
 
     @Test
     void insert() {
-        AlbumEntity albumEntity = createAlbum(artistEntity);
+        AlbumEntity albumEntity = Fixtures.albumEntityOf(artistEntity);
         albumRepository.insert(albumEntity);
 
         assertEquals(albumEntity, albumRepository.findById(albumEntity.getId()));
@@ -102,7 +102,7 @@ class AlbumEntityRepositoryTest extends DbIntegrationTest {
 
     @Test
     void findByCriteria() {
-        AlbumEntity albumEntity = createAlbum(artistEntity);
+        AlbumEntity albumEntity = Fixtures.albumEntityOf(artistEntity);
         albumRepository.insert(albumEntity);
 
         flush();
@@ -137,7 +137,7 @@ class AlbumEntityRepositoryTest extends DbIntegrationTest {
         assertNotNull(emptyRecordsByArtist);
         assertTrue(emptyRecordsByArtist.isEmpty());
 
-        AlbumEntity albumEntity = createAlbum(artistEntity);
+        AlbumEntity albumEntity = Fixtures.albumEntityOf(artistEntity);
         albumRepository.insert(albumEntity);
 
         flush();

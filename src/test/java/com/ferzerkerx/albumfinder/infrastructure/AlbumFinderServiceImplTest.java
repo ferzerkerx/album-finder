@@ -1,6 +1,9 @@
 package com.ferzerkerx.albumfinder.infrastructure;
 
+import com.ferzerkerx.albumfinder.Fixtures;
+import com.ferzerkerx.albumfinder.domain.Album;
 import com.ferzerkerx.albumfinder.domain.AlbumFinderService;
+import com.ferzerkerx.albumfinder.domain.Artist;
 import com.ferzerkerx.albumfinder.infrastructure.entity.AlbumEntity;
 import com.ferzerkerx.albumfinder.infrastructure.entity.ArtistEntity;
 import org.junit.jupiter.api.AfterEach;
@@ -49,32 +52,34 @@ class AlbumFinderServiceImplTest {
 
     @Test
     void updateAlbum() {
-        AlbumEntity albumEntity = new AlbumEntity();
-        albumFinderService.updateAlbum(albumEntity);
-        verify(albumRepository).update(albumEntity);
+        Album album = new Album(1, "someTitle", "1995", new Artist(1, "artistName"));
+        final AlbumEntity albumEntity = Fixtures.albumEntity();
+        albumEntity.setArtist(Fixtures.artistEntity());
+        when(albumRepository.update(any())).thenReturn(albumEntity);
+        albumFinderService.updateAlbum(album);
+        verify(albumRepository).update(any());
     }
 
     @Test
     void updateArtist() {
-        ArtistEntity artistEntity = new ArtistEntity();
-        albumFinderService.updateArtist(artistEntity);
-        verify(artistRepository).update(artistEntity);
+        Artist artist = new Artist(1, "artistName");
+        when(artistRepository.update(any())).thenReturn(Fixtures.artistEntity());
+        albumFinderService.updateArtist(artist);
+        verify(artistRepository).update(any());
     }
 
     @Test
     void saveAlbum() {
-        AlbumEntity albumEntity = new AlbumEntity();
-        albumEntity.setTitle("someTitle");
-        albumEntity.setYear("1995");
         Integer artistId = 1;
+        Album album = new Album(1, "someTitle", "1995", new Artist(artistId, "artistName"));
 
         ArgumentCaptor<AlbumEntity> albumArgumentCaptor = ArgumentCaptor.forClass(AlbumEntity.class);
 
-        albumFinderService.saveAlbum(artistId, albumEntity);
+        albumFinderService.saveAlbum(artistId, album);
         verify(albumRepository).insert(albumArgumentCaptor.capture());
 
         AlbumEntity capturedAlbumEntity = albumArgumentCaptor.getValue();
-        assertEquals(albumEntity, capturedAlbumEntity);
+        assertEquals(album.title(), capturedAlbumEntity.getTitle());
 
         ArtistEntity capturedAlbumArtistEntity = capturedAlbumEntity.getArtist();
         assertNotNull(capturedAlbumArtistEntity);
@@ -83,9 +88,9 @@ class AlbumFinderServiceImplTest {
 
     @Test
     void saveArtist() {
-        ArtistEntity artistEntity = new ArtistEntity();
-        albumFinderService.saveArtist(artistEntity);
-        verify(artistRepository).insert(artistEntity);
+        Artist artist = new Artist(1, "artistName");
+        albumFinderService.saveArtist(artist);
+        verify(artistRepository).insert(any());
     }
 
     @Test
@@ -98,6 +103,10 @@ class AlbumFinderServiceImplTest {
     @Test
     void findAlbumById() {
         int albumId = 1;
+        final AlbumEntity albumEntity = Fixtures.albumEntity();
+        albumEntity.setArtist(Fixtures.artistEntity());
+
+        when(albumRepository.findById(any())).thenReturn(albumEntity);
         albumFinderService.findAlbumById(albumId);
         verify(albumRepository).findById(albumId);
     }
@@ -120,13 +129,14 @@ class AlbumFinderServiceImplTest {
     @Test
     void findMatchedArtistsByName() {
         String name = "name";
-        albumFinderService.findMatchedArtistsByName(name);
+        albumFinderService.findArtistsByName(name);
         verify(artistRepository).findArtistsByName(name);
     }
 
     @Test
     void findArtistById() {
         int artistId = 1;
+        when(artistRepository.findById(any())).thenReturn(Fixtures.artistEntity());
         albumFinderService.findArtistById(artistId);
         verify(artistRepository).findById(artistId);
     }

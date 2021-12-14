@@ -1,16 +1,16 @@
 package com.ferzerkerx.albumfinder.api;
 
+import com.ferzerkerx.albumfinder.domain.Album;
 import com.ferzerkerx.albumfinder.domain.AlbumFinderService;
 import com.ferzerkerx.albumfinder.infrastructure.entity.AlbumEntity;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 import static com.ferzerkerx.albumfinder.api.ResponseUtils.data;
-import static com.ferzerkerx.albumfinder.api.ResponseUtils.status;
 
+//TODO return albumdto
 @RestController
 public class AlbumsController {
 
@@ -21,45 +21,45 @@ public class AlbumsController {
     }
 
     @GetMapping(value = {"/artist/{id}/albums"})
-    public ResponseEntity<Response<List<AlbumEntity>>> showRecordsForArtist(@PathVariable(value = "id") int artistId) {
+    public ResponseEntity<Response<List<Album>>> showRecordsForArtist(@PathVariable(value = "id") int artistId) {
         return data(albumFinderService.findAlbumsByArtist(artistId));
     }
 
     @PostMapping(value = {"/admin/artist/{id}/album"})
-    public ResponseEntity<Response<AlbumEntity>> saveAlbum(@PathVariable(value = "id") int artistId, @RequestBody AlbumDto albumDto) {
-        AlbumEntity albumEntity = albumDto.toEntity();
-        albumFinderService.saveAlbum(artistId, albumEntity);
-        return data(albumEntity);
+    public ResponseEntity<Response<Album>> saveAlbum(@PathVariable(value = "id") int artistId, @RequestBody UpdateAlbumRequestDto updateAlbumRequestDto) {
+        Album album = updateAlbumRequestDto.toAlbum();
+        albumFinderService.saveAlbum(artistId, album);
+        return data(album);
     }
 
     @GetMapping(value = {"/album/{id}"})
-    public ResponseEntity<Response<AlbumEntity>> findAlbumById(@PathVariable(value = "id") int recordId) {
+    public ResponseEntity<Response<Album>> findAlbumById(@PathVariable(value = "id") int recordId) {
         return data(albumFinderService.findAlbumById(recordId));
     }
 
     @DeleteMapping(value = {"/admin/album/{id}"})
     public ResponseEntity<Response<Object>> deleteAlbumById(@PathVariable(value = "id") int albumId) {
         albumFinderService.deleteAlbumById(albumId);
-        return status(HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping(value = {"/admin/album/{id}"})
-    public ResponseEntity<Response<AlbumEntity>> updateAlbumById(@PathVariable(value = "id") int albumId, @RequestBody AlbumDto albumDto) {
-        albumDto.setId(albumId);
-        AlbumEntity albumEntity = albumDto.toEntity();
-        AlbumEntity updatedAlbumEntity = albumFinderService.updateAlbum(albumEntity);
+    public ResponseEntity<Response<Album>> updateAlbumById(@PathVariable(value = "id") int albumId, @RequestBody UpdateAlbumRequestDto updateAlbumRequestDto) {
+        updateAlbumRequestDto.setId(albumId);
+        Album albumEntity = updateAlbumRequestDto.toAlbum();
+        Album updatedAlbumEntity = albumFinderService.updateAlbum(albumEntity);
         return data(updatedAlbumEntity);
     }
 
     @GetMapping(value = {"/albums/search"})
-    public ResponseEntity<Response<List<AlbumEntity>>> findMatchedRecordByCriteria(
+    public ResponseEntity<Response<List<Album>>> findMatchedRecordByCriteria(
             @RequestParam(value = "title", required = false) String title,
             @RequestParam(value = "year", required = false) String year) {
 
         return data(albumFinderService.findMatchedAlbumByCriteria(title, year));
     }
 
-    static class AlbumDto {
+    static class UpdateAlbumRequestDto {
         private Integer id;
         private String title;
         private String year;
@@ -82,6 +82,10 @@ public class AlbumsController {
             albumEntity.setTitle(title);
             albumEntity.setYear(year);
             return albumEntity;
+        }
+
+        Album toAlbum() {
+            return new Album(id, title, year, null);
         }
     }
 }

@@ -20,10 +20,6 @@ public class ResponseUtils {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    public static <T> ResponseEntity<Response<T>> status(HttpStatus status) {
-        return new ResponseEntity<>(status);
-    }
-
     public static ResponseEntity<Response<Object>> unexpectedError(Exception e) {
         LOGGER.error(e.getMessage());
         String message = "Unexpected Error";

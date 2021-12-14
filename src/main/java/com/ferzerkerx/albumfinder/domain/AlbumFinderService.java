@@ -1,9 +1,5 @@
 package com.ferzerkerx.albumfinder.domain;
 
-import com.ferzerkerx.albumfinder.infrastructure.entity.AlbumEntity;
-import com.ferzerkerx.albumfinder.infrastructure.entity.ArtistEntity;
-
-import java.util.Collection;
 import java.util.List;
 
 public interface AlbumFinderService {
@@ -11,23 +7,23 @@ public interface AlbumFinderService {
 
     void deleteArtistWithAlbumsById(int artistId);
 
-    Collection<ArtistEntity> findAllArtists();
+    List<Artist> findAllArtists();
 
-    ArtistEntity findArtistById(int artistId);
+    Artist findArtistById(int artistId);
 
-    List<ArtistEntity> findMatchedArtistsByName(String name);
+    List<Artist> findArtistsByName(String name);
 
-    List<AlbumEntity> findMatchedAlbumByCriteria(String title, String year);
+    List<Album> findMatchedAlbumByCriteria(String title, String year);
 
-    AlbumEntity findAlbumById(int recordId);
+    Album findAlbumById(int recordId);
 
-    List<AlbumEntity> findAlbumsByArtist(int artistId);
+    List<Album> findAlbumsByArtist(int artistId);
 
-    void saveArtist(ArtistEntity artistEntity);
+    void saveArtist(Artist Artist);
 
-    void saveAlbum(int artistId, AlbumEntity albumEntity);
+    void saveAlbum(int artistId, Album Album);
 
-    ArtistEntity updateArtist(ArtistEntity artistEntity);
+    Artist updateArtist(Artist Artist);
 
-    AlbumEntity updateAlbum(AlbumEntity albumEntity);
+    Album updateAlbum(Album Album);
 }

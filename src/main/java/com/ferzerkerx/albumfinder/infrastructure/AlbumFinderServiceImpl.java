@@ -1,14 +1,18 @@
 package com.ferzerkerx.albumfinder.infrastructure;
 
+import com.ferzerkerx.albumfinder.domain.Album;
 import com.ferzerkerx.albumfinder.domain.AlbumFinderService;
+import com.ferzerkerx.albumfinder.domain.Artist;
 import com.ferzerkerx.albumfinder.infrastructure.entity.AlbumEntity;
 import com.ferzerkerx.albumfinder.infrastructure.entity.ArtistEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.ferzerkerx.albumfinder.infrastructure.AlbumFinderServiceImpl.Converter.*;
 
 @Transactional
 @Service
@@ -34,59 +38,114 @@ public class AlbumFinderServiceImpl implements AlbumFinderService {
     }
 
     @Override
-    public Collection<ArtistEntity> findAllArtists() {
-        return artistRepository.findAllArtists();
+    public List<Artist> findAllArtists() {
+        return artistRepository.findAllArtists().stream()
+                .map(Converter::toArtist)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public ArtistEntity findArtistById(int artistId) {
-        return artistRepository.findById(artistId);
+    public Artist findArtistById(int artistId) {
+        return toArtist(artistRepository.findById(artistId));
     }
 
     @Override
-    public List<ArtistEntity> findMatchedArtistsByName(String name) {
-        return artistRepository.findArtistsByName(name);
+    public List<Artist> findArtistsByName(String name) {
+        return artistRepository.findArtistsByName(name).stream()
+                .map(Converter::toArtist)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<AlbumEntity> findMatchedAlbumByCriteria(String title, String year) {
+    public List<Album> findMatchedAlbumByCriteria(String title, String year) {
         AlbumEntity albumEntity = new AlbumEntity();
         albumEntity.setTitle(title);
         albumEntity.setYear(year);
-        return albumRepository.findByCriteria(albumEntity);
+        return albumRepository.findByCriteria(albumEntity).stream()
+                .map(Converter::toAlbum)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public AlbumEntity findAlbumById(int recordId) {
-        return albumRepository.findById(recordId);
+    public Album findAlbumById(int recordId) {
+        return toAlbum(albumRepository.findById(recordId));
     }
 
     @Override
-    public List<AlbumEntity> findAlbumsByArtist(int artistId) {
-        return albumRepository.findRecordsByArtist(artistId);
+    public List<Album> findAlbumsByArtist(int artistId) {
+        return albumRepository.findRecordsByArtist(artistId).stream()
+                .map(Converter::toAlbum)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public void saveArtist(ArtistEntity artistEntity) {
-        artistRepository.insert(artistEntity);
+    public void saveArtist(Artist artist) {
+        artistRepository.insert(toArtistEntity(artist));
     }
 
     @Override
-    public void saveAlbum(int artistId, AlbumEntity albumEntity) {
+    public void saveAlbum(int artistId, Album album) { //TODO simplify
         ArtistEntity artistEntity = new ArtistEntity();
         artistEntity.setId(artistId);
-
+        final AlbumEntity albumEntity = toAlbumEntity(album);
         albumEntity.setArtist(artistEntity);
         albumRepository.insert(albumEntity);
     }
 
     @Override
-    public ArtistEntity updateArtist(ArtistEntity artistEntity) {
-        return artistRepository.update(artistEntity);
+    public Artist updateArtist(Artist artist) {
+        final ArtistEntity updatedArtistEntity = artistRepository.update(toArtistEntity(artist));
+        return toArtist(updatedArtistEntity);
     }
 
     @Override
-    public AlbumEntity updateAlbum(AlbumEntity albumEntity) {
-        return albumRepository.update(albumEntity);
+    public Album updateAlbum(Album album) {
+        final AlbumEntity updatedAlbumEntity = albumRepository.update(toAlbumEntity(album));
+        return toAlbum(updatedAlbumEntity);
+    }
+
+    static class Converter {
+        static AlbumEntity toAlbumEntity(Album album) {
+            final AlbumEntity albumEntity = new AlbumEntity();
+            albumEntity.setId(album.id());
+            albumEntity.setTitle(album.title());
+            albumEntity.setYear(album.year());
+            albumEntity.setArtist(toArtistEntity(album.artist()));
+            return albumEntity;
+        }
+
+        static Album toAlbum(AlbumEntity albumEntity) {
+            return new Album(albumEntity.getId(), albumEntity.getTitle(), albumEntity.getYear(), toArtist(albumEntity.getArtist()));
+        }
+
+        static ArtistEntity toArtistEntity(Artist artist) {
+            final ArtistEntity artistEntity = new ArtistEntity();
+            artistEntity.setId(artist.id());
+            artistEntity.setName(artist.name());
+            return artistEntity;
+        }
+
+        static Artist toArtist(ArtistEntity artistEntity) {
+            return new Artist(artistEntity.getId(), artistEntity.getName());
+        }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

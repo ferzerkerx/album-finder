@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 
 import java.util.List;
 
-import static com.ferzerkerx.albumfinder.Fixtures.createArtist;
+import static com.ferzerkerx.albumfinder.Fixtures.artistEntity;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ArtistEntityRepositoryTest extends DbIntegrationTest {
@@ -20,7 +20,7 @@ class ArtistEntityRepositoryTest extends DbIntegrationTest {
 
     @Test
     void findMatchedArtistsByName() {
-        ArtistEntity artistEntity = createArtist();
+        ArtistEntity artistEntity = artistEntity();
         artistRepository.insert(artistEntity);
 
         flush();
@@ -37,8 +37,8 @@ class ArtistEntityRepositoryTest extends DbIntegrationTest {
         assertNotNull(emptyArtistEntities);
         assertTrue(emptyArtistEntities.isEmpty());
 
-        artistRepository.insert(createArtist());
-        artistRepository.insert(createArtist());
+        artistRepository.insert(artistEntity());
+        artistRepository.insert(artistEntity());
 
         flush();
 
@@ -50,7 +50,7 @@ class ArtistEntityRepositoryTest extends DbIntegrationTest {
 
     @Test
     void deleteById() {
-        ArtistEntity artistEntity = createArtist();
+        ArtistEntity artistEntity = artistEntity();
         artistRepository.insert(artistEntity);
 
         ArtistEntity storedArtistEntity = artistRepository.findById(artistEntity.getId());
@@ -62,7 +62,7 @@ class ArtistEntityRepositoryTest extends DbIntegrationTest {
 
     @Test
     void delete() {
-        ArtistEntity artistEntity = createArtist();
+        ArtistEntity artistEntity = artistEntity();
         artistRepository.insert(artistEntity);
 
         ArtistEntity storedArtistEntity = artistRepository.findById(artistEntity.getId());
@@ -74,7 +74,7 @@ class ArtistEntityRepositoryTest extends DbIntegrationTest {
 
     @Test
     void update() {
-        ArtistEntity artistEntity = createArtist();
+        ArtistEntity artistEntity = artistEntity();
         artistRepository.insert(artistEntity);
 
         ArtistEntity storedArtistEntity = artistRepository.findById(artistEntity.getId());
@@ -89,7 +89,7 @@ class ArtistEntityRepositoryTest extends DbIntegrationTest {
 
     @Test
     void insert() {
-        ArtistEntity artistEntity = createArtist();
+        ArtistEntity artistEntity = artistEntity();
         artistRepository.insert(artistEntity);
 
         ArtistEntity storedArtistEntity = artistRepository.findById(artistEntity.getId());

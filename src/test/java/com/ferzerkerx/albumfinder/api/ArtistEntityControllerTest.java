@@ -1,7 +1,8 @@
 package com.ferzerkerx.albumfinder.api;
 
+import com.ferzerkerx.albumfinder.Fixtures;
 import com.ferzerkerx.albumfinder.domain.AlbumFinderService;
-import com.ferzerkerx.albumfinder.infrastructure.entity.ArtistEntity;
+import com.ferzerkerx.albumfinder.domain.Artist;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -12,7 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Collections;
 import java.util.List;
 
-import static com.ferzerkerx.albumfinder.Fixtures.createArtist;
+import static com.ferzerkerx.albumfinder.Fixtures.artist;
 import static com.ferzerkerx.albumfinder.api.TestUtil.admin;
 import static com.ferzerkerx.albumfinder.api.TestUtil.toJson;
 import static org.hamcrest.Matchers.greaterThan;
@@ -45,9 +46,9 @@ class ArtistEntityControllerTest {
 
     @Test
     void findMatchedArtistsByName() throws Exception {
-        List<ArtistEntity> artistEntities = Collections.singletonList(createArtist());
+        List<Artist> artistEntities = Collections.singletonList(Fixtures.artist());
 
-        when(albumFinderService.findMatchedArtistsByName("someArtist")).thenReturn(artistEntities);
+        when(albumFinderService.findArtistsByName("someArtist")).thenReturn(artistEntities);
 
         mockMvc.perform(get("/artist/search")
                         .param("name", "someArtist")
@@ -60,15 +61,15 @@ class ArtistEntityControllerTest {
 
     @Test
     void updateArtistById() throws Exception {
-        ArtistEntity artistEntity = createArtist();
+        Artist artist = artist();
 
-        when(albumFinderService.updateArtist(any())).thenReturn(artistEntity);
+        when(albumFinderService.updateArtist(any())).thenReturn(artist());
 
         mockMvc.perform(put("/admin/artist/1")
                         .with(csrf())
                         .with(admin())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(toJson(artistEntity)))
+                        .content(toJson(artist)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.id").value(1))
                 .andExpect(jsonPath("$.data.name").value("someArtist"));
@@ -76,9 +77,8 @@ class ArtistEntityControllerTest {
 
     @Test
     void findArtistById() throws Exception {
-        ArtistEntity artistEntity = createArtist();
 
-        when(albumFinderService.findArtistById(1)).thenReturn(artistEntity);
+        when(albumFinderService.findArtistById(1)).thenReturn(artist());
 
         mockMvc.perform(get("/artist/1")
                         .param("name", "someArtist")
@@ -90,20 +90,15 @@ class ArtistEntityControllerTest {
 
     @Test
     void saveArtist() throws Exception {
-        ArtistEntity artistEntity = createArtist();
-        artistEntity.setId(0);
+        Artist artist = artist();
 
-        doAnswer(invocationOnMock -> {
-            ArtistEntity artistEntity1 = (ArtistEntity) invocationOnMock.getArguments()[0];
-            artistEntity1.setId(2);
-            return artistEntity1;
-        }).when(albumFinderService).saveArtist(any());
+        doAnswer(invocationOnMock -> new Artist(2, "someArtist")).when(albumFinderService).saveArtist(any());
 
         mockMvc.perform(post("/admin/artist")
                         .with(csrf())
                         .with(admin())
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(toJson(artistEntity)))
+                        .content(toJson(artist)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.id").value(greaterThan(0)));
     }

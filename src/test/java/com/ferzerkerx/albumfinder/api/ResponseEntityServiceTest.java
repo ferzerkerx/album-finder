@@ -36,11 +36,4 @@ class ResponseEntityServiceTest {
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.value(), meta.getStatus());
     }
 
-    @Test
-    void status() {
-        HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
-        ResponseEntity<Response<String>> response = ResponseUtils.status(httpStatus);
-        assertNotNull(response);
-        assertEquals(httpStatus, response.getStatusCode());
-    }
 }
