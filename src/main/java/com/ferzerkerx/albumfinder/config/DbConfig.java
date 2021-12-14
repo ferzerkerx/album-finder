@@ -49,7 +49,7 @@ public class DbConfig {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(getDataSource());
-        sessionFactory.setPackagesToScan("com.ferzerkerx.albumfinder.model");
+        sessionFactory.setPackagesToScan("com.ferzerkerx.albumfinder.infrastructure.entity");
         sessionFactory.setHibernateProperties(hibernateProperties());
 
         return sessionFactory;

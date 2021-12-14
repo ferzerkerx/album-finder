@@ -1,6 +1,6 @@
 package com.ferzerkerx.albumfinder.config;
 
-import com.ferzerkerx.albumfinder.filter.CsrfHeaderFilter;
+import com.ferzerkerx.albumfinder.api.CsrfHeaderFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;

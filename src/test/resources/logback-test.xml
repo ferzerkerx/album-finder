@@ -8,4 +8,5 @@
     <logger name="org.springframework.web" level="info"/>
     <logger name="org.springframework.test" level="info"/>
     <logger name="org.hibernate" level="info"/>
+    <logger name="org.hibernate.sql" level="info"/>
 </configuration>
