@@ -45,7 +45,7 @@ class AlbumFinderServiceImplTest {
     @Test
     void deleteArtistWithAlbumsById() {
         int artistId = 1;
-        albumFinderService.deleteArtistWithAlbumsById(artistId);
+        albumFinderService.deleteArtistById(artistId);
         verify(albumRepository).deleteRecordsByArtistId(artistId);
         verify(artistRepository).deleteById(artistId);
     }

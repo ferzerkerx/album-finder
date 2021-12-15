@@ -2,7 +2,6 @@ package com.ferzerkerx.albumfinder.api;
 
 import com.ferzerkerx.albumfinder.domain.Album;
 import com.ferzerkerx.albumfinder.domain.AlbumFinderService;
-import com.ferzerkerx.albumfinder.infrastructure.entity.AlbumEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -59,33 +58,4 @@ public class AlbumsController {
         return data(albumFinderService.findMatchedAlbumByCriteria(title, year));
     }
 
-    static class UpdateAlbumRequestDto {
-        private Integer id;
-        private String title;
-        private String year;
-
-        public void setId(Integer id) {
-            this.id = id;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public void setYear(String year) {
-            this.year = year;
-        }
-
-        AlbumEntity toEntity() {
-            AlbumEntity albumEntity = new AlbumEntity();
-            albumEntity.setId(id);
-            albumEntity.setTitle(title);
-            albumEntity.setYear(year);
-            return albumEntity;
-        }
-
-        Album toAlbum() {
-            return new Album(id, title, year, null);
-        }
-    }
 }

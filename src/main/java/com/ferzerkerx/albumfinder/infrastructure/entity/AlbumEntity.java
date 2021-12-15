@@ -1,7 +1,5 @@
 package com.ferzerkerx.albumfinder.infrastructure.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -11,8 +9,6 @@ import javax.validation.constraints.Pattern;
 
 @Entity(name = "Album")
 @Table(name = "album")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AlbumEntity {
 
     @Id

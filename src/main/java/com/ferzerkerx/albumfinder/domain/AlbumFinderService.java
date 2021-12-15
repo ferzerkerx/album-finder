@@ -5,7 +5,7 @@ import java.util.List;
 public interface AlbumFinderService {
     void deleteAlbumById(int recordId);
 
-    void deleteArtistWithAlbumsById(int artistId);
+    void deleteArtistById(int artistId);
 
     List<Artist> findAllArtists();
 
@@ -19,7 +19,7 @@ public interface AlbumFinderService {
 
     List<Album> findAlbumsByArtist(int artistId);
 
-    void saveArtist(Artist Artist);
+    Artist saveArtist(Artist Artist);
 
     void saveAlbum(int artistId, Album Album);
 

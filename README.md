@@ -1,7 +1,7 @@
 ## Sample Project using  Hibernate + SpringMVC + SpringSecurity
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/ferzerkerx/albumEntity-finder)
-[![Build Status](https://travis-ci.org/ferzerkerx/albumEntity-finder.svg?branch=master)](https://travis-ci.org/ferzerkerx/albumEntity-finder)
+[![Build Status](https://github.com/ferzerkerx/album-finder/actions/workflows/maven.yml/badge.svg)](https://github.com/ferzerkerx/album-finder/actions/workflows/maven.yml/badge.svg)
 [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=com.ferzerkerx%3AAlbumFinder&metric=alert_status)](https://sonarcloud.io/dashboard/index/com.ferzerkerx%3AAlbumFinder)
 
 ### Overview:

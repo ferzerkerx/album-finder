@@ -32,7 +32,7 @@ public class AlbumFinderServiceImpl implements AlbumFinderService {
     }
 
     @Override
-    public void deleteArtistWithAlbumsById(int artistId) {
+    public void deleteArtistById(int artistId) {
         albumRepository.deleteRecordsByArtistId(artistId);
         artistRepository.deleteById(artistId);
     }
@@ -79,8 +79,10 @@ public class AlbumFinderServiceImpl implements AlbumFinderService {
     }
 
     @Override
-    public void saveArtist(Artist artist) {
-        artistRepository.insert(toArtistEntity(artist));
+    public Artist saveArtist(Artist artist) {
+        final ArtistEntity artistEntity = toArtistEntity(artist);
+        artistRepository.insert(artistEntity);
+        return toArtist(artistEntity);
     }
 
     @Override

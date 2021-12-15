@@ -35,7 +35,7 @@ class ArtistEntityControllerTest {
 
     @Test
     void deleteArtistById() throws Exception {
-        doNothing().when(albumFinderService).deleteArtistWithAlbumsById(1);
+        doNothing().when(albumFinderService).deleteArtistById(1);
 
         mockMvc.perform(delete("/admin/artist/1")
                         .with(csrf())
