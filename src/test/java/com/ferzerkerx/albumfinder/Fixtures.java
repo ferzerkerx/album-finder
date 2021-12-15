@@ -4,12 +4,10 @@ import com.ferzerkerx.albumfinder.domain.Album;
 import com.ferzerkerx.albumfinder.domain.Artist;
 import com.ferzerkerx.albumfinder.infrastructure.entity.AlbumEntity;
 import com.ferzerkerx.albumfinder.infrastructure.entity.ArtistEntity;
+import lombok.experimental.UtilityClass;
 
+@UtilityClass
 public final class Fixtures {
-
-    private Fixtures() {
-        throw new AssertionError();
-    }
 
     public static ArtistEntity artistEntity() {
         ArtistEntity artistEntity = new ArtistEntity();

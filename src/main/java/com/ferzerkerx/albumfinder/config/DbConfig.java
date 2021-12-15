@@ -1,7 +1,6 @@
 package com.ferzerkerx.albumfinder.config;
 
 import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +23,6 @@ public class DbConfig {
     @Value("${album_finder.pre_populate_db:false}")
     private boolean shouldInsertData;
 
-    @Autowired
     public DbConfig(Environment env) {
         this.env = env;
     }

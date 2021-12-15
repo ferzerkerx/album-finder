@@ -1,6 +1,9 @@
 package com.ferzerkerx.albumfinder.domain;
 
-public record Album(Integer id, String title, String year, Artist artist) {
+import lombok.NonNull;
+import org.springframework.lang.Nullable;
+
+public record Album(@NonNull Integer id, @NonNull String title, @NonNull String year, @Nullable Artist artist) {
 
 }
 

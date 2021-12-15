@@ -1,5 +1,7 @@
 package com.ferzerkerx.albumfinder.domain;
 
-public record Artist(Integer id, String name) {
+import lombok.NonNull;
+
+public record Artist(@NonNull Integer id, @NonNull String name) {
 
 }

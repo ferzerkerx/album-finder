@@ -1,6 +1,7 @@
 package com.ferzerkerx.albumfinder.infrastructure;
 
 import com.ferzerkerx.albumfinder.infrastructure.entity.AlbumEntity;
+import lombok.NonNull;
 import org.apache.commons.lang3.StringUtils;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -18,7 +19,7 @@ import java.util.List;
 @Repository
 public class AlbumRepository extends BaseRepository<AlbumEntity> {
 
-    public AlbumRepository(SessionFactory sessionFactory) {
+    public AlbumRepository(@NonNull SessionFactory sessionFactory) {
         super(AlbumEntity.class, sessionFactory);
     }
 
@@ -35,8 +36,7 @@ public class AlbumRepository extends BaseRepository<AlbumEntity> {
     }
 
 
-    @Override
-    public List<AlbumEntity> findByCriteria(AlbumEntity example) {
+    public List<AlbumEntity> findByCriteria(@NonNull AlbumEntity example) {
 
         CriteriaBuilder builder = getCriteriaBuilder();
 

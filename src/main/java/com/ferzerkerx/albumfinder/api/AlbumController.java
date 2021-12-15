@@ -1,23 +1,28 @@
 package com.ferzerkerx.albumfinder.api;
 
+import com.ferzerkerx.albumfinder.api.dto.AlbumDto;
+import com.ferzerkerx.albumfinder.api.dto.Response;
+import com.ferzerkerx.albumfinder.api.dto.UpdateAlbumRequestDto;
 import com.ferzerkerx.albumfinder.domain.Album;
 import com.ferzerkerx.albumfinder.domain.AlbumFinderService;
-import com.ferzerkerx.albumfinder.domain.Artist;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 import static com.ferzerkerx.albumfinder.api.ResponseUtils.data;
 
 @RestController
+@RequiredArgsConstructor
 public class AlbumController {
 
+    @NonNull
     private final AlbumFinderService albumFinderService;
-
-    public AlbumController(AlbumFinderService albumFinderService) {
-        this.albumFinderService = albumFinderService;
-    }
 
     @GetMapping(value = {"/artist/{id}/albums"})
     public ResponseEntity<Response<List<AlbumDto>>> albumsByArtist(@PathVariable(value = "id") int artistId) {
@@ -32,7 +37,7 @@ public class AlbumController {
     public ResponseEntity<Response<AlbumDto>> saveAlbum(@PathVariable(value = "id") int artistId,
                                                         @RequestBody UpdateAlbumRequestDto updateAlbumRequestDto) {
 
-        final Album album = updateAlbumRequestDto.toAlbum(new Artist(artistId, null));
+        final Album album = updateAlbumRequestDto.toAlbum(artistId);
         final Album savedAlbum = albumFinderService.saveAlbum(album);
         return data(AlbumDto.of(savedAlbum));
     }
@@ -50,9 +55,14 @@ public class AlbumController {
 
     @PutMapping(value = {"/admin/album/{id}"})
     public ResponseEntity<Response<AlbumDto>> updateAlbumById(@PathVariable(value = "id") int albumId,
-                                                              @RequestBody UpdateAlbumRequestDto updateAlbumRequestDto) {
-        updateAlbumRequestDto.setId(albumId);
-        Album album = albumFinderService.updateAlbum(updateAlbumRequestDto.toAlbum());
+                                                              @Valid @RequestBody UpdateAlbumRequestDto updateAlbumRequestDto) {
+
+        Album album = albumFinderService.updateAlbum(
+                updateAlbumRequestDto.toBuilder()
+                        .id(albumId)
+                        .build()
+                        .toAlbum()
+        );
         return data(AlbumDto.of(album));
     }
 
@@ -62,7 +72,10 @@ public class AlbumController {
             @RequestParam(value = "year", required = false) String year) {
 
         return data(
-                albumFinderService.findAlbumByCriteria(title, year).stream()
+                albumFinderService.findAlbumByCriteria(
+                                Optional.ofNullable(title).orElse(StringUtils.EMPTY),
+                                Optional.ofNullable(year).orElse(StringUtils.EMPTY)
+                        ).stream()
                         .map(AlbumDto::of)
                         .toList()
         );

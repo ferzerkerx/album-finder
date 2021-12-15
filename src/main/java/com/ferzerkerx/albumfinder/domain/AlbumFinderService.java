@@ -1,8 +1,11 @@
 package com.ferzerkerx.albumfinder.domain;
 
+import lombok.NonNull;
+
 import java.util.List;
 
 public interface AlbumFinderService {
+
     void deleteAlbumById(int albumId);
 
     void deleteArtistById(int artistId);
@@ -11,19 +14,19 @@ public interface AlbumFinderService {
 
     Artist findArtistById(int artistId);
 
-    List<Artist> findArtistsByName(String name);
+    List<Artist> findArtistsByName(@NonNull String name);
 
-    List<Album> findAlbumByCriteria(String title, String year);
+    List<Album> findAlbumByCriteria(@NonNull String title, @NonNull String year);
 
     Album findAlbumById(int albumId);
 
     List<Album> findAlbumsByArtist(int artistId);
 
-    Artist saveArtist(Artist artist);
+    Artist saveArtist(@NonNull Artist artist);
 
-    Album saveAlbum(Album album);
+    Album saveAlbum(@NonNull Album album);
 
-    Artist updateArtist(Artist artist);
+    Artist updateArtist(@NonNull Artist artist);
 
-    Album updateAlbum(Album album);
+    Album updateAlbum(@NonNull Album album);
 }

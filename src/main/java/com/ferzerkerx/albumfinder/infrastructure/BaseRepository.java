@@ -1,13 +1,15 @@
 package com.ferzerkerx.albumfinder.infrastructure;
 
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import java.util.List;
 
+@RequiredArgsConstructor
 public abstract class BaseRepository<T> {
 
     static final int MAX_RESULTS = 200;
@@ -20,51 +22,41 @@ public abstract class BaseRepository<T> {
 
     private final SessionFactory sessionFactory;
 
-
-    BaseRepository(Class<T> clazz, SessionFactory sessionFactory) {
-        this.clazz = clazz;
-        this.sessionFactory = sessionFactory;
-    }
-
     protected Session getCurrentSession() {
         return sessionFactory.getCurrentSession();
     }
 
-    public void insert(T type) {
+    public void insert(@NonNull T type) {
         getCurrentSession().save(type);
     }
 
-    public T update(T type) {
+    public T update(@NonNull T type) {
         getCurrentSession().update(type);
         return type;
     }
 
-    public void deleteById(Integer id) {
+    public void deleteById(@NonNull Integer id) {
         T byId = findById(id);
         delete(byId);
     }
 
-    public void delete(T type) {
+    public void delete(@NonNull T type) {
         getCurrentSession().delete(type);
     }
 
-    public List<T> findByCriteria(T criteria) {
-        throw new UnsupportedOperationException("This is not implemented yet");
-    }
-
-    public T findById(Integer id) {
+    public T findById(@NonNull Integer id) {
         return getCurrentSession().get(clazz, id);
     }
 
-    Query createQuery(String query) {
+    Query createQuery(@NonNull String query) {
         return getCurrentSession().createQuery(query);
     }
 
-    Query<T> createQuery(CriteriaQuery<T> criteriaQuery) {
+    Query<T> createQuery(@NonNull CriteriaQuery<T> criteriaQuery) {
         return getCurrentSession().createQuery(criteriaQuery);
     }
 
-    Query<T> createTypedQuery(String query) {
+    Query<T> createTypedQuery(@NonNull String query) {
         return getCurrentSession().createQuery(query, clazz);
     }
 

@@ -21,6 +21,7 @@ open module ferzerkerx.albumfinder {
     requires java.validation;
     requires org.slf4j;
     requires spring.security.crypto;
+    requires lombok;
 
     exports com.ferzerkerx.albumfinder;
 }

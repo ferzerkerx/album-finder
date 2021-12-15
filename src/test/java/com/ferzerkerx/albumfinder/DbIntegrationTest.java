@@ -1,6 +1,7 @@
 package com.ferzerkerx.albumfinder;
 
 import com.ferzerkerx.albumfinder.config.DbTestConfig;
+import lombok.Setter;
 import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 public abstract class DbIntegrationTest {
 
     @Autowired
+    @Setter
     private SessionFactory sessionFactory;
 
     protected void flush() {

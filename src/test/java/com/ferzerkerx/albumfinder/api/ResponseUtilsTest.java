@@ -1,5 +1,7 @@
 package com.ferzerkerx.albumfinder.api;
 
+import com.ferzerkerx.albumfinder.api.dto.Meta;
+import com.ferzerkerx.albumfinder.api.dto.Response;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-class ResponseEntityServiceTest {
+class ResponseUtilsTest {
 
     @Test
     void data() {

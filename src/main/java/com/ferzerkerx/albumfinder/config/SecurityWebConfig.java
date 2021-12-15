@@ -1,7 +1,6 @@
 package com.ferzerkerx.albumfinder.config;
 
 import com.ferzerkerx.albumfinder.api.CsrfHeaderFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,7 +25,6 @@ import java.util.Collections;
 @Order(SecurityProperties.BASIC_AUTH_ORDER)
 public class SecurityWebConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
                 .passwordEncoder(passwordEncoder())

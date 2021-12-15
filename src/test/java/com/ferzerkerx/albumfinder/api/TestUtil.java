@@ -2,15 +2,15 @@ package com.ferzerkerx.albumfinder.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.experimental.UtilityClass;
 import org.springframework.test.web.servlet.request.RequestPostProcessor;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 
+@UtilityClass
 public final class TestUtil {
 
-    private TestUtil() {
-        throw new AssertionError();
-    }
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     static RequestPostProcessor admin() {
         return user("admin").password("password").roles("ADMIN");
@@ -21,7 +21,6 @@ public final class TestUtil {
     }
 
     static byte[] toJson(Object object) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsBytes(object);
+        return OBJECT_MAPPER.writeValueAsBytes(object);
     }
 }
