@@ -1,6 +1,5 @@
 package com.ferzerkerx.albumfinder.api;
 
-import com.ferzerkerx.albumfinder.domain.BaseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -24,10 +23,6 @@ public class ResponseUtils {
         LOGGER.error(e.getMessage());
         String message = "Unexpected Error";
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
-        if (e instanceof BaseException) { //TODO this needs to be improved
-            message = e.getMessage();
-            status = HttpStatus.OK;
-        }
         return error(message, status);
     }
 

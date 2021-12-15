@@ -21,7 +21,7 @@ public interface AlbumFinderService {
 
     Artist saveArtist(Artist Artist);
 
-    void saveAlbum(int artistId, Album Album);
+    Album saveAlbum(Album Album);
 
     Artist updateArtist(Artist Artist);
 

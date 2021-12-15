@@ -17,7 +17,6 @@ import static com.ferzerkerx.albumfinder.api.TestUtil.admin;
 import static com.ferzerkerx.albumfinder.api.TestUtil.toJson;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -75,7 +74,7 @@ class AlbumsControllerTest {
             AlbumEntity albumEntity1 = (AlbumEntity) invocationOnMock.getArguments()[1];
             albumEntity1.setId(2);
             return albumEntity1;
-        }).when(albumFinderService).saveAlbum(eq(1), any());
+        }).when(albumFinderService).saveAlbum(any());
 
         mockMvc.perform(post("/admin/artist/1/album")
                         .with(csrf())

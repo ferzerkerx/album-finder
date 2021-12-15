@@ -36,7 +36,8 @@ public class ArtistController {
     }
 
     @PutMapping(value = {"/admin/artist/{id}"})
-    public ResponseEntity<Response<ArtistDto>> updateArtistById(@PathVariable(value = "id") int artistId, @RequestBody UpsertArtistRequestDto upsertArtistRequestDto) {
+    public ResponseEntity<Response<ArtistDto>> updateArtistById(@PathVariable(value = "id") int artistId,
+                                                                @RequestBody UpsertArtistRequestDto upsertArtistRequestDto) {
         upsertArtistRequestDto.setId(artistId);
         Artist updatedArtistEntity = albumFinderService.updateArtist(upsertArtistRequestDto.toArtist());
         return data(ArtistDto.of(updatedArtistEntity));

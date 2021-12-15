@@ -75,7 +75,7 @@ class AlbumFinderServiceImplTest {
 
         ArgumentCaptor<AlbumEntity> albumArgumentCaptor = ArgumentCaptor.forClass(AlbumEntity.class);
 
-        albumFinderService.saveAlbum(artistId, album);
+        albumFinderService.saveAlbum(album);
         verify(albumRepository).insert(albumArgumentCaptor.capture());
 
         AlbumEntity capturedAlbumEntity = albumArgumentCaptor.getValue();

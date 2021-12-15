@@ -86,12 +86,10 @@ public class AlbumFinderServiceImpl implements AlbumFinderService {
     }
 
     @Override
-    public void saveAlbum(int artistId, Album album) { //TODO simplify
-        ArtistEntity artistEntity = new ArtistEntity();
-        artistEntity.setId(artistId);
+    public Album saveAlbum(Album album) {
         final AlbumEntity albumEntity = toAlbumEntity(album);
-        albumEntity.setArtist(artistEntity);
         albumRepository.insert(albumEntity);
+        return toAlbum(albumEntity);
     }
 
     @Override

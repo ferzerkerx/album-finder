@@ -2,14 +2,15 @@ package com.ferzerkerx.albumfinder.api;
 
 import com.ferzerkerx.albumfinder.domain.Album;
 import com.ferzerkerx.albumfinder.domain.AlbumFinderService;
+import com.ferzerkerx.albumfinder.domain.Artist;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.ferzerkerx.albumfinder.api.ResponseUtils.data;
 
-//TODO return albumdto
 @RestController
 public class AlbumsController {
 
@@ -20,20 +21,26 @@ public class AlbumsController {
     }
 
     @GetMapping(value = {"/artist/{id}/albums"})
-    public ResponseEntity<Response<List<Album>>> showRecordsForArtist(@PathVariable(value = "id") int artistId) {
-        return data(albumFinderService.findAlbumsByArtist(artistId));
+    public ResponseEntity<Response<List<AlbumDto>>> showRecordsForArtist(@PathVariable(value = "id") int artistId) {
+        return data(
+                albumFinderService.findAlbumsByArtist(artistId).stream()
+                        .map(AlbumDto::of)
+                        .collect(Collectors.toList())
+        );
     }
 
     @PostMapping(value = {"/admin/artist/{id}/album"})
-    public ResponseEntity<Response<Album>> saveAlbum(@PathVariable(value = "id") int artistId, @RequestBody UpdateAlbumRequestDto updateAlbumRequestDto) {
-        Album album = updateAlbumRequestDto.toAlbum();
-        albumFinderService.saveAlbum(artistId, album);
-        return data(album);
+    public ResponseEntity<Response<AlbumDto>> saveAlbum(@PathVariable(value = "id") int artistId,
+                                                        @RequestBody UpdateAlbumRequestDto updateAlbumRequestDto) {
+
+        final Album album = updateAlbumRequestDto.toAlbum(new Artist(artistId, null));
+        final Album savedAlbum = albumFinderService.saveAlbum(album);
+        return data(AlbumDto.of(savedAlbum));
     }
 
     @GetMapping(value = {"/album/{id}"})
-    public ResponseEntity<Response<Album>> findAlbumById(@PathVariable(value = "id") int recordId) {
-        return data(albumFinderService.findAlbumById(recordId));
+    public ResponseEntity<Response<AlbumDto>> findAlbumById(@PathVariable(value = "id") int recordId) {
+        return data(AlbumDto.of(albumFinderService.findAlbumById(recordId)));
     }
 
     @DeleteMapping(value = {"/admin/album/{id}"})
@@ -43,19 +50,23 @@ public class AlbumsController {
     }
 
     @PutMapping(value = {"/admin/album/{id}"})
-    public ResponseEntity<Response<Album>> updateAlbumById(@PathVariable(value = "id") int albumId, @RequestBody UpdateAlbumRequestDto updateAlbumRequestDto) {
+    public ResponseEntity<Response<AlbumDto>> updateAlbumById(@PathVariable(value = "id") int albumId,
+                                                              @RequestBody UpdateAlbumRequestDto updateAlbumRequestDto) {
         updateAlbumRequestDto.setId(albumId);
-        Album albumEntity = updateAlbumRequestDto.toAlbum();
-        Album updatedAlbumEntity = albumFinderService.updateAlbum(albumEntity);
-        return data(updatedAlbumEntity);
+        Album album = albumFinderService.updateAlbum(updateAlbumRequestDto.toAlbum());
+        return data(AlbumDto.of(album));
     }
 
     @GetMapping(value = {"/albums/search"})
-    public ResponseEntity<Response<List<Album>>> findMatchedRecordByCriteria(
+    public ResponseEntity<Response<List<AlbumDto>>> findMatchedRecordByCriteria(
             @RequestParam(value = "title", required = false) String title,
             @RequestParam(value = "year", required = false) String year) {
 
-        return data(albumFinderService.findMatchedAlbumByCriteria(title, year));
+        return data(
+                albumFinderService.findMatchedAlbumByCriteria(title, year).stream()
+                        .map(AlbumDto::of)
+                        .collect(Collectors.toList())
+        );
     }
 
 }
