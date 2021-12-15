@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.ferzerkerx.albumfinder.infrastructure.AlbumFinderServiceImpl.Converter.*;
 
@@ -41,7 +40,7 @@ public class AlbumFinderServiceImpl implements AlbumFinderService {
     public List<Artist> findAllArtists() {
         return artistRepository.findAllArtists().stream()
                 .map(Converter::toArtist)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -53,7 +52,7 @@ public class AlbumFinderServiceImpl implements AlbumFinderService {
     public List<Artist> findArtistsByName(String name) {
         return artistRepository.findArtistsByName(name).stream()
                 .map(Converter::toArtist)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -63,7 +62,7 @@ public class AlbumFinderServiceImpl implements AlbumFinderService {
         albumEntity.setYear(year);
         return albumRepository.findByCriteria(albumEntity).stream()
                 .map(Converter::toAlbum)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -75,7 +74,7 @@ public class AlbumFinderServiceImpl implements AlbumFinderService {
     public List<Album> findAlbumsByArtist(int artistId) {
         return albumRepository.findRecordsByArtist(artistId).stream()
                 .map(Converter::toAlbum)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
@@ -105,6 +104,10 @@ public class AlbumFinderServiceImpl implements AlbumFinderService {
     }
 
     static class Converter {
+        private Converter() {
+            throw new AssertionError();
+        }
+
         static AlbumEntity toAlbumEntity(Album album) {
             final AlbumEntity albumEntity = new AlbumEntity();
             albumEntity.setId(album.id());

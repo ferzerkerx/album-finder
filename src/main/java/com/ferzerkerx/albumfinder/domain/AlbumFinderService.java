@@ -19,11 +19,11 @@ public interface AlbumFinderService {
 
     List<Album> findAlbumsByArtist(int artistId);
 
-    Artist saveArtist(Artist Artist);
+    Artist saveArtist(Artist artist);
 
-    Album saveAlbum(Album Album);
+    Album saveAlbum(Album album);
 
-    Artist updateArtist(Artist Artist);
+    Artist updateArtist(Artist artist);
 
-    Album updateAlbum(Album Album);
+    Album updateAlbum(Album album);
 }

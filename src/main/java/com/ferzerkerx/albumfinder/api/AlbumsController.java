@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.ferzerkerx.albumfinder.api.ResponseUtils.data;
 
@@ -25,7 +24,7 @@ public class AlbumsController {
         return data(
                 albumFinderService.findAlbumsByArtist(artistId).stream()
                         .map(AlbumDto::of)
-                        .collect(Collectors.toList())
+                        .toList()
         );
     }
 
@@ -65,7 +64,7 @@ public class AlbumsController {
         return data(
                 albumFinderService.findMatchedAlbumByCriteria(title, year).stream()
                         .map(AlbumDto::of)
-                        .collect(Collectors.toList())
+                        .toList()
         );
     }
 
