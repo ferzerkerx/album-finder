@@ -7,11 +7,13 @@
 ### Overview:
 
 - Includes simple CRUD functionality
-- Some features are restricted to admin users
+- Some features are restricted to admin users refer
+  to [SecurityWebConfig](https://github.com/ferzerkerx/album-finder/blob/master/src/main/java/com/ferzerkerx/albumfinder/config/SecurityWebConfig.java#L33)
+  for a list of valid users
 
 ### Backend:
 
-- REST API using SpringMVC
+- REST API using SpringBoot
 - User authentication is provided by SpringSecurity
 - CSRF Protection enabled
-- Data Persistence is done using hibernate on a HSQLDB 
+- Data Persistence is done using hibernate on a HSQLDB
