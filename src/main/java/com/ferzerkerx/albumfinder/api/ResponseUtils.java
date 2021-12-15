@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 
 public class ResponseUtils {
 
-    public ResponseUtils() {
+    private ResponseUtils() {
         throw new AssertionError();
     }
 

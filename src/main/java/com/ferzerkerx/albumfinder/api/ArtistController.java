@@ -49,7 +49,7 @@ public class ArtistController {
         return data(
                 matchedArtistsByName.stream()
                         .map(ArtistDto::of)
-                        .collect(Collectors.toList())
+                        .toList()
         );
     }
 
