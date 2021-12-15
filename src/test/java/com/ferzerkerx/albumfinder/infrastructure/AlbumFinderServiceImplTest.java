@@ -46,7 +46,7 @@ class AlbumFinderServiceImplTest {
     void deleteArtistWithAlbumsById() {
         int artistId = 1;
         albumFinderService.deleteArtistById(artistId);
-        verify(albumRepository).deleteRecordsByArtistId(artistId);
+        verify(albumRepository).deleteAlbumsByArtistId(artistId);
         verify(artistRepository).deleteById(artistId);
     }
 
@@ -97,7 +97,7 @@ class AlbumFinderServiceImplTest {
     void findAlbumsByArtist() {
         int artistId = 1;
         albumFinderService.findAlbumsByArtist(artistId);
-        verify(albumRepository).findRecordsByArtist(artistId);
+        verify(albumRepository).findAlbumsByArtist(artistId);
     }
 
     @Test
@@ -117,7 +117,7 @@ class AlbumFinderServiceImplTest {
 
         String title = "someTitle";
         String year = "1995";
-        albumFinderService.findMatchedAlbumByCriteria(title, year);
+        albumFinderService.findAlbumByCriteria(title, year);
         verify(albumRepository).findByCriteria(albumArgumentCaptor.capture());
 
         AlbumEntity capturedAlbumEntity = albumArgumentCaptor.getValue();

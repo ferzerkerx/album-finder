@@ -26,13 +26,13 @@ public class AlbumFinderServiceImpl implements AlbumFinderService {
     }
 
     @Override
-    public void deleteAlbumById(int recordId) {
-        albumRepository.deleteById(recordId);
+    public void deleteAlbumById(int albumId) {
+        albumRepository.deleteById(albumId);
     }
 
     @Override
     public void deleteArtistById(int artistId) {
-        albumRepository.deleteRecordsByArtistId(artistId);
+        albumRepository.deleteAlbumsByArtistId(artistId);
         artistRepository.deleteById(artistId);
     }
 
@@ -56,7 +56,7 @@ public class AlbumFinderServiceImpl implements AlbumFinderService {
     }
 
     @Override
-    public List<Album> findMatchedAlbumByCriteria(String title, String year) {
+    public List<Album> findAlbumByCriteria(String title, String year) {
         AlbumEntity albumEntity = new AlbumEntity();
         albumEntity.setTitle(title);
         albumEntity.setYear(year);
@@ -66,13 +66,13 @@ public class AlbumFinderServiceImpl implements AlbumFinderService {
     }
 
     @Override
-    public Album findAlbumById(int recordId) {
-        return toAlbum(albumRepository.findById(recordId));
+    public Album findAlbumById(int albumId) {
+        return toAlbum(albumRepository.findById(albumId));
     }
 
     @Override
     public List<Album> findAlbumsByArtist(int artistId) {
-        return albumRepository.findRecordsByArtist(artistId).stream()
+        return albumRepository.findAlbumsByArtist(artistId).stream()
                 .map(Converter::toAlbum)
                 .toList();
     }

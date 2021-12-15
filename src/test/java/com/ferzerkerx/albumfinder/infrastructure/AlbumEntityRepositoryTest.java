@@ -33,19 +33,19 @@ class AlbumEntityRepositoryTest extends DbIntegrationTest {
     }
 
     @Test
-    void deleteRecordsByArtistId() {
+    void deleteAlbumByArtistId() {
         AlbumEntity albumEntity = Fixtures.albumEntityOf(artistEntity);
         albumRepository.insert(albumEntity);
 
         flush();
 
-        List<AlbumEntity> recordsByArtist = albumRepository.findRecordsByArtist(artistEntity.getId());
-        assertNotNull(recordsByArtist);
-        assertEquals(1, recordsByArtist.size());
+        List<AlbumEntity> albumsByArtist = albumRepository.findAlbumsByArtist(artistEntity.getId());
+        assertNotNull(albumsByArtist);
+        assertEquals(1, albumsByArtist.size());
 
-        albumRepository.deleteRecordsByArtistId(artistEntity.getId());
+        albumRepository.deleteAlbumsByArtistId(artistEntity.getId());
 
-        List<AlbumEntity> emptyByArtist = albumRepository.findRecordsByArtist(artistEntity.getId());
+        List<AlbumEntity> emptyByArtist = albumRepository.findAlbumsByArtist(artistEntity.getId());
         assertNotNull(emptyByArtist);
         assertTrue(emptyByArtist.isEmpty());
     }
@@ -132,21 +132,21 @@ class AlbumEntityRepositoryTest extends DbIntegrationTest {
     }
 
     @Test
-    void findRecordsByArtist() {
-        List<AlbumEntity> emptyRecordsByArtist = albumRepository.findRecordsByArtist(artistEntity.getId());
-        assertNotNull(emptyRecordsByArtist);
-        assertTrue(emptyRecordsByArtist.isEmpty());
+    void findAlbumsByArtist() {
+        List<AlbumEntity> emptyAlbumsByArtist = albumRepository.findAlbumsByArtist(artistEntity.getId());
+        assertNotNull(emptyAlbumsByArtist);
+        assertTrue(emptyAlbumsByArtist.isEmpty());
 
         AlbumEntity albumEntity = Fixtures.albumEntityOf(artistEntity);
         albumRepository.insert(albumEntity);
 
         flush();
 
-        List<AlbumEntity> recordsByArtist = albumRepository.findRecordsByArtist(artistEntity.getId());
-        assertNotNull(recordsByArtist);
-        assertEquals(1, recordsByArtist.size());
+        List<AlbumEntity> albumsByArtist = albumRepository.findAlbumsByArtist(artistEntity.getId());
+        assertNotNull(albumsByArtist);
+        assertEquals(1, albumsByArtist.size());
 
-        assertEquals(albumEntity, recordsByArtist.get(0));
+        assertEquals(albumEntity, albumsByArtist.get(0));
     }
 
     @TestConfiguration

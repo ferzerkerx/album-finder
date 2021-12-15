@@ -3,7 +3,7 @@ package com.ferzerkerx.albumfinder.domain;
 import java.util.List;
 
 public interface AlbumFinderService {
-    void deleteAlbumById(int recordId);
+    void deleteAlbumById(int albumId);
 
     void deleteArtistById(int artistId);
 
@@ -13,9 +13,9 @@ public interface AlbumFinderService {
 
     List<Artist> findArtistsByName(String name);
 
-    List<Album> findMatchedAlbumByCriteria(String title, String year);
+    List<Album> findAlbumByCriteria(String title, String year);
 
-    Album findAlbumById(int recordId);
+    Album findAlbumById(int albumId);
 
     List<Album> findAlbumsByArtist(int artistId);
 

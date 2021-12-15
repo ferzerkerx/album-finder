@@ -22,13 +22,13 @@ public class AlbumRepository extends BaseRepository<AlbumEntity> {
         super(AlbumEntity.class, sessionFactory);
     }
 
-    public void deleteRecordsByArtistId(int artistId) {
+    public void deleteAlbumsByArtistId(int artistId) {
         createQuery("DELETE FROM Album a WHERE a.artist.id = :id")
                 .setParameter("id", artistId)
                 .executeUpdate();
     }
 
-    public List<AlbumEntity> findRecordsByArtist(int artistId) {
+    public List<AlbumEntity> findAlbumsByArtist(int artistId) {
         Query<AlbumEntity> query = createTypedQuery("SELECT a FROM Album a WHERE a.artist.id = :id")
                 .setParameter("id", artistId);
         return query.getResultList();

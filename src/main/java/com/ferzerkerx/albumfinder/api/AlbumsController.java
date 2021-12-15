@@ -20,7 +20,7 @@ public class AlbumsController {
     }
 
     @GetMapping(value = {"/artist/{id}/albums"})
-    public ResponseEntity<Response<List<AlbumDto>>> showRecordsForArtist(@PathVariable(value = "id") int artistId) {
+    public ResponseEntity<Response<List<AlbumDto>>> albumsByArtist(@PathVariable(value = "id") int artistId) {
         return data(
                 albumFinderService.findAlbumsByArtist(artistId).stream()
                         .map(AlbumDto::of)
@@ -38,8 +38,8 @@ public class AlbumsController {
     }
 
     @GetMapping(value = {"/album/{id}"})
-    public ResponseEntity<Response<AlbumDto>> findAlbumById(@PathVariable(value = "id") int recordId) {
-        return data(AlbumDto.of(albumFinderService.findAlbumById(recordId)));
+    public ResponseEntity<Response<AlbumDto>> findAlbumById(@PathVariable(value = "id") int albumId) {
+        return data(AlbumDto.of(albumFinderService.findAlbumById(albumId)));
     }
 
     @DeleteMapping(value = {"/admin/album/{id}"})
@@ -57,12 +57,12 @@ public class AlbumsController {
     }
 
     @GetMapping(value = {"/albums/search"})
-    public ResponseEntity<Response<List<AlbumDto>>> findMatchedRecordByCriteria(
+    public ResponseEntity<Response<List<AlbumDto>>> findAlbumByCriteria(
             @RequestParam(value = "title", required = false) String title,
             @RequestParam(value = "year", required = false) String year) {
 
         return data(
-                albumFinderService.findMatchedAlbumByCriteria(title, year).stream()
+                albumFinderService.findAlbumByCriteria(title, year).stream()
                         .map(AlbumDto::of)
                         .toList()
         );

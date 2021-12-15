@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(controllers = AlbumsController.class)
-class AlbumsControllerTest {
+class AlbumControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -110,8 +110,8 @@ class AlbumsControllerTest {
     }
 
     @Test
-    void testFindMatchedRecordByCriteria() throws Exception {
-        when(albumFinderService.findMatchedAlbumByCriteria("someTitle", "someYear")).thenReturn(List.of(album()));
+    void testFindAlbumByCriteria() throws Exception {
+        when(albumFinderService.findAlbumByCriteria("someTitle", "someYear")).thenReturn(List.of(album()));
 
         mockMvc.perform(get("/albums/search")
                         .param("title", "someTitle")

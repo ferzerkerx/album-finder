@@ -26,4 +26,4 @@ CREATE TABLE album
 
 
 ALTER TABLE album
-    ADD CONSTRAINT record_artist FOREIGN KEY (artist_id) REFERENCES artist;
+    ADD CONSTRAINT album_artist FOREIGN KEY (artist_id) REFERENCES artist;
