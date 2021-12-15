@@ -11,11 +11,11 @@ import java.util.List;
 import static com.ferzerkerx.albumfinder.api.ResponseUtils.data;
 
 @RestController
-public class AlbumsController {
+public class AlbumController {
 
     private final AlbumFinderService albumFinderService;
 
-    public AlbumsController(AlbumFinderService albumFinderService) {
+    public AlbumController(AlbumFinderService albumFinderService) {
         this.albumFinderService = albumFinderService;
     }
 
